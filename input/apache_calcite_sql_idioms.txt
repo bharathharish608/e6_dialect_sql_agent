@@ -1,0 +1,91 @@
+APACHE CALCITE SQL IDIOMS FOR NL2SQL AGENT
+
+RESERVED KEYWORDS & IDENTIFIERS:
+- Avoid reserved words as aliases (YEAR, QUARTER, USER, VALUE, etc.)
+- Use backticks for identifiers: `year` instead of "year"
+- Prefer unquoted identifiers when possible
+
+DATE/TIME HANDLING:
+- Use CAST('2024-01-01' AS DATE) for date literals
+- Use EXTRACT(YEAR FROM date_col) for date parts
+- Avoid dialect-specific functions like DATEPART or YEAR()
+- Use CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP
+- Intervals: INTERVAL '1' DAY, INTERVAL '1:30' HOUR TO MINUTE
+- NO TO_CHAR() for date formatting - use CASE statements for month names
+- Date comparisons: BETWEEN CAST('2024-01-01' AS DATE) AND CAST('2024-12-31' AS DATE)
+
+STRING OPERATIONS:
+- Use || for concatenation, not + or CONCAT()
+- Use SUBSTRING(str FROM start FOR length)
+- Use CHAR_LENGTH() not LENGTH() for character count
+- Use POSITION(substring IN string) for string search
+- Use TRIM(BOTH ' ' FROM col) with explicit syntax
+- Use LPAD(string, length, padding) and RPAD() for padding
+- Case-sensitive by default
+- Double single quotes in strings: 'It''s correct'
+- NO FORMAT() or TO_CHAR() for formatting
+
+DATA TYPES:
+- Use DOUBLE not FLOAT8, BIGINT not INT8
+- For timestamps: TIMESTAMP(3) for millisecond precision
+- No BOOLEAN in GROUP BY/ORDER BY/DISTINCT
+- Explicit VARCHAR casting: CAST(col AS VARCHAR)
+
+AGGREGATION & WINDOW FUNCTIONS:
+- Must include all non-aggregate columns in GROUP BY
+- Use FILTER (WHERE condition) for conditional aggregation
+- Window functions: ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)
+- Frame syntax: ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+- Available: PERCENT_RANK(), CUME_DIST(), NTILE(n)
+- No IGNORE NULLS in LEAD/LAG
+
+TYPE CASTING:
+- Explicit casting required: CAST(col AS INTEGER)
+- No implicit string-to-number conversions
+- Cast numeric extracts for string operations: CAST(EXTRACT(MONTH FROM date) AS VARCHAR)
+
+JOIN SYNTAX:
+- Use explicit INNER JOIN, LEFT JOIN syntax
+- Avoid comma-separated table lists
+- Use LATERAL joins for correlated subqueries
+
+NULL HANDLING:
+- Use IS NULL / IS NOT NULL, not = NULL
+- Use COALESCE() instead of ISNULL() or NVL()
+
+BOOLEAN LOGIC:
+- No implicit integer-to-boolean conversion
+- Use TRUE / FALSE literals
+
+SET OPERATIONS:
+- Use EXCEPT not MINUS
+- INTERSECT ALL, UNION ALL for multiset semantics
+
+LIMIT/OFFSET:
+- Use LIMIT n or FETCH FIRST n ROWS ONLY
+- OFFSET n ROWS for pagination
+
+FORMATTING & CONVERSION:
+- NO TO_CHAR(), FORMAT(), or STR() functions
+- Use CASE statements for custom formatting (e.g., month names)
+- Concatenate strings with || for custom formats
+- Use LPAD/RPAD for zero-padding numbers
+
+ADVANCED FEATURES:
+- Row constructors: (col1, col2) = (val1, val2)
+- UNNEST(array_col) for array expansion
+- MULTISET operations: MULTISET[1, 2], CARDINALITY(multiset)
+- Limited regex: SIMILAR TO pattern matching
+
+CONSTRAINTS:
+- No CREATE TABLE - query-only operations
+- Math functions: LN() for natural log, LOG10() for base-10
+- No stored procedures or user-defined functions
+- No PIVOT/UNPIVOT - use CASE statements instead
+
+COMMON PITFALLS TO AVOID:
+- Don't use Oracle-style formatting functions
+- Don't assume implicit conversions
+- Don't use dialect-specific date functions
+- Always cast date literals explicitly
+- Always include all non-aggregate columns in GROUP BY

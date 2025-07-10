@@ -1,0 +1,14 @@
+langchain
+chromadb
+requests
+beautifulsoup4
+python-dotenv
+anthropic
+sentence-transformers
+langgraph>=0.5.1
+rank_bm25
+typing-extensions
+tqdm
+rich
+faiss-cpu
+langchain-anthropic
