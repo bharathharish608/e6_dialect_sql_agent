@@ -2,5 +2,6 @@ config.env
 .env
 .cursor/ 
 venv311/ 
+venv/
 application_logs/
 conversation_logs/ 
