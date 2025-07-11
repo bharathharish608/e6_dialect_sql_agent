@@ -12,3 +12,4 @@ tqdm
 rich
 faiss-cpu
 langchain-anthropic
+llama-index
