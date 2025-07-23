@@ -5,6 +5,9 @@
 import os
 import json
 import chromadb
+
+# Fix tokenizers parallelism warning
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
 from langgraph.graph import StateGraph, END
@@ -126,10 +129,24 @@ def claude_llm_node(state):
     user_input = state["user_input"]
     retrieved = state["retrieved"]
     context = "\n\n".join([f"Source: {c.get('url', c.get('source', ''))}\n{c['text']}" for c in retrieved])
+    
+    # Load apache_calcite_sql_idioms.txt content
+    idioms_content = ""
+    try:
+        with open('input/apache_calcite_sql_idioms.txt', 'r', encoding='utf-8') as f:
+            idioms_content = f.read()
+    except FileNotFoundError:
+        idioms_content = "E6DATA SQL IDIOMS: File not found - using default rules"
+    except Exception as e:
+        idioms_content = f"E6DATA SQL IDIOMS: Error loading file - {str(e)}"
+    
     prompt = f"""
-You are an expert e6data and Apache Calcite SQL assistant. Use the following context to answer the user's question or diagnose their error. Always cite the source (url or 'apache_calcite').
+You are an expert e6data and Apache Calcite SQL assistant. Use the following context and e6data-specific rules to answer the user's question or diagnose their error. Always cite the source (url or 'apache_calcite').
 
-Context:
+CRITICAL E6DATA SQL RULES (ALWAYS APPLY THESE):
+{idioms_content}
+
+Context from Documentation:
 {context}
 
 User:
@@ -158,13 +175,16 @@ Answer:
 
 def expand_query_with_llm(user_query):
     expansion_prompt = (
-        "Rewrite the following user question to be as explicit and technical as possible, using synonyms and related terms, "
-        "so it matches documentation and SQL idioms.\n"
-        "e6data is a SQL engine for analytical querying on object store native big data ecosystems, supporting both basic and advanced SQL features.\n"
+        "Convert this user question into a technical search query optimized for finding SQL function documentation. "
+        "Focus on keywords, function names, and technical terms. Remove conversational language.\n"
+        "e6data is a SQL engine for analytical querying on object store native big data ecosystems.\n"
         "The documentation is at https://docs.e6data.com/\n"
         "e6data uses Apache Calcite for its sql parsing and planning\n"
         "Do not answer the question, just rewrite it for search.\n"
-        "When you expand the query, ensure you do not change the meaning and the intent of the user's question. You cannot add, remove or alter the original user intent behind the question.\n"
+        "Examples:\n"
+        "- 'How does datediff work?' → 'datediff function SQL syntax parameters examples'\n"
+        "- 'What is the syntax for window functions?' → 'window functions SQL syntax OVER PARTITION BY'\n"
+        "- 'How to use aggregate functions?' → 'aggregate functions SQL syntax SUM COUNT AVG'\n"
         f"User question: {user_query}\nExpanded query:"
     )
     print("\n[QUERY EXPANSION] Original user query:", user_query)
@@ -480,15 +500,57 @@ def main():
     turn_idx = 0
     entity_memory = CustomEntityMemory()
     while True:
-        user_input = input("User: ").strip()
-        if user_input.lower() in {"exit", "quit"}:
+        try:
+            user_input = input("User: ").strip()
+            if user_input.lower() in {"exit", "quit"}:
+                break
+        except EOFError:
+            print("\nExiting due to end of input stream.")
             break
         turn_idx += 1
         # 1. Coreference resolution
         resolved_input = resolve_coreferences_with_llm(conversation_history, user_input)
-        # 2. Retrieve documentation context using vector_search_tool (hybrid: vector + BM25)
-        retrieval_query = resolved_input if resolved_input else user_input
-        retrieved_docs = vector_search_tool(retrieval_query, top_k=5)
+        # Clean up the resolved input to remove notes
+        if resolved_input and "(Note:" in resolved_input:
+            resolved_input = resolved_input.split("(Note:")[0].strip()
+        # 2. Expand query for better retrieval
+        expanded_query = expand_query_with_llm(user_input)
+        # 3. Try multiple search strategies for better retrieval
+        retrieved_docs = []
+        search_attempts = [
+            expanded_query,
+            user_input,  # Fallback to original query
+        ]
+        
+        # Add function-specific searches if the query mentions functions
+        if any(keyword in user_input.lower() for keyword in ['function', 'func', 'sql', 'query']):
+            # Extract potential function names (simple heuristic)
+            words = user_input.lower().split()
+            for word in words:
+                if word.isalpha() and len(word) > 2:  # Potential function name
+                    search_attempts.append(f"{word} function")
+                    search_attempts.append(f"{word.upper()} SQL")
+        
+        for attempt in search_attempts:
+            docs = vector_search_tool(attempt, top_k=5)
+            # Check if we found relevant content (contains function, sql, or technical terms)
+            if docs and any(any(term in doc['text'].lower() for term in ['function', 'sql', 'syntax', 'parameter', 'example']) for doc in docs):
+                retrieved_docs = docs
+                break
+            retrieved_docs = docs  # Keep last attempt as fallback
+        
+        # Fallback: If no relevant content found, try direct keyword search
+        if not retrieved_docs or not any(any(term in doc['text'].lower() for term in ['function', 'sql', 'syntax', 'parameter', 'example']) for doc in retrieved_docs):
+            # Extract potential keywords from user input
+            keywords = [word.lower() for word in user_input.split() if word.isalpha() and len(word) > 2]
+            for keyword in keywords[:3]:  # Try first 3 keywords
+                fallback_docs = vector_search_tool(keyword, top_k=3)
+                if fallback_docs and any(any(term in doc['text'].lower() for term in ['function', 'sql', 'syntax']) for doc in fallback_docs):
+                    retrieved_docs = fallback_docs
+                    break
+        
+        # Store the final retrieval query for logging
+        final_retrieval_query = expanded_query
         # 3. Update conversation buffer memory
         conversation_buffer_memory.save_context({"input": user_input}, {"output": ""})
         # 4. Update conversation summary memory
@@ -528,10 +590,35 @@ def main():
         context_str = "\n\n".join([
             f"Source: {doc.get('url', doc.get('source', ''))}\n{doc['text']}" for doc in retrieved_docs
         ])
+        # Load apache_calcite_sql_idioms.txt content
+        idioms_content = ""
+        try:
+            with open('input/apache_calcite_sql_idioms.txt', 'r', encoding='utf-8') as f:
+                idioms_content = f.read()
+        except FileNotFoundError:
+            idioms_content = "E6DATA SQL IDIOMS: File not found - using default rules"
+        except Exception as e:
+            idioms_content = f"E6DATA SQL IDIOMS: Error loading file - {str(e)}"
+        
         prompt = f"""
-You are an expert SQL assistant for e6data. You must answer ONLY using the provided documentation context below, and cite the source (url or 'apache_calcite') for every fact or claim. If the answer is not in the context, say you don't know.
+You are an expert e6data SQL assistant. Answer using ONLY the provided documentation context. Cite sources for all facts.
 
-{tool_description}
+CRITICAL E6DATA SQL RULES (ALWAYS APPLY THESE):
+{idioms_content}
+
+CRITICAL RULES:
+1. If context lists multiple functions, present ALL of them completely
+2. Extract function signatures, parameters, examples, and syntax exactly as shown
+3. If documentation shows equivalent/alternative functions, list them all
+4. Don't summarize - show complete function information when available
+5. If you find partial information, present what you have clearly
+
+For SQL functions, always include:
+- Complete function signature with parameters
+- What the function does
+- Usage examples from documentation
+- Any limitations or notes
+- ALL related/equivalent functions mentioned
 
 Context:
 {context_str}
@@ -547,12 +634,14 @@ Entities:
 
 User (coreference-resolved):
 {resolved_input}
+
+Answer:
 """
         # 10. Call Claude LLM for answer
         try:
             response = client.messages.create(
                 model="claude-sonnet-4-20250514",
-                max_tokens=8192,
+                max_tokens=16384,
                 messages=[{"role": "user", "content": prompt}]
             )
             agent_output = response.content[0].text.strip() if hasattr(response.content[0], 'text') else str(response.content)
@@ -573,7 +662,7 @@ User (coreference-resolved):
             "conversation_id": conversation_id,
             "user_input": user_input,
             "resolved_input": resolved_input,
-            "retrieval_query": retrieval_query,
+            "retrieval_query": final_retrieval_query,
             "retrieved_docs": retrieved_docs,
             "agent_output": agent_output,
             "summary_digest": summary_digest_serializable,

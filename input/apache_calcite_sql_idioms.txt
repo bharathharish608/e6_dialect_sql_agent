@@ -1,9 +1,38 @@
 APACHE CALCITE SQL IDIOMS FOR NL2SQL AGENT
 
 RESERVED KEYWORDS & IDENTIFIERS:
-- Avoid reserved words as aliases (YEAR, QUARTER, USER, VALUE, etc.)
+- Avoid reserved words as aliases (YEAR, QUARTER, USER, VALUE, MONTH, DAY etc.)
 - Use backticks for identifiers: `year` instead of "year"
 - Prefer unquoted identifiers when possible
+
+E6DATA-SPECIFIC RESERVED KEYWORDS:
+- **Data Type Keywords:** ARRAY, BOOLEAN, DATE, DECIMAL, DOUBLE, FLOAT, INT32, INT64, JSON, STRING, STRUCT
+- **Function Category Keywords:** QUERY, SYNTAX, AGGREGATE, MATHEMATICAL, STRING, DATETIME, CONDITIONAL, CONVERSION, WINDOW, COMPARISON, LOGICAL, STATISTICAL, BITWISE, ARRAY, REGEX, GENERATE, CARDINALITY, CHECKSUM, UNLOAD, COPY, INTO
+- **Time-Related Keywords:** HOUR, MINUTE, SECOND, WEEK, DECADE, CENTURY, MILLENNIUM, TIME, TIMESTAMP, DATETIME, INTERVAL, EPOCH, NOW, TODAY, TOMORROW, YESTERDAY, CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP
+- **Database Keywords:** DATABASE, SCHEMA, TABLE, VIEW, INDEX, COLUMN, CATALOG, NAMESPACE, PARTITION, BUCKET
+- **User/Session Keywords:** SESSION, CONNECTION, CLIENT, SERVER, HOST, PORT, DOMAIN, URL, URI
+- **Data Keywords:** DATA, RECORD, ROW, FIELD, ATTRIBUTE, NULL, EMPTY, BLANK, ZERO, ONE, TRUE, FALSE
+- **Query Keywords:** SELECT, FROM, WHERE, GROUP, ORDER, BY, HAVING, JOIN, UNION, INTERSECT, EXCEPT, DISTINCT, LIMIT, OFFSET, TOP, BOTTOM, FIRST, LAST
+- **Aggregate Keywords:** SUM, COUNT, AVG, MIN, MAX, TOTAL, AVERAGE, MINIMUM, MAXIMUM, MEDIAN, MODE, VARIANCE
+- **System Keywords:** SYSTEM, CONFIG, SETTING, PARAMETER, OPTION, VERSION, RELEASE, BUILD, PATCH, UPDATE
+
+SAFE ALIAS ALTERNATIVES:
+- `month` → `month_number` or `month_of_year`
+- `year` → `sales_year` or `fiscal_year`
+- `sum` → `total_amount` or `sum_value`
+- `count` → `record_count` or `total_records`
+- `date` → `sale_date` or `transaction_date`
+- `user` → `user_id` or `customer_name`
+- `array` → `data_array` or `value_list`
+- `json` → `json_data` or `json_payload`
+- `struct` → `data_struct` or `nested_data`
+- `string` → `text_value` or `char_data`
+- `boolean` → `flag_value` or `is_active`
+- `decimal` → `decimal_value` or `precise_amount`
+- `double` → `double_value` or `float_amount`
+- `float` → `float_value` or `decimal_amount`
+- `int32` → `int32_value` or `integer_data`
+- `int64` → `int64_value` or `long_integer`
 
 DATE/TIME HANDLING:
 - Use CAST('2024-01-01' AS DATE) for date literals

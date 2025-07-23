@@ -2,6 +2,11 @@ config.env
 .env
 .cursor/ 
 venv311/ 
+.venv/
 venv/
+application_logs/
+conversation_logs/ 
+src/training
+src/enhanced_agent.py
 application_logs/
 conversation_logs/ 
