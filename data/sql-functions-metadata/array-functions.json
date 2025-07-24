@@ -1,0 +1,344 @@
+{
+  "category": "ARRAY",
+  "functions": [
+    {
+      "name": "ARRAY_VALUE_CONSTRUCTOR",
+      "sqlKind": "ARRAY_VALUE_CONSTRUCTOR",
+      "category": "ARRAY",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "Variable",
+        "types": "Any number of values of compatible types",
+        "description": "Values to construct array from"
+      },
+      "description": "Constructs an array from values using ARRAY[...] syntax",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY[1, 2, 3] -- Returns array of integers",
+        "SELECT ARRAY['a', 'b', 'c'] -- Returns array of strings"
+      ]
+    },
+    {
+      "name": "ARRAY_SLICE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY (same element type as input)",
+      "parameters": {
+        "count": "3",
+        "types": "ARRAY, INTEGER, INTEGER",
+        "description": "Array, start index (1-based), end index"
+      },
+      "description": "Extracts a slice of an array",
+      "aliases": ["SLICE"],
+      "examples": [
+        "SELECT ARRAY_SLICE([1,2,3,4,5], 2, 4) -- Returns [2,3,4]",
+        "SELECT ARRAY_SLICE(tags, 1, 3) FROM products"
+      ]
+    },
+    {
+      "name": "SLICE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "ARRAY, INTEGER, INTEGER",
+        "description": "Array, start index, length"
+      },
+      "description": "Extracts a slice of an array",
+      "aliases": ["ARRAY_SLICE"],
+      "examples": [
+        "SELECT SLICE([1,2,3,4,5], 2, 3) -- Returns [2,3,4]"
+      ]
+    },
+    {
+      "name": "ARRAY_SORT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 to 3",
+        "types": "ARRAY, [BOOLEAN], [BOOLEAN]",
+        "description": "Array, optional ascending flag, optional nulls first flag"
+      },
+      "description": "Sorts an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_SORT([3,1,4,1,5]) -- Returns [1,1,3,4,5]",
+        "SELECT ARRAY_SORT([3,1,4], FALSE) -- Returns [4,3,1] (descending)"
+      ]
+    },
+    {
+      "name": "ARRAY_MAX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type of array, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to find maximum value in"
+      },
+      "description": "Returns the maximum value in an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_MAX([3,1,4,1,5]) -- Returns 5",
+        "SELECT ARRAY_MAX(scores) FROM students"
+      ]
+    },
+    {
+      "name": "ARRAY_MIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type of array, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to find minimum value in"
+      },
+      "description": "Returns the minimum value in an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_MIN([3,1,4,1,5]) -- Returns 1",
+        "SELECT ARRAY_MIN(prices) FROM products"
+      ]
+    },
+    {
+      "name": "ARRAY_JOIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "ARRAY, STRING, [STRING]",
+        "description": "Array, delimiter, optional null replacement"
+      },
+      "description": "Joins array elements into a string",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_JOIN(['a','b','c'], ',') -- Returns 'a,b,c'",
+        "SELECT ARRAY_JOIN([1,NULL,3], '-', '0') -- Returns '1-0-3'"
+      ]
+    },
+    {
+      "name": "ARRAY_APPEND",
+      "sqlKind": "ARRAY_APPEND",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to append"
+      },
+      "description": "Appends an element to the end of an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_APPEND([1,2,3], 4) -- Returns [1,2,3,4]",
+        "SELECT ARRAY_APPEND(tags, 'new-tag') FROM products"
+      ]
+    },
+    {
+      "name": "ARRAY_PREPEND",
+      "sqlKind": "ARRAY_PREPEND",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to prepend"
+      },
+      "description": "Prepends an element to the beginning of an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_PREPEND([1,2,3], 0) -- Returns [0,1,2,3]",
+        "SELECT ARRAY_PREPEND(items, 'first') FROM lists"
+      ]
+    },
+    {
+      "name": "ARRAY_CONTAINS",
+      "sqlKind": "ARRAY_CONTAINS",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to search for"
+      },
+      "description": "Checks if an array contains a specific element",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_CONTAINS([1,2,3], 2) -- Returns TRUE",
+        "SELECT ARRAY_CONTAINS(['a','b','c'], 'd') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "ARRAY_POSITION",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, ARRAY",
+        "description": "Element to find and array to search in"
+      },
+      "description": "Returns the position of an element in an array (1-based)",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_POSITION(2, [1,2,3,2]) -- Returns 2",
+        "SELECT ARRAY_POSITION('x', ['a','b','c']) -- Returns NULL"
+      ]
+    },
+    {
+      "name": "ARRAY_CONCAT",
+      "sqlKind": "ARRAY_CONCAT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY (least restrictive type)",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "ARRAY, ARRAY, ...",
+        "description": "Arrays to concatenate"
+      },
+      "description": "Concatenates multiple arrays",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_CONCAT([1,2], [3,4]) -- Returns [1,2,3,4]",
+        "SELECT ARRAY_CONCAT([1,2], [3,4], [5,6]) -- Returns [1,2,3,4,5,6]"
+      ]
+    },
+    {
+      "name": "ARRAYS_OVERLAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ARRAY",
+        "description": "Two arrays to check for overlap"
+      },
+      "description": "Checks if two arrays have any elements in common",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAYS_OVERLAP([1,2,3], [3,4,5]) -- Returns TRUE",
+        "SELECT ARRAYS_OVERLAP([1,2], [3,4]) -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "ARRAY_INTERSECT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ARRAY",
+        "description": "Two arrays to intersect"
+      },
+      "description": "Returns the intersection of two arrays",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_INTERSECT([1,2,3,4], [3,4,5,6]) -- Returns [3,4]",
+        "SELECT ARRAY_INTERSECT(['a','b'], ['b','c']) -- Returns ['b']"
+      ]
+    },
+    {
+      "name": "ARRAY_COMPACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to compact"
+      },
+      "description": "Removes null values from an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_COMPACT([1,NULL,2,NULL,3]) -- Returns [1,2,3]",
+        "SELECT ARRAY_COMPACT(measurements) FROM sensors"
+      ]
+    },
+    {
+      "name": "FILTER_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and filter lambda expression"
+      },
+      "description": "Filters array elements based on a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT FILTER_ARRAY([1,2,3,4,5], x -> x > 2) -- Returns [3,4,5]",
+        "SELECT FILTER_ARRAY(numbers, x -> x % 2 = 0) -- Even numbers only"
+      ]
+    },
+    {
+      "name": "TRANSFORM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and transformation lambda expression"
+      },
+      "description": "Transforms array elements using a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT TRANSFORM([1,2,3], x -> x * 2) -- Returns [2,4,6]",
+        "SELECT TRANSFORM(names, x -> UPPER(x)) FROM users"
+      ]
+    },
+    {
+      "name": "ANY_MATCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and predicate lambda expression"
+      },
+      "description": "Checks if any array element matches the predicate",
+      "aliases": [],
+      "examples": [
+        "SELECT ANY_MATCH([1,2,3], x -> x > 2) -- Returns TRUE",
+        "SELECT ANY_MATCH(scores, x -> x >= 90) FROM students"
+      ]
+    },
+    {
+      "name": "ALL_MATCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and predicate lambda expression"
+      },
+      "description": "Checks if all array elements match the predicate",
+      "aliases": [],
+      "examples": [
+        "SELECT ALL_MATCH([2,4,6], x -> x % 2 = 0) -- Returns TRUE",
+        "SELECT ALL_MATCH(grades, x -> x >= 60) FROM courses"
+      ]
+    },
+    {
+      "name": "REDUCE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Depends on lambda return type",
+      "parameters": {
+        "count": "3",
+        "types": "ARRAY, INITIAL_VALUE, LAMBDA",
+        "description": "Array, initial value, and reducer lambda"
+      },
+      "description": "Reduces an array to a single value using a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT REDUCE([1,2,3,4], 0, (acc, x) -> acc + x) -- Returns 10",
+        "SELECT REDUCE(prices, 0, (sum, p) -> sum + p) FROM items"
+      ]
+    }
+  ]
+}

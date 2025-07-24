@@ -21,6 +21,26 @@ import datetime
 from langchain.memory import ConversationBufferMemory, ConversationSummaryMemory
 from langchain_anthropic import ChatAnthropic
 
+# --- Concise E6DATA SQL Rules for Prompt Injection ---
+E6DATA_CONCISE_RULES = """
+CRITICAL E6DATA SQL RULES:
+- Use EXTRACT(YEAR FROM date_col) not YEAR(date_col)
+- Use || for string concatenation, not + or CONCAT()
+- Use CHAR_LENGTH() not LENGTH() for character count
+- Use POSITION('substring' IN string) not INSTR()
+- Cast date literals: CAST('2024-01-01' AS DATE)
+- Use FILTER (WHERE condition) for conditional aggregation
+- Arrays: ARRAY[1,2,3], ARRAY_SLICE(), ARRAY_CONTAINS(), UNNEST()
+- Geospatial: H3_LATLNG_TO_CELL(lat,lng,res), H3_POLYGON_TO_CELLS()
+- JSON: json_col.field_name or json_col['field_name']
+- No CREATE TABLE, DDL, stored procedures, or PIVOT/UNPIVOT
+- No implicit conversions - explicit CAST required
+- No dialect-specific functions (TO_CHAR, YEAR(), etc.)
+- Include all non-aggregate columns in GROUP BY
+- Use COALESCE() not ISNULL() or NVL()
+- Use EXCEPT not MINUS for set operations
+"""
+
 # --- Claude Sonnet LLM Wrapper for LangChain ---
 class ClaudeLLMForLangChain:
     def __init__(self, api_key, model="claude-sonnet-4-20250514", max_tokens=8192):
@@ -130,18 +150,20 @@ def claude_llm_node(state):
     retrieved = state["retrieved"]
     context = "\n\n".join([f"Source: {c.get('url', c.get('source', ''))}\n{c['text']}" for c in retrieved])
     
-    # Load apache_calcite_sql_idioms.txt content
+    # Load e6data_sql_rules.txt content
     idioms_content = ""
     try:
-        with open('input/apache_calcite_sql_idioms.txt', 'r', encoding='utf-8') as f:
+        with open('input/e6data_sql_rules.txt', 'r', encoding='utf-8') as f:
             idioms_content = f.read()
     except FileNotFoundError:
-        idioms_content = "E6DATA SQL IDIOMS: File not found - using default rules"
+        idioms_content = "E6DATA SQL RULES: File not found - using default rules"
     except Exception as e:
-        idioms_content = f"E6DATA SQL IDIOMS: Error loading file - {str(e)}"
+        idioms_content = f"E6DATA SQL RULES: Error loading file - {str(e)}"
     
     prompt = f"""
-You are an expert e6data and Apache Calcite SQL assistant. Use the following context and e6data-specific rules to answer the user's question or diagnose their error. Always cite the source (url or 'apache_calcite').
+You are an expert e6data SQL assistant. Use the following context and e6data-specific rules to answer the user's question or diagnose their error. Always cite the source (url or 'e6data_sql_rules').
+
+{E6DATA_CONCISE_RULES}
 
 CRITICAL E6DATA SQL RULES (ALWAYS APPLY THESE):
 {idioms_content}
@@ -481,6 +503,65 @@ def get_log_paths():
         conv_id
     )
 
+# --- Enhanced Input Handling ---
+def get_user_input():
+    """
+    Get user input with support for multi-line and large queries.
+    User can type multiple lines and end with an empty line.
+    Also supports reading from files and handling large JSON inputs.
+    """
+    print("User: ", end="", flush=True)
+    
+    # Check if user wants to read from a file
+    first_line = input().strip()
+    
+    # If it starts with @, treat as file path
+    if first_line.startswith('@'):
+        file_path = first_line[1:].strip()
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            print(f"📁 Read {len(content)} characters from {file_path}")
+            return content.strip()
+        except FileNotFoundError:
+            print(f"❌ File not found: {file_path}")
+            return ""
+        except Exception as e:
+            print(f"❌ Error reading file: {e}")
+            return ""
+    
+    # If it starts with {, treat as JSON input (continue reading)
+    if first_line.startswith('{'):
+        lines = [first_line]
+        try:
+            while True:
+                line = input()
+                lines.append(line)
+                # Try to parse as JSON after each line
+                try:
+                    json.loads('\n'.join(lines))
+                    # If successful, we have complete JSON
+                    break
+                except json.JSONDecodeError:
+                    # Continue reading
+                    continue
+        except EOFError:
+            pass
+        return '\n'.join(lines).strip()
+    
+    # Regular multi-line input
+    lines = [first_line]
+    while True:
+        try:
+            line = input()
+            if line.strip() == "" and lines:  # Empty line after content = end of input
+                break
+            lines.append(line)
+        except EOFError:
+            break
+    
+    return "\n".join(lines).strip()
+
 # --- Main Conversational Loop Integration ---
 def main():
     import os
@@ -497,11 +578,16 @@ def main():
     conv_log_path, app_log_path, conversation_id = get_log_paths()
     print(f"e6data Conversational SQL Agent (multi-turn, with memory)\nLogging to: {conv_log_path} (conversation), {app_log_path} (application)")
     print("Type 'exit' to quit.")
+    print("💡 Input Options:")
+    print("   • Regular text: Type your query, press Enter for new lines, press Enter twice (empty line) to submit")
+    print("   • Read from file: Start with @filename (e.g., @test_query.json)")
+    print("   • Large JSON: Start with { and the agent will read until valid JSON is complete")
+    print("   • Multi-line: Type multiple lines, end with empty line")
     turn_idx = 0
     entity_memory = CustomEntityMemory()
     while True:
         try:
-            user_input = input("User: ").strip()
+            user_input = get_user_input()
             if user_input.lower() in {"exit", "quit"}:
                 break
         except EOFError:
@@ -590,18 +676,20 @@ def main():
         context_str = "\n\n".join([
             f"Source: {doc.get('url', doc.get('source', ''))}\n{doc['text']}" for doc in retrieved_docs
         ])
-        # Load apache_calcite_sql_idioms.txt content
+        # Load e6data_sql_rules.txt content
         idioms_content = ""
         try:
-            with open('input/apache_calcite_sql_idioms.txt', 'r', encoding='utf-8') as f:
+            with open('input/e6data_sql_rules.txt', 'r', encoding='utf-8') as f:
                 idioms_content = f.read()
         except FileNotFoundError:
-            idioms_content = "E6DATA SQL IDIOMS: File not found - using default rules"
+            idioms_content = "E6DATA SQL RULES: File not found - using default rules"
         except Exception as e:
-            idioms_content = f"E6DATA SQL IDIOMS: Error loading file - {str(e)}"
+            idioms_content = f"E6DATA SQL RULES: Error loading file - {str(e)}"
         
         prompt = f"""
 You are an expert e6data SQL assistant. Answer using ONLY the provided documentation context. Cite sources for all facts.
+
+{E6DATA_CONCISE_RULES}
 
 CRITICAL E6DATA SQL RULES (ALWAYS APPLY THESE):
 {idioms_content}

@@ -1,0 +1,230 @@
+E6DATA SQL RULES FOR NL2SQL AGENT
+
+RESERVED KEYWORDS & IDENTIFIERS:
+- Avoid reserved words as aliases (YEAR, QUARTER, USER, VALUE, MONTH, DAY, etc.)
+- Use backticks for identifiers: `year` instead of "year"
+- Prefer unquoted identifiers when possible
+
+E6DATA-SPECIFIC RESERVED KEYWORDS:
+- **Data Type Keywords:** ARRAY, BOOLEAN, DATE, DECIMAL, DOUBLE, FLOAT, INT32, INT64, JSON, STRING, STRUCT, MAP, TIMESTAMP
+- **Function Category Keywords:** QUERY, SYNTAX, AGGREGATE, MATHEMATICAL, STRING, DATETIME, CONDITIONAL, CONVERSION, WINDOW, COMPARISON, LOGICAL, STATISTICAL, BITWISE, ARRAY, REGEX, GENERATE, CARDINALITY, CHECKSUM, UNLOAD, COPY, INTO
+- **Time-Related Keywords:** HOUR, MINUTE, SECOND, WEEK, DECADE, CENTURY, MILLENNIUM, TIME, TIMESTAMP, DATETIME, INTERVAL, EPOCH, NOW, TODAY, TOMORROW, YESTERDAY, CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP
+- **Database Keywords:** DATABASE, SCHEMA, TABLE, VIEW, INDEX, COLUMN, CATALOG, NAMESPACE, PARTITION, BUCKET
+- **User/Session Keywords:** SESSION, CONNECTION, CLIENT, SERVER, HOST, PORT, DOMAIN, URL, URI
+- **Data Keywords:** DATA, RECORD, ROW, FIELD, ATTRIBUTE, NULL, EMPTY, BLANK, ZERO, ONE, TRUE, FALSE
+- **Query Keywords:** SELECT, FROM, WHERE, GROUP, ORDER, BY, HAVING, JOIN, UNION, INTERSECT, EXCEPT, DISTINCT, LIMIT, OFFSET, TOP, BOTTOM, FIRST, LAST
+- **Aggregate Keywords:** SUM, COUNT, AVG, MIN, MAX, TOTAL, AVERAGE, MINIMUM, MAXIMUM, MEDIAN, MODE, VARIANCE
+- **System Keywords:** SYSTEM, CONFIG, SETTING, PARAMETER, OPTION, VERSION, RELEASE, BUILD, PATCH, UPDATE
+- **Geospatial Keywords:** H3, BING, TILE, LATLNG, CELL, POLYGON, GEOJSON, GEOSPATIAL
+
+SAFE ALIAS ALTERNATIVES:
+- `month` → `month_number` or `month_of_year`
+- `year` → `sales_year` or `fiscal_year`
+- `sum` → `total_amount` or `sum_value`
+- `count` → `record_count` or `total_records`
+- `date` → `sale_date` or `transaction_date`
+- `user` → `user_id` or `customer_name`
+- `array` → `data_array` or `value_list`
+- `json` → `json_data` or `json_payload`
+- `struct` → `data_struct` or `nested_data`
+- `string` → `text_value` or `char_data`
+- `boolean` → `flag_value` or `is_active`
+- `decimal` → `decimal_value` or `precise_amount`
+- `double` → `double_value` or `float_amount`
+- `float` → `float_value` or `decimal_amount`
+- `int32` → `int32_value` or `integer_data`
+- `int64` → `int64_value` or `long_integer`
+- `map` → `data_map` or `key_value_pairs`
+- `h3` → `h3_cell` or `hexagon_id`
+
+E6DATA DATA TYPES:
+- **Basic Types:** BOOLEAN, INT32, INT64, FLOAT, DOUBLE, DECIMAL(p,s), STRING, VARCHAR
+- **Date/Time:** DATE, TIME, TIMESTAMP, TIMESTAMP(3) for millisecond precision
+- **Complex Types:** ARRAY, STRUCT, MAP, JSON
+- **Geospatial:** H3 cell indices (BIGINT), H3 addresses (VARCHAR), Bing tiles (VARCHAR)
+- **Use DOUBLE not FLOAT8, BIGINT not INT8**
+- **No BOOLEAN in GROUP BY/ORDER BY/DISTINCT**
+
+E6DATA FUNCTION CATEGORIES:
+- **Aggregate:** COUNT, SUM, AVG, MIN, MAX, STRING_AGG, ARRAY_AGG, ARG_MAX, ARG_MIN, ANY_VALUE
+- **String:** CONCAT, SUBSTR, UPPER, LOWER, REPLACE, SPLIT, POSITION, CHAR_LENGTH, TRIM, LPAD, RPAD
+- **Numeric:** PLUS, MINUS, DIVIDE, POW, MOD, COS, SIN, TAN, LN, LOG10, ABS, ROUND, FLOOR, CEIL
+- **DateTime:** CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP, DATE_ADD, DATE_DIFF, EXTRACT, TO_DATE, TO_TIMESTAMP
+- **Array:** ARRAY_VALUE_CONSTRUCTOR, ARRAY_SLICE, ARRAY_SORT, ARRAY_APPEND, ARRAY_CONTAINS, UNNEST
+- **Geospatial:** H3_LATLNG_TO_CELL, H3_POLYGON_TO_CELLS, H3_GRID_DISK, BING_TILE_AT, BING_TILE_QUADKEY
+- **JSON:** JSON_FORMAT, JSON access operators
+- **Encoding/Hash:** MD5, SHA256, BASE64, HEX, TO_BASE64, FROM_BASE64, TO_HEX, FROM_HEX
+- **Bitwise:** BITWISE_AND, BITWISE_OR, BITWISE_XOR, BITWISE_NOT
+- **System:** CAST, TRY_CAST, COALESCE, CASE, IF, VERSION, SLEEP, TYPEOF
+- **Pattern:** LIKE, NOT LIKE, ILIKE, RLIKE, REGEXP_CONTAINS
+
+DATE/TIME HANDLING:
+- Use CAST('2024-01-01' AS DATE) for date literals
+- Use EXTRACT(YEAR FROM date_col) for date parts (YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, QUARTER, WEEK, DECADE, CENTURY, MILLENNIUM)
+- Avoid dialect-specific functions like DATEPART or YEAR()
+- Use CURRENT_DATE, CURRENT_TIME, CURRENT_TIMESTAMP
+- Intervals: INTERVAL '1' DAY, INTERVAL '1:30' HOUR TO MINUTE
+- Date comparisons: BETWEEN CAST('2024-01-01' AS DATE) AND CAST('2024-12-31' AS DATE)
+- Date arithmetic: date_col + INTERVAL '7' DAY
+
+STRING OPERATIONS:
+- Use || for concatenation, not + or CONCAT()
+- Use SUBSTRING(str FROM start FOR length)
+- Use CHAR_LENGTH() not LENGTH() for character count
+- Use POSITION(substring IN string) for string search
+- Use TRIM(BOTH ' ' FROM col) with explicit syntax
+- Use LPAD(string, length, padding) and RPAD() for padding
+- Case-sensitive by default
+- Double single quotes in strings: 'It''s correct'
+- NO FORMAT() or TO_CHAR() for formatting
+
+ARRAY OPERATIONS:
+- Construct arrays: ARRAY[1, 2, 3] or ARRAY['a', 'b', 'c']
+- Access elements: array_col[0] (0-based indexing)
+- Slice arrays: ARRAY_SLICE(array, start, end)
+- Check containment: ARRAY_CONTAINS(array, element)
+- Expand arrays: UNNEST(array_col)
+- Sort arrays: ARRAY_SORT(array)
+- Append to arrays: ARRAY_APPEND(array, element)
+
+GEOSPATIAL OPERATIONS:
+- Convert lat/lng to H3: H3_LATLNG_TO_CELL(lat, lng, resolution)
+- Convert to H3 address: H3_LATLNG_TO_CELLADDRESS(lat, lng, resolution)
+- Convert H3 to lat/lng: H3_CELL_TO_LATLNG(cell_index) returns [lat, lng] array
+- Polygon to cells: H3_POLYGON_TO_CELLS(wkt_polygon, resolution)
+- Grid disk: H3_GRID_DISK(cell, ring_size) for neighborhood analysis
+- Bing tiles: BING_TILE_AT(lng, lat, zoom_level)
+- H3 resolutions: 0-15 (0=largest cells, 15=smallest cells)
+
+JSON OPERATIONS:
+- Access JSON: json_col.field_name or json_col['field_name']
+- Format JSON: JSON_FORMAT(json_col)
+- JSON functions available for parsing and manipulation
+
+AGGREGATION & WINDOW FUNCTIONS:
+- Must include all non-aggregate columns in GROUP BY
+- Use FILTER (WHERE condition) for conditional aggregation: SUM(amount) FILTER (WHERE status = 'completed')
+- Window functions: ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...)
+- Frame syntax: ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+- Available: PERCENT_RANK(), CUME_DIST(), NTILE(n), LAG(), LEAD()
+- No IGNORE NULLS in LEAD/LAG
+
+TYPE CASTING:
+- Explicit casting required: CAST(col AS INTEGER)
+- No implicit string-to-number conversions
+- Cast numeric extracts for string operations: CAST(EXTRACT(MONTH FROM date) AS VARCHAR)
+- Safe casting: TRY_CAST() returns NULL on failure instead of error
+
+JOIN SYNTAX:
+- Use explicit INNER JOIN, LEFT JOIN syntax
+- Avoid comma-separated table lists
+- Use LATERAL joins for correlated subqueries
+
+NULL HANDLING:
+- Use IS NULL / IS NOT NULL, not = NULL
+- Use COALESCE() instead of ISNULL() or NVL()
+
+BOOLEAN LOGIC:
+- No implicit integer-to-boolean conversion
+- Use TRUE / FALSE literals
+
+SET OPERATIONS:
+- Use EXCEPT not MINUS
+- INTERSECT ALL, UNION ALL for multiset semantics
+
+LIMIT/OFFSET:
+- Use LIMIT n or FETCH FIRST n ROWS ONLY
+- OFFSET n ROWS for pagination
+
+FORMATTING & CONVERSION:
+- NO TO_CHAR(), FORMAT(), or STR() functions
+- Use CASE statements for custom formatting (e.g., month names)
+- Concatenate strings with || for custom formats
+- Use LPAD/RPAD for zero-padding numbers
+
+ADVANCED FEATURES:
+- Row constructors: (col1, col2) = (val1, val2)
+- UNNEST(array_col) for array expansion
+- MULTISET operations: MULTISET[1, 2], CARDINALITY(multiset)
+- Limited regex: SIMILAR TO pattern matching
+- URL parsing functions available
+- Hash functions: MD5, SHA256
+- Encoding functions: BASE64, HEX
+
+E6DATA LIMITATIONS:
+- **No CREATE TABLE** - query-only operations
+- **No DDL operations** - cannot create/modify tables
+- **No stored procedures** or user-defined functions
+- **No PIVOT/UNPIVOT** - use CASE statements instead
+- **No IGNORE NULLS** in LEAD/LAG window functions
+- **Limited regex** - SIMILAR TO pattern matching only
+- **No implicit conversions** - explicit casting required
+- **No dialect-specific functions** - use standard SQL functions
+
+COMMON PITFALLS TO AVOID:
+- Don't use Oracle-style formatting functions (TO_CHAR, TO_DATE)
+- Don't assume implicit conversions
+- Don't use dialect-specific date functions (YEAR(), MONTH(), etc.)
+- Always cast date literals explicitly
+- Always include all non-aggregate columns in GROUP BY
+- Don't use reserved keywords as aliases
+- Don't use + for string concatenation
+- Don't use LENGTH() for character count
+- Don't use INSTR() for string search
+- Don't use CONCAT() for string concatenation
+
+FUNCTION-SPECIFIC EXAMPLES:
+
+**Date/Time:**
+```sql
+-- Correct e6data syntax
+SELECT EXTRACT(YEAR FROM order_date) as year,
+       EXTRACT(MONTH FROM order_date) as month,
+       order_date + INTERVAL '7' DAY as delivery_date
+FROM orders
+WHERE order_date BETWEEN CAST('2024-01-01' AS DATE) AND CAST('2024-12-31' AS DATE)
+```
+
+**String Operations:**
+```sql
+-- Correct e6data syntax
+SELECT first_name || ' ' || last_name as full_name,
+       CHAR_LENGTH(description) as desc_length,
+       POSITION('@' IN email) as at_position
+FROM customers
+```
+
+**Conditional Aggregation:**
+```sql
+-- Correct e6data syntax
+SELECT SUM(amount) FILTER (WHERE status = 'completed') as completed_sales,
+       COUNT(*) FILTER (WHERE amount > 100) as high_value_orders
+FROM orders
+```
+
+**Array Operations:**
+```sql
+-- Correct e6data syntax
+SELECT ARRAY[1, 2, 3, 4, 5] as numbers,
+       ARRAY_SLICE(tags, 1, 3) as first_three_tags,
+       ARRAY_CONTAINS(categories, 'electronics') as has_electronics
+FROM products
+```
+
+**Geospatial Operations:**
+```sql
+-- Correct e6data syntax
+SELECT H3_LATLNG_TO_CELL(latitude, longitude, 9) as h3_cell,
+       H3_CELL_TO_LATLNG(h3_index)[0] as cell_lat,
+       H3_CELL_TO_LATLNG(h3_index)[1] as cell_lng
+FROM locations
+```
+
+**JSON Operations:**
+```sql
+-- Correct e6data syntax
+SELECT json_data.field_name as field_value,
+       json_data['nested.field'] as nested_value,
+       JSON_FORMAT(json_data) as formatted_json
+FROM json_table
+``` 

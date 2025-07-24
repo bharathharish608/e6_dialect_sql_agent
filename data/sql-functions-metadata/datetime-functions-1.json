@@ -1,0 +1,341 @@
+{
+  "category": "TIMEDATE",
+  "functions": [
+    {
+      "name": "CURRENT_DATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional timezone"
+      },
+      "description": "Returns the current date",
+      "aliases": [],
+      "examples": [
+        "SELECT CURRENT_DATE -- Returns today's date",
+        "SELECT CURRENT_DATE('America/New_York') -- Returns current date in New York timezone"
+      ]
+    },
+    {
+      "name": "CURRENT_TIMESTAMP",
+      "sqlKind": "CURRENT_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional timezone"
+      },
+      "description": "Returns the current timestamp",
+      "aliases": ["GETDATE"],
+      "examples": [
+        "SELECT CURRENT_TIMESTAMP -- Returns current date and time",
+        "SELECT CURRENT_TIMESTAMP('UTC') -- Returns current UTC timestamp"
+      ]
+    },
+    {
+      "name": "GETDATE",
+      "sqlKind": "CURRENT_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional timezone"
+      },
+      "description": "Returns the current timestamp (SQL Server compatible)",
+      "aliases": ["CURRENT_TIMESTAMP"],
+      "examples": [
+        "SELECT GETDATE() -- Returns current date and time"
+      ]
+    },
+    {
+      "name": "NOW",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns the current timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT NOW() -- Returns current date and time"
+      ]
+    },
+    {
+      "name": "DATE_ADD",
+      "sqlKind": "DATE_ADD",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP or DATE NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "TIMESTAMP/DATE, INTEGER or STRING, INTEGER, TIMESTAMP",
+        "description": "Date/timestamp, interval amount, or (interval unit, amount, date)"
+      },
+      "description": "Adds an interval to a date or timestamp",
+      "aliases": ["DATEADD"],
+      "examples": [
+        "SELECT DATE_ADD(CURRENT_DATE, 7) -- Adds 7 days",
+        "SELECT DATE_ADD('DAY', 7, '2023-01-01') -- Adds 7 days to date"
+      ]
+    },
+    {
+      "name": "DATEADD",
+      "sqlKind": "DATE_ADD",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, INTEGER, TIMESTAMP",
+        "description": "Interval unit, amount, date/timestamp"
+      },
+      "description": "Adds an interval to a date or timestamp (SQL Server compatible)",
+      "aliases": ["DATE_ADD"],
+      "examples": [
+        "SELECT DATEADD('month', 3, '2023-01-01') -- Adds 3 months",
+        "SELECT DATEADD('hour', -2, CURRENT_TIMESTAMP) -- Subtracts 2 hours"
+      ]
+    },
+    {
+      "name": "DATE_SUB",
+      "sqlKind": "DATE_SUB",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "DATE, INTEGER",
+        "description": "Date, number of days to subtract"
+      },
+      "description": "Subtracts days from a date",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE_SUB('2023-01-15', 7) -- Returns '2023-01-08'",
+        "SELECT DATE_SUB(CURRENT_DATE, 30) -- 30 days ago"
+      ]
+    },
+    {
+      "name": "DATE_DIFF",
+      "sqlKind": "DATE_DIFF",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, DATE/TIMESTAMP, DATE/TIMESTAMP",
+        "description": "Date part, start date, end date"
+      },
+      "description": "Returns the difference between two dates",
+      "aliases": ["DATEDIFF"],
+      "examples": [
+        "SELECT DATE_DIFF('DAY', '2023-01-01', '2023-01-15') -- Returns 14",
+        "SELECT DATE_DIFF('MONTH', '2023-01-01', '2023-06-01') -- Returns 5"
+      ]
+    },
+    {
+      "name": "DATEDIFF",
+      "sqlKind": "DATEDIFF",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "DATE/TIMESTAMP, DATE/TIMESTAMP or STRING, DATE/TIMESTAMP, DATE/TIMESTAMP",
+        "description": "Two dates or (date part, start date, end date)"
+      },
+      "description": "Returns the difference between two dates",
+      "aliases": ["DATE_DIFF"],
+      "examples": [
+        "SELECT DATEDIFF('2023-01-15', '2023-01-01') -- Returns 14 (days)",
+        "SELECT DATEDIFF('HOUR', '2023-01-01 00:00', '2023-01-01 12:00') -- Returns 12"
+      ]
+    },
+    {
+      "name": "TIMESTAMP_ADD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, INTEGER, TIMESTAMP",
+        "description": "Interval unit, amount, timestamp"
+      },
+      "description": "Adds an interval to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIMESTAMP_ADD('HOUR', 2, '2023-01-01 10:00:00') -- Returns '2023-01-01 12:00:00'",
+        "SELECT TIMESTAMP_ADD('MINUTE', 30, CURRENT_TIMESTAMP) -- Adds 30 minutes"
+      ]
+    },
+    {
+      "name": "TIMESTAMP_DIFF",
+      "sqlKind": "TIMESTAMP_DIFF",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, TIMESTAMP, TIMESTAMP",
+        "description": "Time unit, start timestamp, end timestamp"
+      },
+      "description": "Returns the difference between two timestamps",
+      "aliases": ["TIMESTAMPDIFF"],
+      "examples": [
+        "SELECT TIMESTAMP_DIFF('SECOND', '2023-01-01 10:00:00', '2023-01-01 10:00:30') -- Returns 30",
+        "SELECT TIMESTAMP_DIFF('DAY', '2023-01-01', '2023-02-01') -- Returns 31"
+      ]
+    },
+    {
+      "name": "TIMESTAMPDIFF",
+      "sqlKind": "TIMESTAMP_DIFF",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, TIMESTAMP, TIMESTAMP",
+        "description": "Time unit, start timestamp, end timestamp"
+      },
+      "description": "Returns the difference between two timestamps",
+      "aliases": ["TIMESTAMP_DIFF"],
+      "examples": [
+        "SELECT TIMESTAMPDIFF('HOUR', '2023-01-01 10:00:00', '2023-01-01 15:00:00') -- Returns 5"
+      ]
+    },
+    {
+      "name": "DATE_TRUNC",
+      "sqlKind": "DATE_TRUNC",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, TIMESTAMP",
+        "description": "Date part to truncate to, timestamp"
+      },
+      "description": "Truncates a timestamp to a specified precision",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE_TRUNC('MONTH', '2023-01-15 10:30:00') -- Returns '2023-01-01 00:00:00'",
+        "SELECT DATE_TRUNC('HOUR', CURRENT_TIMESTAMP) -- Truncates to current hour"
+      ]
+    },
+    {
+      "name": "TRUNC",
+      "sqlKind": "TRUNC",
+      "category": "TIMEDATE",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "TIMESTAMP, STRING",
+        "description": "Timestamp, date part to truncate to"
+      },
+      "description": "Truncates a timestamp to a specified precision",
+      "aliases": [],
+      "examples": [
+        "SELECT TRUNC('2023-01-15 10:30:00', 'DAY') -- Returns '2023-01-15 00:00:00'",
+        "SELECT TRUNC(CURRENT_TIMESTAMP, 'YEAR') -- Truncates to start of year"
+      ]
+    },
+    {
+      "name": "UNIX_TIMESTAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0, 1, or 2",
+        "types": "[TIMESTAMP/STRING], [STRING]",
+        "description": "Optional timestamp and format string"
+      },
+      "description": "Returns the Unix timestamp (seconds since 1970-01-01)",
+      "aliases": [],
+      "examples": [
+        "SELECT UNIX_TIMESTAMP() -- Current Unix timestamp",
+        "SELECT UNIX_TIMESTAMP('2023-01-01 00:00:00') -- Returns 1672531200"
+      ]
+    },
+    {
+      "name": "FROM_UNIXTIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "NUMERIC, [STRING]",
+        "description": "Unix timestamp, optional format string"
+      },
+      "description": "Converts Unix timestamp to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_UNIXTIME(1672531200) -- Returns '2023-01-01 00:00:00'",
+        "SELECT FROM_UNIXTIME(1672531200, 'yyyy-MM-dd') -- Returns '2023-01-01'"
+      ]
+    },
+    {
+      "name": "FROM_UNIXTIME_WITHUNIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, STRING",
+        "description": "Unix timestamp value, time unit (seconds/milliseconds/microseconds)"
+      },
+      "description": "Converts Unix timestamp to a timestamp with specified unit",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_UNIXTIME_WITHUNIT(1672531200000, 'milliseconds') -- From milliseconds",
+        "SELECT FROM_UNIXTIME_WITHUNIT(1672531200, 'seconds') -- From seconds"
+      ]
+    },
+    {
+      "name": "TO_UNIX_TIMESTAMP",
+      "sqlKind": "TO_UNIX_TIMESTAMP",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP",
+        "description": "Timestamp to convert"
+      },
+      "description": "Converts a timestamp to Unix timestamp",
+      "aliases": ["TO_UNIXTIME"],
+      "examples": [
+        "SELECT TO_UNIX_TIMESTAMP('2023-01-01 00:00:00') -- Returns 1672531200",
+        "SELECT TO_UNIX_TIMESTAMP(CURRENT_TIMESTAMP) -- Current Unix timestamp"
+      ]
+    },
+    {
+      "name": "TO_UNIXTIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP",
+        "description": "Timestamp to convert"
+      },
+      "description": "Converts a timestamp to Unix timestamp",
+      "aliases": ["TO_UNIX_TIMESTAMP"],
+      "examples": [
+        "SELECT TO_UNIXTIME('2023-01-01 00:00:00') -- Returns 1672531200"
+      ]
+    },
+    {
+      "name": "GETUTCDATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional format"
+      },
+      "description": "Returns the current UTC date",
+      "aliases": [],
+      "examples": [
+        "SELECT GETUTCDATE() -- Returns current UTC date",
+        "SELECT GETUTCDATE('yyyy-MM-dd') -- Returns formatted UTC date"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "category": "STRING",
+  "functions": [
+    {
+      "name": "CONCAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "STRING, STRING, ...",
+        "description": "Two or more string values to concatenate"
+      },
+      "description": "Concatenates two or more string values",
+      "aliases": [],
+      "examples": [
+        "SELECT CONCAT('Hello', ' ', 'World') -- Returns 'Hello World'",
+        "SELECT CONCAT(first_name, ' ', last_name) FROM users"
+      ]
+    },
+    {
+      "name": "CONCAT_WS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as first argument, nullable",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "STRING (separator), STRING, STRING, ...",
+        "description": "First parameter is separator, followed by strings to concatenate"
+      },
+      "description": "Concatenates strings with a separator",
+      "aliases": [],
+      "examples": [
+        "SELECT CONCAT_WS(',', 'apple', 'banana', 'orange') -- Returns 'apple,banana,orange'",
+        "SELECT CONCAT_WS(' - ', city, state, country) FROM locations"
+      ]
+    },
+    {
+      "name": "SUBSTR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [INTEGER]",
+        "description": "String, start position (1-based), optional length"
+      },
+      "description": "Extracts a substring from a string",
+      "aliases": ["SUBSTRING"],
+      "examples": [
+        "SELECT SUBSTR('Hello World', 7) -- Returns 'World'",
+        "SELECT SUBSTR('Hello World', 7, 3) -- Returns 'Wor'"
+      ]
+    },
+    {
+      "name": "LEN",
+      "sqlKind": "LEN",
+      "category": "NUMERIC",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String value to measure"
+      },
+      "description": "Returns the length of a string",
+      "aliases": ["LENGTH"],
+      "examples": [
+        "SELECT LEN('Hello') -- Returns 5",
+        "SELECT LEN(product_name) FROM products"
+      ]
+    },
+    {
+      "name": "LENGTH",
+      "sqlKind": "LEN",
+      "category": "NUMERIC",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String value to measure"
+      },
+      "description": "Returns the length of a string",
+      "aliases": ["LEN"],
+      "examples": [
+        "SELECT LENGTH('Hello') -- Returns 5",
+        "SELECT LENGTH(description) FROM items"
+      ]
+    },
+    {
+      "name": "LTRIM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to trim, optional characters to remove"
+      },
+      "description": "Removes leading spaces or specified characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT LTRIM('   Hello') -- Returns 'Hello'",
+        "SELECT LTRIM('xxxHello', 'x') -- Returns 'Hello'"
+      ]
+    },
+    {
+      "name": "RTRIM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to trim, optional characters to remove"
+      },
+      "description": "Removes trailing spaces or specified characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT RTRIM('Hello   ') -- Returns 'Hello'",
+        "SELECT RTRIM('Helloyyy', 'y') -- Returns 'Hello'"
+      ]
+    },
+    {
+      "name": "REPLACE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, STRING, STRING",
+        "description": "String to search in, string to find, string to replace with"
+      },
+      "description": "Replaces all occurrences of a substring within a string",
+      "aliases": [],
+      "examples": [
+        "SELECT REPLACE('Hello World', 'World', 'Universe') -- Returns 'Hello Universe'",
+        "SELECT REPLACE(email, '@old.com', '@new.com') FROM users"
+      ]
+    },
+    {
+      "name": "SPLIT",
+      "sqlKind": "SPLIT",
+      "category": "STRING",
+      "returnType": "ARRAY of strings, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to split, optional delimiter (default is comma)"
+      },
+      "description": "Splits a string into an array of substrings",
+      "aliases": [],
+      "examples": [
+        "SELECT SPLIT('a,b,c') -- Returns ['a', 'b', 'c']",
+        "SELECT SPLIT('a-b-c', '-') -- Returns ['a', 'b', 'c']"
+      ]
+    },
+    {
+      "name": "UPPER",
+      "sqlKind": "UPPER",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to uppercase"
+      },
+      "description": "Converts a string to uppercase",
+      "aliases": ["UPPER_CASE", "UCASE"],
+      "examples": [
+        "SELECT UPPER('hello') -- Returns 'HELLO'",
+        "SELECT UPPER(name) FROM customers"
+      ]
+    },
+    {
+      "name": "UPPER_CASE",
+      "sqlKind": "UPPER",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to uppercase"
+      },
+      "description": "Converts a string to uppercase",
+      "aliases": ["UPPER", "UCASE"],
+      "examples": [
+        "SELECT UPPER_CASE('hello') -- Returns 'HELLO'"
+      ]
+    },
+    {
+      "name": "UCASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to uppercase"
+      },
+      "description": "Converts a string to uppercase",
+      "aliases": ["UPPER", "UPPER_CASE"],
+      "examples": [
+        "SELECT UCASE('hello') -- Returns 'HELLO'"
+      ]
+    },
+    {
+      "name": "LOWER",
+      "sqlKind": "LOWER",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to lowercase"
+      },
+      "description": "Converts a string to lowercase",
+      "aliases": ["LOWER_CASE", "LCASE"],
+      "examples": [
+        "SELECT LOWER('HELLO') -- Returns 'hello'",
+        "SELECT LOWER(country_code) FROM countries"
+      ]
+    },
+    {
+      "name": "LOWER_CASE",
+      "sqlKind": "LOWER",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to lowercase"
+      },
+      "description": "Converts a string to lowercase",
+      "aliases": ["LOWER", "LCASE"],
+      "examples": [
+        "SELECT LOWER_CASE('HELLO') -- Returns 'hello'"
+      ]
+    },
+    {
+      "name": "LCASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to convert to lowercase"
+      },
+      "description": "Converts a string to lowercase",
+      "aliases": ["LOWER", "LOWER_CASE"],
+      "examples": [
+        "SELECT LCASE('HELLO') -- Returns 'hello'"
+      ]
+    },
+    {
+      "name": "REVERSE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to reverse"
+      },
+      "description": "Reverses the characters in a string",
+      "aliases": [],
+      "examples": [
+        "SELECT REVERSE('Hello') -- Returns 'olleH'",
+        "SELECT REVERSE(product_code) FROM inventory"
+      ]
+    },
+    {
+      "name": "LPAD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [STRING]",
+        "description": "String to pad, target length, optional pad string (default is space)"
+      },
+      "description": "Pads a string on the left to a specified length",
+      "aliases": [],
+      "examples": [
+        "SELECT LPAD('123', 5, '0') -- Returns '00123'",
+        "SELECT LPAD('ABC', 6) -- Returns '   ABC'"
+      ]
+    },
+    {
+      "name": "RPAD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [STRING]",
+        "description": "String to pad, target length, optional pad string (default is space)"
+      },
+      "description": "Pads a string on the right to a specified length",
+      "aliases": [],
+      "examples": [
+        "SELECT RPAD('123', 5, '0') -- Returns '12300'",
+        "SELECT RPAD('ABC', 6) -- Returns 'ABC   '"
+      ]
+    },
+    {
+      "name": "LEFT",
+      "sqlKind": "LEFT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to extract from, number of characters from left"
+      },
+      "description": "Returns the leftmost n characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT LEFT('Hello World', 5) -- Returns 'Hello'",
+        "SELECT LEFT(phone_number, 3) FROM contacts"
+      ]
+    },
+    {
+      "name": "RIGHT",
+      "sqlKind": "RIGHT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to extract from, number of characters from right"
+      },
+      "description": "Returns the rightmost n characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT RIGHT('Hello World', 5) -- Returns 'World'",
+        "SELECT RIGHT(account_number, 4) FROM accounts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "category": "ENCODING_AND_HASH",
+  "functions": [
+    {
+      "name": "MD5",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the MD5 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT MD5('hello') -- Returns '5d41402abc4b2a76b9719d911017c592'",
+        "SELECT MD5(email) FROM users"
+      ]
+    },
+    {
+      "name": "SHA",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the SHA-1 hash of a string",
+      "aliases": ["SHA1"],
+      "examples": [
+        "SELECT SHA('hello') -- Returns SHA-1 hash",
+        "SELECT SHA(password) FROM credentials"
+      ]
+    },
+    {
+      "name": "SHA1",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the SHA-1 hash of a string",
+      "aliases": ["SHA"],
+      "examples": [
+        "SELECT SHA1('hello') -- Returns 'aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d'"
+      ]
+    },
+    {
+      "name": "SHA256",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to hash, optional encoding"
+      },
+      "description": "Returns the SHA-256 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SHA256('hello') -- Returns SHA-256 hash",
+        "SELECT SHA256(sensitive_data, 'hex') FROM secure_table"
+      ]
+    },
+    {
+      "name": "SHA512",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the SHA-512 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SHA512('hello') -- Returns SHA-512 hash",
+        "SELECT SHA512(document_content) FROM documents"
+      ]
+    },
+    {
+      "name": "HMAC_MD5",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-MD5 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_MD5('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_MD5(data, api_key) FROM requests"
+      ]
+    },
+    {
+      "name": "HMAC_SHA1",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA1 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA1('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA1(payload, private_key) FROM api_calls"
+      ]
+    },
+    {
+      "name": "HMAC_SHA256",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA256 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA256('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA256(request_body, api_secret) FROM webhooks"
+      ]
+    },
+    {
+      "name": "HMAC_SHA512",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA512 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA512('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA512(transaction_data, master_key) FROM payments"
+      ]
+    },
+    {
+      "name": "CRC32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to calculate CRC32 for"
+      },
+      "description": "Returns the CRC32 checksum of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT CRC32('hello') -- Returns 907060870",
+        "SELECT CRC32(file_content) FROM uploads"
+      ]
+    },
+    {
+      "name": "TO_BASE64",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "BINARY",
+        "description": "Binary data to encode"
+      },
+      "description": "Encodes binary data to Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE64('hello') -- Returns 'aGVsbG8='",
+        "SELECT TO_BASE64(image_data) FROM photos"
+      ]
+    },
+    {
+      "name": "FROM_BASE64",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Base64 string to decode"
+      },
+      "description": "Decodes a Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE64('aGVsbG8=') -- Returns 'hello'",
+        "SELECT FROM_BASE64(encoded_data) FROM messages"
+      ]
+    },
+    {
+      "name": "TO_BASE64URL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Encodes string to URL-safe Base64",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE64URL('hello/world') -- URL-safe encoding",
+        "SELECT TO_BASE64URL(jwt_payload) FROM tokens"
+      ]
+    },
+    {
+      "name": "FROM_BASE64URL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL-safe Base64 string to decode"
+      },
+      "description": "Decodes a URL-safe Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE64URL('aGVsbG8') -- Returns decoded string",
+        "SELECT FROM_BASE64URL(token) FROM oauth_tokens"
+      ]
+    },
+    {
+      "name": "TO_HEX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "Data to encode, optional encoding"
+      },
+      "description": "Converts data to hexadecimal string",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_HEX('hello') -- Returns '68656c6c6f'",
+        "SELECT TO_HEX(binary_data) FROM files"
+      ]
+    },
+    {
+      "name": "FROM_HEX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Hexadecimal string to decode"
+      },
+      "description": "Decodes a hexadecimal string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_HEX('68656c6c6f') -- Returns 'hello'",
+        "SELECT FROM_HEX(hex_color) FROM colors"
+      ]
+    },
+    {
+      "name": "TO_BASE32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Encodes string to Base32",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE32('hello') -- Returns 'NBSWY3DP'",
+        "SELECT TO_BASE32(secret_key) FROM auth_tokens"
+      ]
+    },
+    {
+      "name": "FROM_BASE32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Base32 string to decode"
+      },
+      "description": "Decodes a Base32 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE32('NBSWY3DP') -- Returns 'hello'",
+        "SELECT FROM_BASE32(encoded_secret) FROM credentials"
+      ]
+    },
+    {
+      "name": "TO_BASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "Number string and target base (2-36)"
+      },
+      "description": "Converts a number to a string in the specified base",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE('255', 16) -- Returns 'FF'",
+        "SELECT TO_BASE('10', 2) -- Returns '1010'"
+      ]
+    },
+    {
+      "name": "FROM_BASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String in specified base and source base (2-36)"
+      },
+      "description": "Converts a string from the specified base to decimal",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE('FF', 16) -- Returns '255'",
+        "SELECT FROM_BASE('1010', 2) -- Returns '10'"
+      ]
+    }
+  ]
+}

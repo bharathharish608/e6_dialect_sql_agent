@@ -1,0 +1,345 @@
+{
+  "category": "BITWISE_AND_URL",
+  "functions": [
+    {
+      "name": "BITWISE_AND",
+      "sqlKind": "BITWISE_AND",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise AND"
+      },
+      "description": "Performs bitwise AND operation",
+      "aliases": ["BIT_AND_OPERATOR (&)"],
+      "examples": [
+        "SELECT BITWISE_AND(12, 10) -- Returns 8 (1100 & 1010 = 1000)",
+        "SELECT BITWISE_AND(flags, 4) FROM permissions -- Check if bit 2 is set"
+      ]
+    },
+    {
+      "name": "BITWISE_OR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise OR"
+      },
+      "description": "Performs bitwise OR operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_OR(12, 10) -- Returns 14 (1100 | 1010 = 1110)",
+        "SELECT BITWISE_OR(permissions, 2) FROM users -- Add permission bit"
+      ]
+    },
+    {
+      "name": "BITWISE_XOR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise XOR"
+      },
+      "description": "Performs bitwise XOR operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_XOR(12, 10) -- Returns 6 (1100 ^ 1010 = 0110)",
+        "SELECT BITWISE_XOR(value1, value2) FROM data"
+      ]
+    },
+    {
+      "name": "BITWISE_NOT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to invert"
+      },
+      "description": "Performs bitwise NOT operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_NOT(12) -- Returns -13 (~1100)",
+        "SELECT BITWISE_NOT(mask) FROM filters"
+      ]
+    },
+    {
+      "name": "BITWISE_SHIFT_LEFT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Value, shift amount, optional width"
+      },
+      "description": "Shifts bits to the left",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_SHIFT_LEFT(4, 2, 32) -- Returns 16 (100 << 2 = 10000)",
+        "SELECT BITWISE_SHIFT_LEFT(value, 3, 64) FROM binary_data"
+      ]
+    },
+    {
+      "name": "SHIFTLEFT",
+      "sqlKind": "LEFT_SHIFT",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Shifts bits to the left",
+      "aliases": ["LEFT_SHIFT (<<)"],
+      "examples": [
+        "SELECT SHIFTLEFT(8, 2) -- Returns 32",
+        "SELECT SHIFTLEFT(flags, 1) FROM settings"
+      ]
+    },
+    {
+      "name": "SHIFTRIGHT",
+      "sqlKind": "RIGHT_SHIFT",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Shifts bits to the right",
+      "aliases": ["RIGHT_SHIFT (>>)"],
+      "examples": [
+        "SELECT SHIFTRIGHT(32, 2) -- Returns 8",
+        "SELECT SHIFTRIGHT(packed_data, 4) FROM compressed"
+      ]
+    },
+    {
+      "name": "BITWISE_ARITHMETIC_SHIFT_RIGHT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Arithmetic right shift (preserves sign)",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_ARITHMETIC_SHIFT_RIGHT(-16, 2) -- Returns -4",
+        "SELECT BITWISE_ARITHMETIC_SHIFT_RIGHT(signed_int, 1) FROM numbers"
+      ]
+    },
+    {
+      "name": "BITWISE_LOGICAL_SHIFT_RIGHT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Value, shift amount, bit width"
+      },
+      "description": "Logical right shift (fills with zeros)",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_LOGICAL_SHIFT_RIGHT(-16, 2, 32) -- Unsigned shift",
+        "SELECT BITWISE_LOGICAL_SHIFT_RIGHT(data, 8, 64) FROM binary_stream"
+      ]
+    },
+    {
+      "name": "BIT_COUNT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and bit width"
+      },
+      "description": "Counts the number of set bits",
+      "aliases": [],
+      "examples": [
+        "SELECT BIT_COUNT(15, 32) -- Returns 4 (1111 has 4 ones)",
+        "SELECT BIT_COUNT(flags, 64) FROM feature_flags"
+      ]
+    },
+    {
+      "name": "GETBIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and bit position (0-based)"
+      },
+      "description": "Returns the bit at specified position",
+      "aliases": [],
+      "examples": [
+        "SELECT GETBIT(5, 0) -- Returns 1 (bit 0 of 101)",
+        "SELECT GETBIT(permissions, 3) FROM users -- Check 4th bit"
+      ]
+    },
+    {
+      "name": "URL_ENCODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to URL encode"
+      },
+      "description": "URL encodes a string",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_ENCODE('hello world') -- Returns 'hello%20world'",
+        "SELECT URL_ENCODE(search_query) FROM searches"
+      ]
+    },
+    {
+      "name": "URL_DECODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL encoded string to decode"
+      },
+      "description": "Decodes a URL encoded string",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_DECODE('hello%20world') -- Returns 'hello world'",
+        "SELECT URL_DECODE(encoded_param) FROM web_requests"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_HOST",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the host from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_HOST('https://www.example.com/path') -- Returns 'www.example.com'",
+        "SELECT URL_EXTRACT_HOST(referrer) FROM clickstream"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_PROTOCOL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the protocol from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PROTOCOL('https://example.com') -- Returns 'https'",
+        "SELECT URL_EXTRACT_PROTOCOL(page_url) FROM analytics"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_PATH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the path from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PATH('https://example.com/users/profile') -- Returns '/users/profile'",
+        "SELECT URL_EXTRACT_PATH(request_url) FROM logs"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_PORT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the port number from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PORT('https://example.com:8080/path') -- Returns 8080",
+        "SELECT URL_EXTRACT_PORT('https://example.com/') -- Returns NULL (default port)"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_QUERY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the query string from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_QUERY('https://example.com/search?q=test&page=1') -- Returns 'q=test&page=1'",
+        "SELECT URL_EXTRACT_QUERY(landing_page) FROM sessions"
+      ]
+    },
+    {
+      "name": "URL_EXTRACT_FRAGMENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the fragment (hash) from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_FRAGMENT('https://example.com/page#section') -- Returns 'section'",
+        "SELECT URL_EXTRACT_FRAGMENT(bookmark_url) FROM user_bookmarks"
+      ]
+    },
+    {
+      "name": "PARSE_PRESTO_DATA_SIZE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Data size string (e.g., '1GB', '500MB')"
+      },
+      "description": "Parses Presto-style data size strings to bytes",
+      "aliases": [],
+      "examples": [
+        "SELECT PARSE_PRESTO_DATA_SIZE('1GB') -- Returns 1073741824",
+        "SELECT PARSE_PRESTO_DATA_SIZE('500MB') -- Returns 524288000"
+      ]
+    }
+  ]
+}

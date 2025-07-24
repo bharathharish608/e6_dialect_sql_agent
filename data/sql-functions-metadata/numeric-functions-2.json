@@ -1,0 +1,345 @@
+{
+  "category": "NUMERIC",
+  "functions": [
+    {
+      "name": "NEGATIVE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the negative value (unary minus)",
+      "aliases": [],
+      "examples": [
+        "SELECT NEGATIVE(5) -- Returns -5",
+        "SELECT NEGATIVE(-5) -- Returns 5"
+      ]
+    },
+    {
+      "name": "COS",
+      "sqlKind": "COS",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the cosine of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT COS(0) -- Returns 1.0",
+        "SELECT COS(PI()) -- Returns -1.0"
+      ]
+    },
+    {
+      "name": "SIN",
+      "sqlKind": "SIN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the sine of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT SIN(0) -- Returns 0.0",
+        "SELECT SIN(PI()/2) -- Returns 1.0"
+      ]
+    },
+    {
+      "name": "TAN",
+      "sqlKind": "TAN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the tangent of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT TAN(0) -- Returns 0.0",
+        "SELECT TAN(PI()/4) -- Returns 1.0"
+      ]
+    },
+    {
+      "name": "COSEC",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the cosecant of an angle (1/sin(x))",
+      "aliases": [],
+      "examples": [
+        "SELECT COSEC(PI()/2) -- Returns 1.0",
+        "SELECT COSEC(PI()/6) -- Returns 2.0"
+      ]
+    },
+    {
+      "name": "SEC",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the secant of an angle (1/cos(x))",
+      "aliases": [],
+      "examples": [
+        "SELECT SEC(0) -- Returns 1.0",
+        "SELECT SEC(PI()/3) -- Returns 2.0"
+      ]
+    },
+    {
+      "name": "COSH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic cosine of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT COSH(0) -- Returns 1.0",
+        "SELECT COSH(1) -- Returns 1.5430806348152"
+      ]
+    },
+    {
+      "name": "SINH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic sine of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT SINH(0) -- Returns 0.0",
+        "SELECT SINH(1) -- Returns 1.1752011936438"
+      ]
+    },
+    {
+      "name": "TANH",
+      "sqlKind": "TANH",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic tangent of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT TANH(0) -- Returns 0.0",
+        "SELECT TANH(1) -- Returns 0.7615941559558"
+      ]
+    },
+    {
+      "name": "ACOS",
+      "sqlKind": "ACOS",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the arccosine (inverse cosine) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ACOS(1) -- Returns 0.0",
+        "SELECT ACOS(0) -- Returns PI()/2"
+      ]
+    },
+    {
+      "name": "ASIN",
+      "sqlKind": "ASIN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the arcsine (inverse sine) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ASIN(0) -- Returns 0.0",
+        "SELECT ASIN(1) -- Returns PI()/2"
+      ]
+    },
+    {
+      "name": "ATAN",
+      "sqlKind": "ATAN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the arctangent (inverse tangent) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ATAN(0) -- Returns 0.0",
+        "SELECT ATAN(1) -- Returns PI()/4"
+      ]
+    },
+    {
+      "name": "ATAN2",
+      "sqlKind": "ATAN2",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "y-coordinate, x-coordinate"
+      },
+      "description": "Returns the arctangent of y/x in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ATAN2(1, 1) -- Returns PI()/4",
+        "SELECT ATAN2(1, 0) -- Returns PI()/2"
+      ]
+    },
+    {
+      "name": "ACOSH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value >= 1"
+      },
+      "description": "Returns the inverse hyperbolic cosine",
+      "aliases": [],
+      "examples": [
+        "SELECT ACOSH(1) -- Returns 0.0",
+        "SELECT ACOSH(2) -- Returns 1.3169578969248"
+      ]
+    },
+    {
+      "name": "ASINH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the inverse hyperbolic sine",
+      "aliases": [],
+      "examples": [
+        "SELECT ASINH(0) -- Returns 0.0",
+        "SELECT ASINH(1) -- Returns 0.8813735870196"
+      ]
+    },
+    {
+      "name": "ATANH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the inverse hyperbolic tangent",
+      "aliases": [],
+      "examples": [
+        "SELECT ATANH(0) -- Returns 0.0",
+        "SELECT ATANH(0.5) -- Returns 0.5493061443341"
+      ]
+    },
+    {
+      "name": "COSINE_DISTANCE",
+      "sqlKind": "COSINE_DISTANCE",
+      "category": "NUMERIC",
+      "returnType": "FLOAT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Two vector strings to compare"
+      },
+      "description": "Calculates the cosine distance between two vectors",
+      "aliases": [],
+      "examples": [
+        "SELECT COSINE_DISTANCE('[1,2,3]', '[4,5,6]') -- Returns cosine distance",
+        "SELECT COSINE_DISTANCE(embedding1, embedding2) FROM vectors"
+      ]
+    },
+    {
+      "name": "WIDTH_BUCKET",
+      "sqlKind": "WIDTH_BUCKET",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "4",
+        "types": "NUMERIC, NUMERIC, NUMERIC, INTEGER",
+        "description": "Value, min, max, bucket count"
+      },
+      "description": "Returns the bucket number for a value in an equi-width histogram",
+      "aliases": [],
+      "examples": [
+        "SELECT WIDTH_BUCKET(5.5, 0, 10, 5) -- Returns 3",
+        "SELECT WIDTH_BUCKET(age, 0, 100, 10) FROM users -- Age buckets"
+      ]
+    },
+    {
+      "name": "RAND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed value"
+      },
+      "description": "Returns a random value between 0 and 1",
+      "aliases": [],
+      "examples": [
+        "SELECT RAND() -- Returns random value",
+        "SELECT RAND(42) -- Returns same value for same seed"
+      ]
+    },
+    {
+      "name": "SECURE_RAND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed value"
+      },
+      "description": "Returns a cryptographically secure random value",
+      "aliases": [],
+      "examples": [
+        "SELECT SECURE_RAND() -- Returns secure random value",
+        "SELECT SECURE_RAND(42) -- With seed"
+      ]
+    }
+  ]
+}

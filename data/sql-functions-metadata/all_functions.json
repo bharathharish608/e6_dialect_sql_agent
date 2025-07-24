@@ -1,0 +1,4871 @@
+[
+  {
+    "name": "MD5",
+    "folder": "numeric",
+    "metadata": {
+      "name": "MD5",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the MD5 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT MD5('hello') -- Returns '5d41402abc4b2a76b9719d911017c592'",
+        "SELECT MD5(email) FROM users"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "SHA256",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SHA256",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to hash, optional encoding"
+      },
+      "description": "Returns the SHA-256 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SHA256('hello') -- Returns SHA-256 hash",
+        "SELECT SHA256(sensitive_data, 'hex') FROM secure_table"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "SHA512",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SHA512",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to hash"
+      },
+      "description": "Returns the SHA-512 hash of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SHA512('hello') -- Returns SHA-512 hash",
+        "SELECT SHA512(document_content) FROM documents"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "HMAC_MD5",
+    "folder": "numeric",
+    "metadata": {
+      "name": "HMAC_MD5",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-MD5 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_MD5('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_MD5(data, api_key) FROM requests"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "HMAC_SHA1",
+    "folder": "numeric",
+    "metadata": {
+      "name": "HMAC_SHA1",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA1 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA1('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA1(payload, private_key) FROM api_calls"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "HMAC_SHA256",
+    "folder": "numeric",
+    "metadata": {
+      "name": "HMAC_SHA256",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA256 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA256('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA256(request_body, api_secret) FROM webhooks"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "HMAC_SHA512",
+    "folder": "numeric",
+    "metadata": {
+      "name": "HMAC_SHA512",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "Message and secret key"
+      },
+      "description": "Returns HMAC-SHA512 authentication code",
+      "aliases": [],
+      "examples": [
+        "SELECT HMAC_SHA512('message', 'secret') -- Returns HMAC",
+        "SELECT HMAC_SHA512(transaction_data, master_key) FROM payments"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "CRC32",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "CRC32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to calculate CRC32 for"
+      },
+      "description": "Returns the CRC32 checksum of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT CRC32('hello') -- Returns 907060870",
+        "SELECT CRC32(file_content) FROM uploads"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "TO_BASE64",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_BASE64",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "BINARY",
+        "description": "Binary data to encode"
+      },
+      "description": "Encodes binary data to Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE64('hello') -- Returns 'aGVsbG8='",
+        "SELECT TO_BASE64(image_data) FROM photos"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "FROM_BASE64",
+    "folder": "string",
+    "metadata": {
+      "name": "FROM_BASE64",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Base64 string to decode"
+      },
+      "description": "Decodes a Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE64('aGVsbG8=') -- Returns 'hello'",
+        "SELECT FROM_BASE64(encoded_data) FROM messages"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "TO_BASE64URL",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_BASE64URL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Encodes string to URL-safe Base64",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE64URL('hello/world') -- URL-safe encoding",
+        "SELECT TO_BASE64URL(jwt_payload) FROM tokens"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "FROM_BASE64URL",
+    "folder": "string",
+    "metadata": {
+      "name": "FROM_BASE64URL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL-safe Base64 string to decode"
+      },
+      "description": "Decodes a URL-safe Base64 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE64URL('aGVsbG8') -- Returns decoded string",
+        "SELECT FROM_BASE64URL(token) FROM oauth_tokens"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "TO_HEX",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_HEX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "Data to encode, optional encoding"
+      },
+      "description": "Converts data to hexadecimal string",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_HEX('hello') -- Returns '68656c6c6f'",
+        "SELECT TO_HEX(binary_data) FROM files"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "FROM_HEX",
+    "folder": "string",
+    "metadata": {
+      "name": "FROM_HEX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Hexadecimal string to decode"
+      },
+      "description": "Decodes a hexadecimal string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_HEX('68656c6c6f') -- Returns 'hello'",
+        "SELECT FROM_HEX(hex_color) FROM colors"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "TO_BASE32",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_BASE32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Encodes string to Base32",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE32('hello') -- Returns 'NBSWY3DP'",
+        "SELECT TO_BASE32(secret_key) FROM auth_tokens"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "FROM_BASE32",
+    "folder": "string",
+    "metadata": {
+      "name": "FROM_BASE32",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Base32 string to decode"
+      },
+      "description": "Decodes a Base32 string",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE32('NBSWY3DP') -- Returns 'hello'",
+        "SELECT FROM_BASE32(encoded_secret) FROM credentials"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "TO_BASE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_BASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "Number string and target base (2-36)"
+      },
+      "description": "Converts a number to a string in the specified base",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BASE('255', 16) -- Returns 'FF'",
+        "SELECT TO_BASE('10', 2) -- Returns '1010'"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "FROM_BASE",
+    "folder": "string",
+    "metadata": {
+      "name": "FROM_BASE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String in specified base and source base (2-36)"
+      },
+      "description": "Converts a string from the specified base to decimal",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_BASE('FF', 16) -- Returns '255'",
+        "SELECT FROM_BASE('1010', 2) -- Returns '10'"
+      ]
+    },
+    "source_file": "encoding-hash-functions.json"
+  },
+  {
+    "name": "CURRENT_DATE",
+    "folder": "timedate",
+    "metadata": {
+      "name": "CURRENT_DATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional timezone"
+      },
+      "description": "Returns the current date",
+      "aliases": [],
+      "examples": [
+        "SELECT CURRENT_DATE -- Returns today's date",
+        "SELECT CURRENT_DATE('America/New_York') -- Returns current date in New York timezone"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "NOW",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "NOW",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns the current timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT NOW() -- Returns current date and time"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "DATE_SUB",
+    "folder": "timedate",
+    "metadata": {
+      "name": "DATE_SUB",
+      "sqlKind": "DATE_SUB",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "DATE, INTEGER",
+        "description": "Date, number of days to subtract"
+      },
+      "description": "Subtracts days from a date",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE_SUB('2023-01-15', 7) -- Returns '2023-01-08'",
+        "SELECT DATE_SUB(CURRENT_DATE, 30) -- 30 days ago"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "TIMESTAMP_ADD",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TIMESTAMP_ADD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, INTEGER, TIMESTAMP",
+        "description": "Interval unit, amount, timestamp"
+      },
+      "description": "Adds an interval to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIMESTAMP_ADD('HOUR', 2, '2023-01-01 10:00:00') -- Returns '2023-01-01 12:00:00'",
+        "SELECT TIMESTAMP_ADD('MINUTE', 30, CURRENT_TIMESTAMP) -- Adds 30 minutes"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "DATE_TRUNC",
+    "folder": "timedate",
+    "metadata": {
+      "name": "DATE_TRUNC",
+      "sqlKind": "DATE_TRUNC",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, TIMESTAMP",
+        "description": "Date part to truncate to, timestamp"
+      },
+      "description": "Truncates a timestamp to a specified precision",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE_TRUNC('MONTH', '2023-01-15 10:30:00') -- Returns '2023-01-01 00:00:00'",
+        "SELECT DATE_TRUNC('HOUR', CURRENT_TIMESTAMP) -- Truncates to current hour"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "TRUNC",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TRUNC",
+      "sqlKind": "TRUNC",
+      "category": "TIMEDATE",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "TIMESTAMP, STRING",
+        "description": "Timestamp, date part to truncate to"
+      },
+      "description": "Truncates a timestamp to a specified precision",
+      "aliases": [],
+      "examples": [
+        "SELECT TRUNC('2023-01-15 10:30:00', 'DAY') -- Returns '2023-01-15 00:00:00'",
+        "SELECT TRUNC(CURRENT_TIMESTAMP, 'YEAR') -- Truncates to start of year"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "UNIX_TIMESTAMP",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "UNIX_TIMESTAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0, 1, or 2",
+        "types": "[TIMESTAMP/STRING], [STRING]",
+        "description": "Optional timestamp and format string"
+      },
+      "description": "Returns the Unix timestamp (seconds since 1970-01-01)",
+      "aliases": [],
+      "examples": [
+        "SELECT UNIX_TIMESTAMP() -- Current Unix timestamp",
+        "SELECT UNIX_TIMESTAMP('2023-01-01 00:00:00') -- Returns 1672531200"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "FROM_UNIXTIME",
+    "folder": "timedate",
+    "metadata": {
+      "name": "FROM_UNIXTIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "NUMERIC, [STRING]",
+        "description": "Unix timestamp, optional format string"
+      },
+      "description": "Converts Unix timestamp to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_UNIXTIME(1672531200) -- Returns '2023-01-01 00:00:00'",
+        "SELECT FROM_UNIXTIME(1672531200, 'yyyy-MM-dd') -- Returns '2023-01-01'"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "FROM_UNIXTIME_WITHUNIT",
+    "folder": "timedate",
+    "metadata": {
+      "name": "FROM_UNIXTIME_WITHUNIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, STRING",
+        "description": "Unix timestamp value, time unit (seconds/milliseconds/microseconds)"
+      },
+      "description": "Converts Unix timestamp to a timestamp with specified unit",
+      "aliases": [],
+      "examples": [
+        "SELECT FROM_UNIXTIME_WITHUNIT(1672531200000, 'milliseconds') -- From milliseconds",
+        "SELECT FROM_UNIXTIME_WITHUNIT(1672531200, 'seconds') -- From seconds"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "GETUTCDATE",
+    "folder": "timedate",
+    "metadata": {
+      "name": "GETUTCDATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[STRING]",
+        "description": "Optional format"
+      },
+      "description": "Returns the current UTC date",
+      "aliases": [],
+      "examples": [
+        "SELECT GETUTCDATE() -- Returns current UTC date",
+        "SELECT GETUTCDATE('yyyy-MM-dd') -- Returns formatted UTC date"
+      ]
+    },
+    "source_file": "datetime-functions-1.json"
+  },
+  {
+    "name": "NEGATIVE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "NEGATIVE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the negative value (unary minus)",
+      "aliases": [],
+      "examples": [
+        "SELECT NEGATIVE(5) -- Returns -5",
+        "SELECT NEGATIVE(-5) -- Returns 5"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "COS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "COS",
+      "sqlKind": "COS",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the cosine of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT COS(0) -- Returns 1.0",
+        "SELECT COS(PI()) -- Returns -1.0"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "SIN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SIN",
+      "sqlKind": "SIN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the sine of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT SIN(0) -- Returns 0.0",
+        "SELECT SIN(PI()/2) -- Returns 1.0"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "TAN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "TAN",
+      "sqlKind": "TAN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the tangent of an angle in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT TAN(0) -- Returns 0.0",
+        "SELECT TAN(PI()/4) -- Returns 1.0"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "COSEC",
+    "folder": "numeric",
+    "metadata": {
+      "name": "COSEC",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the cosecant of an angle (1/sin(x))",
+      "aliases": [],
+      "examples": [
+        "SELECT COSEC(PI()/2) -- Returns 1.0",
+        "SELECT COSEC(PI()/6) -- Returns 2.0"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "SEC",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SEC",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Angle in radians"
+      },
+      "description": "Returns the secant of an angle (1/cos(x))",
+      "aliases": [],
+      "examples": [
+        "SELECT SEC(0) -- Returns 1.0",
+        "SELECT SEC(PI()/3) -- Returns 2.0"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "COSH",
+    "folder": "numeric",
+    "metadata": {
+      "name": "COSH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic cosine of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT COSH(0) -- Returns 1.0",
+        "SELECT COSH(1) -- Returns 1.5430806348152"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "SINH",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SINH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic sine of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT SINH(0) -- Returns 0.0",
+        "SELECT SINH(1) -- Returns 1.1752011936438"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "TANH",
+    "folder": "numeric",
+    "metadata": {
+      "name": "TANH",
+      "sqlKind": "TANH",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the hyperbolic tangent of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT TANH(0) -- Returns 0.0",
+        "SELECT TANH(1) -- Returns 0.7615941559558"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ACOS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ACOS",
+      "sqlKind": "ACOS",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the arccosine (inverse cosine) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ACOS(1) -- Returns 0.0",
+        "SELECT ACOS(0) -- Returns PI()/2"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ASIN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ASIN",
+      "sqlKind": "ASIN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the arcsine (inverse sine) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ASIN(0) -- Returns 0.0",
+        "SELECT ASIN(1) -- Returns PI()/2"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ATAN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ATAN",
+      "sqlKind": "ATAN",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the arctangent (inverse tangent) in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ATAN(0) -- Returns 0.0",
+        "SELECT ATAN(1) -- Returns PI()/4"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ATAN2",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ATAN2",
+      "sqlKind": "ATAN2",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "y-coordinate, x-coordinate"
+      },
+      "description": "Returns the arctangent of y/x in radians",
+      "aliases": [],
+      "examples": [
+        "SELECT ATAN2(1, 1) -- Returns PI()/4",
+        "SELECT ATAN2(1, 0) -- Returns PI()/2"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ACOSH",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ACOSH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value >= 1"
+      },
+      "description": "Returns the inverse hyperbolic cosine",
+      "aliases": [],
+      "examples": [
+        "SELECT ACOSH(1) -- Returns 0.0",
+        "SELECT ACOSH(2) -- Returns 1.3169578969248"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ASINH",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ASINH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the inverse hyperbolic sine",
+      "aliases": [],
+      "examples": [
+        "SELECT ASINH(0) -- Returns 0.0",
+        "SELECT ASINH(1) -- Returns 0.8813735870196"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "ATANH",
+    "folder": "numeric",
+    "metadata": {
+      "name": "ATANH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Value between -1 and 1"
+      },
+      "description": "Returns the inverse hyperbolic tangent",
+      "aliases": [],
+      "examples": [
+        "SELECT ATANH(0) -- Returns 0.0",
+        "SELECT ATANH(0.5) -- Returns 0.5493061443341"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "COSINE_DISTANCE",
+    "folder": "numeric",
+    "metadata": {
+      "name": "COSINE_DISTANCE",
+      "sqlKind": "COSINE_DISTANCE",
+      "category": "NUMERIC",
+      "returnType": "FLOAT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "Two vector strings to compare"
+      },
+      "description": "Calculates the cosine distance between two vectors",
+      "aliases": [],
+      "examples": [
+        "SELECT COSINE_DISTANCE('[1,2,3]', '[4,5,6]') -- Returns cosine distance",
+        "SELECT COSINE_DISTANCE(embedding1, embedding2) FROM vectors"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "WIDTH_BUCKET",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "WIDTH_BUCKET",
+      "sqlKind": "WIDTH_BUCKET",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "4",
+        "types": "NUMERIC, NUMERIC, NUMERIC, INTEGER",
+        "description": "Value, min, max, bucket count"
+      },
+      "description": "Returns the bucket number for a value in an equi-width histogram",
+      "aliases": [],
+      "examples": [
+        "SELECT WIDTH_BUCKET(5.5, 0, 10, 5) -- Returns 3",
+        "SELECT WIDTH_BUCKET(age, 0, 100, 10) FROM users -- Age buckets"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "RAND",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "RAND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed value"
+      },
+      "description": "Returns a random value between 0 and 1",
+      "aliases": [],
+      "examples": [
+        "SELECT RAND() -- Returns random value",
+        "SELECT RAND(42) -- Returns same value for same seed"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "SECURE_RAND",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SECURE_RAND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed value"
+      },
+      "description": "Returns a cryptographically secure random value",
+      "aliases": [],
+      "examples": [
+        "SELECT SECURE_RAND() -- Returns secure random value",
+        "SELECT SECURE_RAND(42) -- With seed"
+      ]
+    },
+    "source_file": "numeric-functions-2.json"
+  },
+  {
+    "name": "CONCAT",
+    "folder": "string",
+    "metadata": {
+      "name": "CONCAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "STRING, STRING, ...",
+        "description": "Two or more string values to concatenate"
+      },
+      "description": "Concatenates two or more string values",
+      "aliases": [],
+      "examples": [
+        "SELECT CONCAT('Hello', ' ', 'World') -- Returns 'Hello World'",
+        "SELECT CONCAT(first_name, ' ', last_name) FROM users"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "CONCAT_WS",
+    "folder": "string",
+    "metadata": {
+      "name": "CONCAT_WS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as first argument, nullable",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "STRING (separator), STRING, STRING, ...",
+        "description": "First parameter is separator, followed by strings to concatenate"
+      },
+      "description": "Concatenates strings with a separator",
+      "aliases": [],
+      "examples": [
+        "SELECT CONCAT_WS(',', 'apple', 'banana', 'orange') -- Returns 'apple,banana,orange'",
+        "SELECT CONCAT_WS(' - ', city, state, country) FROM locations"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "SUBSTR",
+    "folder": "string",
+    "metadata": {
+      "name": "SUBSTR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [INTEGER]",
+        "description": "String, start position (1-based), optional length"
+      },
+      "description": "Extracts a substring from a string",
+      "aliases": [
+        "SUBSTRING"
+      ],
+      "examples": [
+        "SELECT SUBSTR('Hello World', 7) -- Returns 'World'",
+        "SELECT SUBSTR('Hello World', 7, 3) -- Returns 'Wor'"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "LTRIM",
+    "folder": "string",
+    "metadata": {
+      "name": "LTRIM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to trim, optional characters to remove"
+      },
+      "description": "Removes leading spaces or specified characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT LTRIM('   Hello') -- Returns 'Hello'",
+        "SELECT LTRIM('xxxHello', 'x') -- Returns 'Hello'"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "RTRIM",
+    "folder": "string",
+    "metadata": {
+      "name": "RTRIM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to trim, optional characters to remove"
+      },
+      "description": "Removes trailing spaces or specified characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT RTRIM('Hello   ') -- Returns 'Hello'",
+        "SELECT RTRIM('Helloyyy', 'y') -- Returns 'Hello'"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "REPLACE",
+    "folder": "string",
+    "metadata": {
+      "name": "REPLACE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, STRING, STRING",
+        "description": "String to search in, string to find, string to replace with"
+      },
+      "description": "Replaces all occurrences of a substring within a string",
+      "aliases": [],
+      "examples": [
+        "SELECT REPLACE('Hello World', 'World', 'Universe') -- Returns 'Hello Universe'",
+        "SELECT REPLACE(email, '@old.com', '@new.com') FROM users"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "SPLIT",
+    "folder": "string",
+    "metadata": {
+      "name": "SPLIT",
+      "sqlKind": "SPLIT",
+      "category": "STRING",
+      "returnType": "ARRAY of strings, nullable",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to split, optional delimiter (default is comma)"
+      },
+      "description": "Splits a string into an array of substrings",
+      "aliases": [],
+      "examples": [
+        "SELECT SPLIT('a,b,c') -- Returns ['a', 'b', 'c']",
+        "SELECT SPLIT('a-b-c', '-') -- Returns ['a', 'b', 'c']"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "REVERSE",
+    "folder": "string",
+    "metadata": {
+      "name": "REVERSE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to reverse"
+      },
+      "description": "Reverses the characters in a string",
+      "aliases": [],
+      "examples": [
+        "SELECT REVERSE('Hello') -- Returns 'olleH'",
+        "SELECT REVERSE(product_code) FROM inventory"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "LPAD",
+    "folder": "string",
+    "metadata": {
+      "name": "LPAD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [STRING]",
+        "description": "String to pad, target length, optional pad string (default is space)"
+      },
+      "description": "Pads a string on the left to a specified length",
+      "aliases": [],
+      "examples": [
+        "SELECT LPAD('123', 5, '0') -- Returns '00123'",
+        "SELECT LPAD('ABC', 6) -- Returns '   ABC'"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "RPAD",
+    "folder": "string",
+    "metadata": {
+      "name": "RPAD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, INTEGER, [STRING]",
+        "description": "String to pad, target length, optional pad string (default is space)"
+      },
+      "description": "Pads a string on the right to a specified length",
+      "aliases": [],
+      "examples": [
+        "SELECT RPAD('123', 5, '0') -- Returns '12300'",
+        "SELECT RPAD('ABC', 6) -- Returns 'ABC   '"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "LEFT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "LEFT",
+      "sqlKind": "LEFT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to extract from, number of characters from left"
+      },
+      "description": "Returns the leftmost n characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT LEFT('Hello World', 5) -- Returns 'Hello'",
+        "SELECT LEFT(phone_number, 3) FROM contacts"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "RIGHT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "RIGHT",
+      "sqlKind": "RIGHT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to extract from, number of characters from right"
+      },
+      "description": "Returns the rightmost n characters from a string",
+      "aliases": [],
+      "examples": [
+        "SELECT RIGHT('Hello World', 5) -- Returns 'World'",
+        "SELECT RIGHT(account_number, 4) FROM accounts"
+      ]
+    },
+    "source_file": "string-functions-1.json"
+  },
+  {
+    "name": "BITWISE_AND",
+    "folder": "numeric",
+    "metadata": {
+      "name": "BITWISE_AND",
+      "sqlKind": "BITWISE_AND",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise AND"
+      },
+      "description": "Performs bitwise AND operation",
+      "aliases": [
+        "BIT_AND_OPERATOR (&)"
+      ],
+      "examples": [
+        "SELECT BITWISE_AND(12, 10) -- Returns 8 (1100 & 1010 = 1000)",
+        "SELECT BITWISE_AND(flags, 4) FROM permissions -- Check if bit 2 is set"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_OR",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "BITWISE_OR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise OR"
+      },
+      "description": "Performs bitwise OR operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_OR(12, 10) -- Returns 14 (1100 | 1010 = 1110)",
+        "SELECT BITWISE_OR(permissions, 2) FROM users -- Add permission bit"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_XOR",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "BITWISE_XOR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values for bitwise XOR"
+      },
+      "description": "Performs bitwise XOR operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_XOR(12, 10) -- Returns 6 (1100 ^ 1010 = 0110)",
+        "SELECT BITWISE_XOR(value1, value2) FROM data"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_NOT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "BITWISE_NOT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to invert"
+      },
+      "description": "Performs bitwise NOT operation",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_NOT(12) -- Returns -13 (~1100)",
+        "SELECT BITWISE_NOT(mask) FROM filters"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_SHIFT_LEFT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "BITWISE_SHIFT_LEFT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Value, shift amount, optional width"
+      },
+      "description": "Shifts bits to the left",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_SHIFT_LEFT(4, 2, 32) -- Returns 16 (100 << 2 = 10000)",
+        "SELECT BITWISE_SHIFT_LEFT(value, 3, 64) FROM binary_data"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "SHIFTLEFT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SHIFTLEFT",
+      "sqlKind": "LEFT_SHIFT",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Shifts bits to the left",
+      "aliases": [
+        "LEFT_SHIFT (<<)"
+      ],
+      "examples": [
+        "SELECT SHIFTLEFT(8, 2) -- Returns 32",
+        "SELECT SHIFTLEFT(flags, 1) FROM settings"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "SHIFTRIGHT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "SHIFTRIGHT",
+      "sqlKind": "RIGHT_SHIFT",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Shifts bits to the right",
+      "aliases": [
+        "RIGHT_SHIFT (>>)"
+      ],
+      "examples": [
+        "SELECT SHIFTRIGHT(32, 2) -- Returns 8",
+        "SELECT SHIFTRIGHT(packed_data, 4) FROM compressed"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_ARITHMETIC_SHIFT_RIGHT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "BITWISE_ARITHMETIC_SHIFT_RIGHT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and shift amount"
+      },
+      "description": "Arithmetic right shift (preserves sign)",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_ARITHMETIC_SHIFT_RIGHT(-16, 2) -- Returns -4",
+        "SELECT BITWISE_ARITHMETIC_SHIFT_RIGHT(signed_int, 1) FROM numbers"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BITWISE_LOGICAL_SHIFT_RIGHT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "BITWISE_LOGICAL_SHIFT_RIGHT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Value, shift amount, bit width"
+      },
+      "description": "Logical right shift (fills with zeros)",
+      "aliases": [],
+      "examples": [
+        "SELECT BITWISE_LOGICAL_SHIFT_RIGHT(-16, 2, 32) -- Unsigned shift",
+        "SELECT BITWISE_LOGICAL_SHIFT_RIGHT(data, 8, 64) FROM binary_stream"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "BIT_COUNT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "BIT_COUNT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and bit width"
+      },
+      "description": "Counts the number of set bits",
+      "aliases": [],
+      "examples": [
+        "SELECT BIT_COUNT(15, 32) -- Returns 4 (1111 has 4 ones)",
+        "SELECT BIT_COUNT(flags, 64) FROM feature_flags"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "GETBIT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "GETBIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Value and bit position (0-based)"
+      },
+      "description": "Returns the bit at specified position",
+      "aliases": [],
+      "examples": [
+        "SELECT GETBIT(5, 0) -- Returns 1 (bit 0 of 101)",
+        "SELECT GETBIT(permissions, 3) FROM users -- Check 4th bit"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_ENCODE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_ENCODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to URL encode"
+      },
+      "description": "URL encodes a string",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_ENCODE('hello world') -- Returns 'hello%20world'",
+        "SELECT URL_ENCODE(search_query) FROM searches"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_DECODE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_DECODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL encoded string to decode"
+      },
+      "description": "Decodes a URL encoded string",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_DECODE('hello%20world') -- Returns 'hello world'",
+        "SELECT URL_DECODE(encoded_param) FROM web_requests"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_HOST",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_HOST",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the host from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_HOST('https://www.example.com/path') -- Returns 'www.example.com'",
+        "SELECT URL_EXTRACT_HOST(referrer) FROM clickstream"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_PROTOCOL",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_PROTOCOL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the protocol from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PROTOCOL('https://example.com') -- Returns 'https'",
+        "SELECT URL_EXTRACT_PROTOCOL(page_url) FROM analytics"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_PATH",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_PATH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the path from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PATH('https://example.com/users/profile') -- Returns '/users/profile'",
+        "SELECT URL_EXTRACT_PATH(request_url) FROM logs"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_PORT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_PORT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the port number from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_PORT('https://example.com:8080/path') -- Returns 8080",
+        "SELECT URL_EXTRACT_PORT('https://example.com/') -- Returns NULL (default port)"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_QUERY",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_QUERY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the query string from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_QUERY('https://example.com/search?q=test&page=1') -- Returns 'q=test&page=1'",
+        "SELECT URL_EXTRACT_QUERY(landing_page) FROM sessions"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "URL_EXTRACT_FRAGMENT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "URL_EXTRACT_FRAGMENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "URL string"
+      },
+      "description": "Extracts the fragment (hash) from a URL",
+      "aliases": [],
+      "examples": [
+        "SELECT URL_EXTRACT_FRAGMENT('https://example.com/page#section') -- Returns 'section'",
+        "SELECT URL_EXTRACT_FRAGMENT(bookmark_url) FROM user_bookmarks"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "PARSE_PRESTO_DATA_SIZE",
+    "folder": "numeric",
+    "metadata": {
+      "name": "PARSE_PRESTO_DATA_SIZE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Data size string (e.g., '1GB', '500MB')"
+      },
+      "description": "Parses Presto-style data size strings to bytes",
+      "aliases": [],
+      "examples": [
+        "SELECT PARSE_PRESTO_DATA_SIZE('1GB') -- Returns 1073741824",
+        "SELECT PARSE_PRESTO_DATA_SIZE('500MB') -- Returns 524288000"
+      ]
+    },
+    "source_file": "bitwise-url-functions.json"
+  },
+  {
+    "name": "CAST",
+    "folder": "system",
+    "metadata": {
+      "name": "CAST",
+      "sqlKind": "CAST",
+      "category": "SYSTEM",
+      "returnType": "Target type specified in cast",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, TYPE",
+        "description": "Value to cast and target type"
+      },
+      "description": "Converts a value from one data type to another",
+      "aliases": [],
+      "examples": [
+        "SELECT CAST('123' AS INTEGER) -- Returns 123",
+        "SELECT CAST(price AS VARCHAR) FROM products"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TRY_CAST",
+    "folder": "system",
+    "metadata": {
+      "name": "TRY_CAST",
+      "sqlKind": "TRY_CAST",
+      "category": "SYSTEM",
+      "returnType": "Target type specified in cast, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, TYPE",
+        "description": "Value to cast and target type"
+      },
+      "description": "Attempts to convert a value, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_CAST('abc' AS INTEGER) -- Returns NULL",
+        "SELECT TRY_CAST('123' AS INTEGER) -- Returns 123"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TO_NUMBER",
+    "folder": "numeric",
+    "metadata": {
+      "name": "TO_NUMBER",
+      "sqlKind": "TO_NUMBER",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to convert, format pattern"
+      },
+      "description": "Converts a string to a number using a format",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_NUMBER('123.45', '999.99') -- Returns 123.45",
+        "SELECT TO_NUMBER('$1,234.56', '$9,999.99') -- Returns 1234.56"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TRY_TO_NUMBER",
+    "folder": "numeric",
+    "metadata": {
+      "name": "TRY_TO_NUMBER",
+      "sqlKind": "TRY_TO_NUMBER",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to convert, format pattern"
+      },
+      "description": "Attempts to convert string to number, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_TO_NUMBER('abc', '999') -- Returns NULL",
+        "SELECT TRY_TO_NUMBER('123', '999') -- Returns 123"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TO_BOOLEAN",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TO_BOOLEAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING or NUMERIC",
+        "description": "Value to convert to boolean"
+      },
+      "description": "Converts a value to boolean",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BOOLEAN('true') -- Returns TRUE",
+        "SELECT TO_BOOLEAN(1) -- Returns TRUE",
+        "SELECT TO_BOOLEAN('false') -- Returns FALSE"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TO_DATE",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TO_DATE",
+      "sqlKind": "TO_DATE",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/TIMESTAMP, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a string or timestamp to a date",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_DATE('2023-01-15') -- Returns date",
+        "SELECT TO_DATE('15/01/2023', 'DD/MM/YYYY') -- With format"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TO_TIMESTAMP",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TO_TIMESTAMP",
+      "sqlKind": "TO_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/NUMERIC, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a value to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_TIMESTAMP('2023-01-15 10:30:00') -- Returns timestamp",
+        "SELECT TO_TIMESTAMP(1672531200) -- From Unix timestamp"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TRY_TO_TIMESTAMP",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TRY_TO_TIMESTAMP",
+      "sqlKind": "TRY_TO_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/NUMERIC, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Attempts to convert to timestamp, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_TO_TIMESTAMP('invalid') -- Returns NULL",
+        "SELECT TRY_TO_TIMESTAMP('2023-01-15') -- Returns timestamp"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "TYPEOF",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TYPEOF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to get type of"
+      },
+      "description": "Returns the data type of an expression as a string",
+      "aliases": [],
+      "examples": [
+        "SELECT TYPEOF(123) -- Returns 'INTEGER'",
+        "SELECT TYPEOF('hello') -- Returns 'VARCHAR'",
+        "SELECT TYPEOF([1,2,3]) -- Returns 'ARRAY'"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "COALESCE",
+    "folder": "system",
+    "metadata": {
+      "name": "COALESCE",
+      "sqlKind": "COALESCE",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of arguments",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "ANY, ANY, ...",
+        "description": "Values to check for non-null"
+      },
+      "description": "Returns the first non-null value in a list",
+      "aliases": [],
+      "examples": [
+        "SELECT COALESCE(NULL, 'default') -- Returns 'default'",
+        "SELECT COALESCE(phone, mobile, 'N/A') FROM contacts"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "NVL2",
+    "folder": "system",
+    "metadata": {
+      "name": "NVL2",
+      "sqlKind": "NVL2",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of 2nd and 3rd args",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, SAME, SAME",
+        "description": "Value to check, value if not null, value if null"
+      },
+      "description": "Returns second arg if first is not null, else third arg",
+      "aliases": [],
+      "examples": [
+        "SELECT NVL2(commission, commission * 1.1, 0) FROM sales",
+        "SELECT NVL2(end_date, 'Completed', 'Active') FROM projects"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "NULLIF",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "NULLIF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as first argument, force nullable",
+      "parameters": {
+        "count": "2",
+        "types": "COMPARABLE, COMPARABLE",
+        "description": "Two values to compare"
+      },
+      "description": "Returns NULL if two values are equal, else returns first value",
+      "aliases": [],
+      "examples": [
+        "SELECT NULLIF(0, 0) -- Returns NULL",
+        "SELECT NULLIF(5, 0) -- Returns 5"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "NULLIFZERO",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "NULLIFZERO",
+      "sqlKind": "NULLIFZERO",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, force nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Returns NULL if the value is zero",
+      "aliases": [],
+      "examples": [
+        "SELECT NULLIFZERO(0) -- Returns NULL",
+        "SELECT NULLIFZERO(5) -- Returns 5"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "CASE",
+    "folder": "system",
+    "metadata": {
+      "name": "CASE",
+      "sqlKind": "CASE",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of result expressions",
+      "parameters": {
+        "count": "Variable",
+        "types": "Condition/value pairs with optional ELSE",
+        "description": "CASE expression with WHEN/THEN pairs"
+      },
+      "description": "Conditional expression that returns different values based on conditions",
+      "aliases": [],
+      "examples": [
+        "SELECT CASE WHEN score >= 90 THEN 'A' WHEN score >= 80 THEN 'B' ELSE 'C' END",
+        "SELECT CASE status WHEN 'active' THEN 1 WHEN 'inactive' THEN 0 END"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "IF",
+    "folder": "system",
+    "metadata": {
+      "name": "IF",
+      "sqlKind": "IF",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of result expressions",
+      "parameters": {
+        "count": "3",
+        "types": "BOOLEAN, ANY, ANY",
+        "description": "Condition, value if true, value if false"
+      },
+      "description": "Returns one of two values based on a condition",
+      "aliases": [],
+      "examples": [
+        "SELECT IF(age >= 18, 'Adult', 'Minor') FROM users",
+        "SELECT IF(quantity > 0, 'In Stock', 'Out of Stock') FROM products"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "IFF",
+    "folder": "system",
+    "metadata": {
+      "name": "IFF",
+      "sqlKind": "OTHER",
+      "category": "SYSTEM",
+      "returnType": "Type of second argument, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "BOOLEAN, SAME, SAME",
+        "description": "Condition, value if true, value if false"
+      },
+      "description": "Inline IF function (Snowflake compatible)",
+      "aliases": [],
+      "examples": [
+        "SELECT IFF(status = 'active', 1, 0) FROM accounts",
+        "SELECT IFF(temperature > 100, 'Hot', 'Normal') FROM sensors"
+      ]
+    },
+    "source_file": "conversion-system-functions.json"
+  },
+  {
+    "name": "ARRAY_VALUE_CONSTRUCTOR",
+    "folder": "array",
+    "metadata": {
+      "name": "ARRAY_VALUE_CONSTRUCTOR",
+      "sqlKind": "ARRAY_VALUE_CONSTRUCTOR",
+      "category": "ARRAY",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "Variable",
+        "types": "Any number of values of compatible types",
+        "description": "Values to construct array from"
+      },
+      "description": "Constructs an array from values using ARRAY[...] syntax",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY[1, 2, 3] -- Returns array of integers",
+        "SELECT ARRAY['a', 'b', 'c'] -- Returns array of strings"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_SORT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_SORT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1 to 3",
+        "types": "ARRAY, [BOOLEAN], [BOOLEAN]",
+        "description": "Array, optional ascending flag, optional nulls first flag"
+      },
+      "description": "Sorts an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_SORT([3,1,4,1,5]) -- Returns [1,1,3,4,5]",
+        "SELECT ARRAY_SORT([3,1,4], FALSE) -- Returns [4,3,1] (descending)"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_MAX",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_MAX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type of array, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to find maximum value in"
+      },
+      "description": "Returns the maximum value in an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_MAX([3,1,4,1,5]) -- Returns 5",
+        "SELECT ARRAY_MAX(scores) FROM students"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_MIN",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_MIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type of array, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to find minimum value in"
+      },
+      "description": "Returns the minimum value in an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_MIN([3,1,4,1,5]) -- Returns 1",
+        "SELECT ARRAY_MIN(prices) FROM products"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_JOIN",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_JOIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "ARRAY, STRING, [STRING]",
+        "description": "Array, delimiter, optional null replacement"
+      },
+      "description": "Joins array elements into a string",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_JOIN(['a','b','c'], ',') -- Returns 'a,b,c'",
+        "SELECT ARRAY_JOIN([1,NULL,3], '-', '0') -- Returns '1-0-3'"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_APPEND",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_APPEND",
+      "sqlKind": "ARRAY_APPEND",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to append"
+      },
+      "description": "Appends an element to the end of an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_APPEND([1,2,3], 4) -- Returns [1,2,3,4]",
+        "SELECT ARRAY_APPEND(tags, 'new-tag') FROM products"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_PREPEND",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_PREPEND",
+      "sqlKind": "ARRAY_PREPEND",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to prepend"
+      },
+      "description": "Prepends an element to the beginning of an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_PREPEND([1,2,3], 0) -- Returns [0,1,2,3]",
+        "SELECT ARRAY_PREPEND(items, 'first') FROM lists"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_CONTAINS",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_CONTAINS",
+      "sqlKind": "ARRAY_CONTAINS",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ANY",
+        "description": "Array and element to search for"
+      },
+      "description": "Checks if an array contains a specific element",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_CONTAINS([1,2,3], 2) -- Returns TRUE",
+        "SELECT ARRAY_CONTAINS(['a','b','c'], 'd') -- Returns FALSE"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_POSITION",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_POSITION",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, ARRAY",
+        "description": "Element to find and array to search in"
+      },
+      "description": "Returns the position of an element in an array (1-based)",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_POSITION(2, [1,2,3,2]) -- Returns 2",
+        "SELECT ARRAY_POSITION('x', ['a','b','c']) -- Returns NULL"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_CONCAT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_CONCAT",
+      "sqlKind": "ARRAY_CONCAT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY (least restrictive type)",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "ARRAY, ARRAY, ...",
+        "description": "Arrays to concatenate"
+      },
+      "description": "Concatenates multiple arrays",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_CONCAT([1,2], [3,4]) -- Returns [1,2,3,4]",
+        "SELECT ARRAY_CONCAT([1,2], [3,4], [5,6]) -- Returns [1,2,3,4,5,6]"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAYS_OVERLAP",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAYS_OVERLAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ARRAY",
+        "description": "Two arrays to check for overlap"
+      },
+      "description": "Checks if two arrays have any elements in common",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAYS_OVERLAP([1,2,3], [3,4,5]) -- Returns TRUE",
+        "SELECT ARRAYS_OVERLAP([1,2], [3,4]) -- Returns FALSE"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_INTERSECT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_INTERSECT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, ARRAY",
+        "description": "Two arrays to intersect"
+      },
+      "description": "Returns the intersection of two arrays",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_INTERSECT([1,2,3,4], [3,4,5,6]) -- Returns [3,4]",
+        "SELECT ARRAY_INTERSECT(['a','b'], ['b','c']) -- Returns ['b']"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ARRAY_COMPACT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_COMPACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY",
+        "description": "Array to compact"
+      },
+      "description": "Removes null values from an array",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_COMPACT([1,NULL,2,NULL,3]) -- Returns [1,2,3]",
+        "SELECT ARRAY_COMPACT(measurements) FROM sensors"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "FILTER_ARRAY",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "FILTER_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input array",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and filter lambda expression"
+      },
+      "description": "Filters array elements based on a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT FILTER_ARRAY([1,2,3,4,5], x -> x > 2) -- Returns [3,4,5]",
+        "SELECT FILTER_ARRAY(numbers, x -> x % 2 = 0) -- Even numbers only"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "TRANSFORM",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TRANSFORM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and transformation lambda expression"
+      },
+      "description": "Transforms array elements using a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT TRANSFORM([1,2,3], x -> x * 2) -- Returns [2,4,6]",
+        "SELECT TRANSFORM(names, x -> UPPER(x)) FROM users"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ANY_MATCH",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ANY_MATCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and predicate lambda expression"
+      },
+      "description": "Checks if any array element matches the predicate",
+      "aliases": [],
+      "examples": [
+        "SELECT ANY_MATCH([1,2,3], x -> x > 2) -- Returns TRUE",
+        "SELECT ANY_MATCH(scores, x -> x >= 90) FROM students"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "ALL_MATCH",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ALL_MATCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, LAMBDA",
+        "description": "Array and predicate lambda expression"
+      },
+      "description": "Checks if all array elements match the predicate",
+      "aliases": [],
+      "examples": [
+        "SELECT ALL_MATCH([2,4,6], x -> x % 2 = 0) -- Returns TRUE",
+        "SELECT ALL_MATCH(grades, x -> x >= 60) FROM courses"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "REDUCE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REDUCE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Depends on lambda return type",
+      "parameters": {
+        "count": "3",
+        "types": "ARRAY, INITIAL_VALUE, LAMBDA",
+        "description": "Array, initial value, and reducer lambda"
+      },
+      "description": "Reduces an array to a single value using a lambda expression",
+      "aliases": [],
+      "examples": [
+        "SELECT REDUCE([1,2,3,4], 0, (acc, x) -> acc + x) -- Returns 10",
+        "SELECT REDUCE(prices, 0, (sum, p) -> sum + p) FROM items"
+      ]
+    },
+    "source_file": "array-functions.json"
+  },
+  {
+    "name": "INSTR",
+    "folder": "string",
+    "metadata": {
+      "name": "INSTR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 to 4",
+        "types": "STRING, STRING, [INTEGER], [INTEGER]",
+        "description": "String to search in, substring to find, optional start position, optional occurrence"
+      },
+      "description": "Returns the position of a substring within a string",
+      "aliases": [],
+      "examples": [
+        "SELECT INSTR('Hello World', 'World') -- Returns 7",
+        "SELECT INSTR('Hello World Hello', 'Hello', 2) -- Returns 13"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "REPEAT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REPEAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to repeat, number of times to repeat"
+      },
+      "description": "Repeats a string a specified number of times",
+      "aliases": [],
+      "examples": [
+        "SELECT REPEAT('ABC', 3) -- Returns 'ABCABCABC'",
+        "SELECT REPEAT('-', 10) -- Returns '----------'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "SPLIT_PART",
+    "folder": "string",
+    "metadata": {
+      "name": "SPLIT_PART",
+      "sqlKind": "SPLIT_PART",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, STRING, INTEGER",
+        "description": "String to split, delimiter, part number (1-based)"
+      },
+      "description": "Splits a string and returns the specified part",
+      "aliases": [],
+      "examples": [
+        "SELECT SPLIT_PART('a,b,c', ',', 2) -- Returns 'b'",
+        "SELECT SPLIT_PART('2023-01-15', '-', 1) -- Returns '2023'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "INITCAP",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "INITCAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to capitalize"
+      },
+      "description": "Capitalizes the first letter of each word",
+      "aliases": [],
+      "examples": [
+        "SELECT INITCAP('hello world') -- Returns 'Hello World'",
+        "SELECT INITCAP('JOHN DOE') -- Returns 'John Doe'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "SOUNDEX",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SOUNDEX",
+      "sqlKind": "SOUNDEX",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Returns the Soundex code of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SOUNDEX('Smith') -- Returns 'S530'",
+        "SELECT SOUNDEX('Smythe') -- Returns 'S530'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "NORMALIZE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "NORMALIZE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to normalize, optional normalization form"
+      },
+      "description": "Normalizes a Unicode string",
+      "aliases": [],
+      "examples": [
+        "SELECT NORMALIZE('caf\u00e9') -- Normalizes the string",
+        "SELECT NORMALIZE('caf\u00e9', 'NFC') -- Normalizes using NFC form"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "CONTAINS_SUBSTR",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "CONTAINS_SUBSTR",
+      "sqlKind": "CONTAINS_SUBSTR",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, substring to find"
+      },
+      "description": "Checks if a string contains a substring",
+      "aliases": [],
+      "examples": [
+        "SELECT CONTAINS_SUBSTR('Hello World', 'World') -- Returns TRUE",
+        "SELECT CONTAINS_SUBSTR('Hello', 'xyz') -- Returns FALSE"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "HAMMING_DISTANCE",
+    "folder": "string",
+    "metadata": {
+      "name": "HAMMING_DISTANCE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "First string, second string (must be same length)"
+      },
+      "description": "Calculates the Hamming distance between two strings",
+      "aliases": [],
+      "examples": [
+        "SELECT HAMMING_DISTANCE('karolin', 'kathrin') -- Returns 3",
+        "SELECT HAMMING_DISTANCE('1011101', '1001001') -- Returns 2"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "LEVENSHTEIN",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "LEVENSHTEIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "First string, second string"
+      },
+      "description": "Calculates the Levenshtein distance between two strings",
+      "aliases": [],
+      "examples": [
+        "SELECT LEVENSHTEIN('kitten', 'sitting') -- Returns 3",
+        "SELECT LEVENSHTEIN('saturday', 'sunday') -- Returns 3"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "MID",
+    "folder": "string",
+    "metadata": {
+      "name": "MID",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, INTEGER, INTEGER",
+        "description": "String to extract from, start position (1-based), length"
+      },
+      "description": "Extracts a substring from a string (similar to SUBSTR)",
+      "aliases": [],
+      "examples": [
+        "SELECT MID('Hello World', 7, 5) -- Returns 'World'",
+        "SELECT MID('ABCDEFG', 3, 2) -- Returns 'CD'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "STUFF",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "STUFF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "4",
+        "types": "STRING, INTEGER, INTEGER, STRING",
+        "description": "String to modify, start position, length to delete, string to insert"
+      },
+      "description": "Deletes a part of a string and inserts another string at that position",
+      "aliases": [],
+      "examples": [
+        "SELECT STUFF('Hello World', 7, 5, 'Universe') -- Returns 'Hello Universe'",
+        "SELECT STUFF('ABCDEFG', 3, 2, 'XYZ') -- Returns 'ABXYZEFG'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "STRRPOS",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "STRRPOS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String to search in, substring to find, optional start position"
+      },
+      "description": "Returns the position of the last occurrence of a substring",
+      "aliases": [],
+      "examples": [
+        "SELECT STRRPOS('Hello Hello World', 'Hello') -- Returns 7",
+        "SELECT STRRPOS('ABCABC', 'ABC') -- Returns 4"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "ARRAY_TO_STRING",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "ARRAY_TO_STRING",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(4) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, STRING",
+        "description": "Array to convert, delimiter"
+      },
+      "description": "Concatenates array elements into a string with a delimiter",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_TO_STRING(['a', 'b', 'c'], ',') -- Returns 'a,b,c'",
+        "SELECT ARRAY_TO_STRING([1, 2, 3], '-') -- Returns '1-2-3'"
+      ]
+    },
+    "source_file": "string-functions-2.json"
+  },
+  {
+    "name": "DATE",
+    "folder": "timedate",
+    "metadata": {
+      "name": "DATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP/STRING",
+        "description": "Timestamp or date string to convert"
+      },
+      "description": "Extracts the date part from a timestamp or converts string to date",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE('2023-01-15 10:30:00') -- Returns '2023-01-15'",
+        "SELECT DATE(CURRENT_TIMESTAMP) -- Returns today's date"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "TIME",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIME",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP/STRING",
+        "description": "Timestamp or time string to convert"
+      },
+      "description": "Extracts the time part from a timestamp or converts string to time",
+      "aliases": [],
+      "examples": [
+        "SELECT TIME('2023-01-15 10:30:00') -- Returns '10:30:00'",
+        "SELECT TIME(CURRENT_TIMESTAMP) -- Returns current time"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "TIMESTAMP",
+    "folder": "timedate",
+    "metadata": {
+      "name": "TIMESTAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "1",
+        "types": "STRING/DATE",
+        "description": "String or date to convert to timestamp"
+      },
+      "description": "Converts a string or date to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIMESTAMP('2023-01-15 10:30:00') -- Returns timestamp",
+        "SELECT TIMESTAMP('2023-01-15') -- Returns '2023-01-15 00:00:00'"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "DATETIME",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "DATETIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "TIMESTAMP, [STRING]",
+        "description": "Timestamp, optional timezone"
+      },
+      "description": "Creates a datetime with optional timezone",
+      "aliases": [],
+      "examples": [
+        "SELECT DATETIME('2023-01-15 10:30:00') -- Returns datetime",
+        "SELECT DATETIME('2023-01-15 10:30:00', 'America/New_York') -- With timezone"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "TIME_STAMP",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TIME_STAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "TIMESTAMP, [STRING]",
+        "description": "Timestamp, optional format"
+      },
+      "description": "Creates a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIME_STAMP('2023-01-15 10:30:00') -- Returns timestamp"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "GENERATE_TIMESTAMP_ARRAY",
+    "folder": "timedate",
+    "metadata": {
+      "name": "GENERATE_TIMESTAMP_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "ARRAY of TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "TIMESTAMP, TIMESTAMP, INTERVAL",
+        "description": "Start timestamp, end timestamp, interval"
+      },
+      "description": "Generates an array of timestamps",
+      "aliases": [],
+      "examples": [
+        "SELECT GENERATE_TIMESTAMP_ARRAY('2023-01-01', '2023-01-05', INTERVAL 1 DAY)",
+        "-- Returns array of 5 timestamps"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "GENERATE_DATE_ARRAY",
+    "folder": "timedate",
+    "metadata": {
+      "name": "GENERATE_DATE_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "ARRAY of DATE NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "DATE, DATE, INTERVAL",
+        "description": "Start date, end date, interval"
+      },
+      "description": "Generates an array of dates",
+      "aliases": [],
+      "examples": [
+        "SELECT GENERATE_DATE_ARRAY('2023-01-01', '2023-01-31', INTERVAL 7 DAY)",
+        "-- Returns array of weekly dates"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "SECOND",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SECOND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIME/TIMESTAMP/STRING",
+        "description": "Time, timestamp, or time string"
+      },
+      "description": "Extracts the second from a time or timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT SECOND('10:30:45') -- Returns 45",
+        "SELECT SECOND(CURRENT_TIMESTAMP) -- Returns current second"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "WEEKDAY",
+    "folder": "timedate",
+    "metadata": {
+      "name": "WEEKDAY",
+      "sqlKind": "WEEKDAY",
+      "category": "TIMEDATE",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the weekday number (0=Monday, 6=Sunday)",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKDAY('2023-01-15') -- Returns 6 (Sunday)",
+        "SELECT WEEKDAY(CURRENT_DATE) -- Returns current weekday"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "DAYNAME",
+    "folder": "timedate",
+    "metadata": {
+      "name": "DAYNAME",
+      "sqlKind": "DAYNAME",
+      "category": "TIMEDATE",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the name of the weekday",
+      "aliases": [],
+      "examples": [
+        "SELECT DAYNAME('2023-01-15') -- Returns 'Sunday'",
+        "SELECT DAYNAME(CURRENT_DATE) -- Returns current day name"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "DAYOFWEEKISO",
+    "folder": "timedate",
+    "metadata": {
+      "name": "DAYOFWEEKISO",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns ISO day of week (1=Monday, 7=Sunday)",
+      "aliases": [],
+      "examples": [
+        "SELECT DAYOFWEEKISO('2023-01-15') -- Returns 7 (Sunday)",
+        "SELECT DAYOFWEEKISO(CURRENT_DATE) -- Returns current ISO day"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "WEEKOFYEAR",
+    "folder": "timedate",
+    "metadata": {
+      "name": "WEEKOFYEAR",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the week number of the year",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKOFYEAR('2023-01-15') -- Returns 3",
+        "SELECT WEEKOFYEAR(CURRENT_DATE) -- Returns current week number"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "WEEKISO",
+    "folder": "timedate",
+    "metadata": {
+      "name": "WEEKISO",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the ISO week number",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKISO('2023-01-15') -- Returns ISO week number",
+        "SELECT WEEKISO(CURRENT_DATE) -- Returns current ISO week"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "YEAROFWEEK",
+    "folder": "timedate",
+    "metadata": {
+      "name": "YEAROFWEEK",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the year of the week-based year",
+      "aliases": [],
+      "examples": [
+        "SELECT YEAROFWEEK('2023-01-01') -- May return 2022 if Jan 1 is in last week of previous year",
+        "SELECT YEAROFWEEK(CURRENT_DATE) -- Returns current week-based year"
+      ]
+    },
+    "source_file": "datetime-functions-2.json"
+  },
+  {
+    "name": "PLUS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "PLUS",
+      "sqlKind": "PLUS",
+      "category": "NUMERIC",
+      "returnType": "Sum type of operands, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values to add"
+      },
+      "description": "Arithmetic addition operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 5 + 3 -- Returns 8",
+        "SELECT price + tax FROM orders"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "MINUS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "MINUS",
+      "sqlKind": "MINUS",
+      "category": "NUMERIC",
+      "returnType": "Sum type of operands, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values to subtract"
+      },
+      "description": "Arithmetic subtraction operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 10 - 3 -- Returns 7",
+        "SELECT revenue - cost AS profit FROM sales"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "DIVIDE",
+    "folder": "numeric",
+    "metadata": {
+      "name": "DIVIDE",
+      "sqlKind": "DIVIDE",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Dividend and divisor"
+      },
+      "description": "Arithmetic division operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 20 / 4 -- Returns 5.0",
+        "SELECT total_sales / num_customers AS avg_sale FROM metrics"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "TRY_DIVIDE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "TRY_DIVIDE",
+      "sqlKind": "TRY_DIVIDE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, ANY",
+        "description": "Dividend and divisor"
+      },
+      "description": "Safe division that returns NULL instead of error on division by zero",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_DIVIDE(10, 0) -- Returns NULL",
+        "SELECT TRY_DIVIDE(20, 4) -- Returns 5.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "POW",
+    "folder": "numeric",
+    "metadata": {
+      "name": "POW",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Base and exponent"
+      },
+      "description": "Raises a number to the power of another number",
+      "aliases": [],
+      "examples": [
+        "SELECT POW(2, 3) -- Returns 8.0",
+        "SELECT POW(10, 2) -- Returns 100.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "MOD",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "MOD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Dividend and divisor"
+      },
+      "description": "Returns the remainder of division",
+      "aliases": [],
+      "examples": [
+        "SELECT MOD(10, 3) -- Returns 1",
+        "SELECT MOD(25, 7) -- Returns 4"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "LOG",
+    "folder": "numeric",
+    "metadata": {
+      "name": "LOG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Base and value"
+      },
+      "description": "Returns the logarithm of a number with specified base",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG(2, 8) -- Returns 3.0",
+        "SELECT LOG(10, 100) -- Returns 2.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "LOG10",
+    "folder": "numeric",
+    "metadata": {
+      "name": "LOG10",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the base-10 logarithm of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG10(100) -- Returns 2.0",
+        "SELECT LOG10(1000) -- Returns 3.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "LOG2",
+    "folder": "numeric",
+    "metadata": {
+      "name": "LOG2",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the base-2 logarithm of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG2(8) -- Returns 3.0",
+        "SELECT LOG2(16) -- Returns 4.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "SQUARE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SQUARE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to square"
+      },
+      "description": "Returns the square of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT SQUARE(5) -- Returns 25.0",
+        "SELECT SQUARE(-3) -- Returns 9.0"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "FACTORIAL",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "FACTORIAL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Non-negative integer"
+      },
+      "description": "Returns the factorial of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT FACTORIAL(5) -- Returns 120",
+        "SELECT FACTORIAL(0) -- Returns 1"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "E",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "E",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns Euler's number (e \u2248 2.71828)",
+      "aliases": [],
+      "examples": [
+        "SELECT E() -- Returns 2.718281828459045"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "INFINITY",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "INFINITY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns positive infinity",
+      "aliases": [],
+      "examples": [
+        "SELECT INFINITY() -- Returns Infinity",
+        "SELECT 1 / 0 < INFINITY() -- Returns TRUE"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "NAN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "NAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns Not-a-Number (NaN)",
+      "aliases": [],
+      "examples": [
+        "SELECT NAN() -- Returns NaN",
+        "SELECT IS_NAN(NAN()) -- Returns TRUE"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "IS_FINITE",
+    "folder": "numeric",
+    "metadata": {
+      "name": "IS_FINITE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is finite",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_FINITE(100) -- Returns TRUE",
+        "SELECT IS_FINITE(INFINITY()) -- Returns FALSE"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "IS_INFINITE",
+    "folder": "numeric",
+    "metadata": {
+      "name": "IS_INFINITE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is infinite",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_INFINITE(100) -- Returns FALSE",
+        "SELECT IS_INFINITE(INFINITY()) -- Returns TRUE"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "IS_NAN",
+    "folder": "numeric",
+    "metadata": {
+      "name": "IS_NAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is NaN (Not-a-Number)",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_NAN(100) -- Returns FALSE",
+        "SELECT IS_NAN(0.0 / 0.0) -- Returns TRUE"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "POSITIVE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "POSITIVE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the positive value (unary plus)",
+      "aliases": [],
+      "examples": [
+        "SELECT POSITIVE(-5) -- Returns -5",
+        "SELECT POSITIVE(5) -- Returns 5"
+      ]
+    },
+    "source_file": "numeric-functions-1.json"
+  },
+  {
+    "name": "UUID",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "UUID",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed for deterministic UUID"
+      },
+      "description": "Generates a universally unique identifier (UUID)",
+      "aliases": [],
+      "examples": [
+        "SELECT UUID() -- Returns random UUID like 'f47ac10b-58cc-4372-a567-0e02b2c3d479'",
+        "SELECT UUID(42) -- Returns same UUID for same seed"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "VERSION",
+    "folder": "system",
+    "metadata": {
+      "name": "VERSION",
+      "sqlKind": "VERSION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns the version of the database system",
+      "aliases": [],
+      "examples": [
+        "SELECT VERSION() -- Returns system version information"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "SLEEP",
+    "folder": "system",
+    "metadata": {
+      "name": "SLEEP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Number of seconds to sleep"
+      },
+      "description": "Pauses execution for specified seconds",
+      "aliases": [],
+      "examples": [
+        "SELECT SLEEP(2) -- Pauses for 2 seconds",
+        "SELECT SLEEP(0.5) -- Pauses for 500 milliseconds"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "JSON_FORMAT",
+    "folder": "system",
+    "metadata": {
+      "name": "JSON_FORMAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to format as JSON"
+      },
+      "description": "Formats a value as JSON string",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_FORMAT(map_col) FROM table_with_maps",
+        "SELECT JSON_FORMAT(array_col) FROM table_with_arrays"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "JSON_EXTRACT_SCALAR",
+    "folder": "system",
+    "metadata": {
+      "name": "JSON_EXTRACT_SCALAR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "JSON/STRING/STRUCT/MAP/ARRAY, STRING",
+        "description": "JSON-like value and path"
+      },
+      "description": "Extracts a scalar value from JSON-like structures",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_EXTRACT_SCALAR(json_col, '$.id') FROM users",
+        "SELECT JSON_EXTRACT_SCALAR(nested_data, '$.items[0].price') FROM orders"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "JSON_ARRAY_LENGTH",
+    "folder": "string",
+    "metadata": {
+      "name": "JSON_ARRAY_LENGTH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "JSON array as string"
+      },
+      "description": "Returns the length of a JSON array",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_ARRAY_LENGTH('[1,2,3]') -- Returns 3",
+        "SELECT JSON_ARRAY_LENGTH(items_json) FROM shopping_cart"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "IS_VALID_JSON",
+    "folder": "system",
+    "metadata": {
+      "name": "IS_VALID_JSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to validate as JSON"
+      },
+      "description": "Checks if a string is valid JSON",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_VALID_JSON('{\"valid\": true}') -- Returns TRUE",
+        "SELECT IS_VALID_JSON('{invalid}') -- Returns FALSE"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "JSONEXTRACT",
+    "folder": "system",
+    "metadata": {
+      "name": "JSONEXTRACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "STRING",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "JSON string and path (ClickHouse compatible)"
+      },
+      "description": "Extracts value from JSON (ClickHouse compatible)",
+      "aliases": [],
+      "examples": [
+        "SELECT JSONEXTRACT('{\"a\": 1}', 'a') -- Returns '1'",
+        "SELECT JSONEXTRACT(json_data, 'user.id') FROM logs"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "JSON_HAS",
+    "folder": "system",
+    "metadata": {
+      "name": "JSON_HAS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "JSON string and path to check"
+      },
+      "description": "Checks if a path exists in JSON",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_HAS('{\"a\": 1}', 'a') -- Returns TRUE",
+        "SELECT JSON_HAS(config, 'settings.debug') FROM app_config"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "TO_JSON",
+    "folder": "system",
+    "metadata": {
+      "name": "TO_JSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "JSON STRING",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to convert to JSON"
+      },
+      "description": "Converts a value to JSON representation",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_JSON(struct_col) FROM table_with_structs",
+        "SELECT TO_JSON(MAP('key1', 'value1', 'key2', 'value2'))"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "NAMED_STRUCT",
+    "folder": "system",
+    "metadata": {
+      "name": "NAMED_STRUCT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "STRUCT",
+      "parameters": {
+        "count": "Variable (even number)",
+        "types": "STRING, ANY, STRING, ANY, ...",
+        "description": "Alternating field names and values"
+      },
+      "description": "Creates a struct with named fields",
+      "aliases": [],
+      "examples": [
+        "SELECT NAMED_STRUCT('name', 'John', 'age', 30) -- Returns struct",
+        "SELECT NAMED_STRUCT('id', user_id, 'email', user_email) FROM users"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "MAP_KEYS",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "MAP_KEYS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "ARRAY of keys",
+      "parameters": {
+        "count": "1",
+        "types": "MAP",
+        "description": "Map to extract keys from"
+      },
+      "description": "Returns an array of all keys in a map",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_KEYS(MAP('a', 1, 'b', 2)) -- Returns ['a', 'b']",
+        "SELECT MAP_KEYS(attributes) FROM products"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "MAP_VALUES",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "MAP_VALUES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "ARRAY of values",
+      "parameters": {
+        "count": "1",
+        "types": "MAP",
+        "description": "Map to extract values from"
+      },
+      "description": "Returns an array of all values in a map",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_VALUES(MAP('a', 1, 'b', 2)) -- Returns [1, 2]",
+        "SELECT MAP_VALUES(properties) FROM items"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "MAP_CONCAT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "MAP_CONCAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "MAP (same as input)",
+      "parameters": {
+        "count": "2",
+        "types": "MAP, MAP",
+        "description": "Two maps to concatenate"
+      },
+      "description": "Merges two maps into one",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_CONCAT(MAP('a', 1), MAP('b', 2)) -- Returns MAP('a', 1, 'b', 2)",
+        "SELECT MAP_CONCAT(defaults, overrides) FROM configurations"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "SLICE_MAP",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SLICE_MAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "MAP",
+      "parameters": {
+        "count": "2",
+        "types": "MAP, ARRAY",
+        "description": "Map and array of keys to extract"
+      },
+      "description": "Extracts a subset of a map based on keys",
+      "aliases": [],
+      "examples": [
+        "SELECT SLICE_MAP(MAP('a',1,'b',2,'c',3), ['a','c']) -- Returns MAP('a',1,'c',3)",
+        "SELECT SLICE_MAP(full_config, required_keys) FROM settings"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "EXPLODE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "EXPLODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TABLE",
+      "returnType": "TABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY/MAP",
+        "description": "Array or map to explode"
+      },
+      "description": "Transforms array/map into multiple rows",
+      "aliases": [],
+      "examples": [
+        "SELECT EXPLODE([1,2,3]) -- Returns 3 rows",
+        "SELECT id, EXPLODE(tags) AS tag FROM products"
+      ]
+    },
+    "source_file": "miscellaneous-functions.json"
+  },
+  {
+    "name": "COUNT",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "COUNT",
+      "sqlKind": "COUNT",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1",
+        "types": "ANY or *",
+        "description": "Column to count or * for all rows"
+      },
+      "description": "Counts the number of rows or non-null values",
+      "aliases": [],
+      "examples": [
+        "SELECT COUNT(*) FROM users -- Count all rows",
+        "SELECT COUNT(email) FROM users -- Count non-null emails",
+        "SELECT COUNT(DISTINCT city) FROM users -- Count unique cities"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "SUM",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "SUM",
+      "sqlKind": "SUM",
+      "category": "AGGREGATE",
+      "returnType": "Sum type of input",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric column to sum"
+      },
+      "description": "Calculates the sum of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT SUM(amount) FROM sales",
+        "SELECT SUM(quantity * price) FROM order_items"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "AVG",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "AVG",
+      "sqlKind": "AVG",
+      "category": "AGGREGATE",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric column to average"
+      },
+      "description": "Calculates the average of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT AVG(salary) FROM employees",
+        "SELECT AVG(rating) FROM reviews"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "MIN",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "MIN",
+      "sqlKind": "MIN",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY COMPARABLE",
+        "description": "Column to find minimum"
+      },
+      "description": "Returns the minimum value",
+      "aliases": [],
+      "examples": [
+        "SELECT MIN(price) FROM products",
+        "SELECT MIN(created_date) FROM orders"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "MAX",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "MAX",
+      "sqlKind": "MAX",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY COMPARABLE",
+        "description": "Column to find maximum"
+      },
+      "description": "Returns the maximum value",
+      "aliases": [],
+      "examples": [
+        "SELECT MAX(score) FROM exams",
+        "SELECT MAX(last_login) FROM users"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "STRING_AGG",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "STRING_AGG",
+      "sqlKind": "STRING_AGG",
+      "category": "AGGREGATE",
+      "returnType": "STRING NULLABLE",
+      "parameters": {
+        "count": "1 to 3",
+        "types": "STRING, [STRING], [INTEGER]",
+        "description": "Column, optional separator, optional limit"
+      },
+      "description": "Concatenates strings from a group into a single string",
+      "aliases": [],
+      "examples": [
+        "SELECT STRING_AGG(name, ', ') FROM users GROUP BY department",
+        "SELECT STRING_AGG(tag, '|' ORDER BY tag) FROM product_tags"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "ARG_MAX",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "ARG_MAX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, COMPARABLE",
+        "description": "Value column, comparison column"
+      },
+      "description": "Returns the value of the first column at the row with max value of second column",
+      "aliases": [],
+      "examples": [
+        "SELECT ARG_MAX(product_name, price) FROM products -- Product with highest price",
+        "SELECT ARG_MAX(employee_name, salary) FROM employees GROUP BY department"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "ARG_MIN",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "ARG_MIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, COMPARABLE",
+        "description": "Value column, comparison column"
+      },
+      "description": "Returns the value of the first column at the row with min value of second column",
+      "aliases": [],
+      "examples": [
+        "SELECT ARG_MIN(product_name, price) FROM products -- Cheapest product",
+        "SELECT ARG_MIN(student_name, score) FROM exam_results GROUP BY class"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "MAX_BY",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "MAX_BY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, COMPARABLE, INTEGER",
+        "description": "Value column, comparison column, number of values"
+      },
+      "description": "Returns top N values based on comparison column",
+      "aliases": [],
+      "examples": [
+        "SELECT MAX_BY(product_name, revenue, 5) FROM sales -- Top 5 products by revenue",
+        "SELECT MAX_BY(employee_id, performance_score, 3) FROM reviews"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "MIN_BY",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "MIN_BY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, COMPARABLE, INTEGER",
+        "description": "Value column, comparison column, number of values"
+      },
+      "description": "Returns bottom N values based on comparison column",
+      "aliases": [],
+      "examples": [
+        "SELECT MIN_BY(product_name, price, 5) FROM products -- 5 cheapest products",
+        "SELECT MIN_BY(error_message, error_count, 10) FROM logs"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "APPROX_COUNT_DISTINCT",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "APPROX_COUNT_DISTINCT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "ANY, [DOUBLE]",
+        "description": "Column to count, optional error rate"
+      },
+      "description": "Approximates the number of distinct values using HyperLogLog",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_COUNT_DISTINCT(user_id) FROM events",
+        "SELECT APPROX_COUNT_DISTINCT(ip_address, 0.01) FROM access_logs"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "APPROX_PERCENTILE",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "APPROX_PERCENTILE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "NUMERIC, DOUBLE, [INTEGER]",
+        "description": "Column, percentile (0-1), optional accuracy"
+      },
+      "description": "Approximates the percentile of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_PERCENTILE(response_time, 0.95) FROM api_logs -- 95th percentile",
+        "SELECT APPROX_PERCENTILE(salary, 0.5) FROM employees -- Median"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "APPROX_QUANTILES",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "APPROX_QUANTILES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, INTEGER",
+        "description": "Column, number of quantiles"
+      },
+      "description": "Approximates quantile boundaries for numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_QUANTILES(income, 4) FROM census -- Quartiles",
+        "SELECT APPROX_QUANTILES(score, 10) FROM exams -- Deciles"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "CORR",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "CORR",
+      "sqlKind": "CORR",
+      "category": "AGGREGATE",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric columns to correlate"
+      },
+      "description": "Calculates the correlation coefficient between two numeric columns",
+      "aliases": [],
+      "examples": [
+        "SELECT CORR(temperature, ice_cream_sales) FROM daily_stats",
+        "SELECT CORR(study_hours, test_score) FROM students"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "ARBITRARY",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "ARBITRARY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to select arbitrary value from"
+      },
+      "description": "Returns an arbitrary non-null value from the group",
+      "aliases": [],
+      "examples": [
+        "SELECT ARBITRARY(color) FROM products GROUP BY category",
+        "SELECT ARBITRARY(manager_id) FROM employees GROUP BY department"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "ANY_VALUE",
+    "folder": "aggregate",
+    "metadata": {
+      "name": "ANY_VALUE",
+      "sqlKind": "ANY_VALUE",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to select any value from"
+      },
+      "description": "Returns any value from the group (including nulls)",
+      "aliases": [],
+      "examples": [
+        "SELECT ANY_VALUE(email) FROM users GROUP BY domain",
+        "SELECT ANY_VALUE(timestamp) FROM logs GROUP BY session_id"
+      ]
+    },
+    "source_file": "aggregate-functions.json"
+  },
+  {
+    "name": "H3_LATLNG_TO_CELL",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_LATLNG_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Latitude, longitude, resolution (0-15)"
+      },
+      "description": "Converts latitude/longitude to H3 cell index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_LATLNG_TO_CELL(37.7749, -122.4194, 9) -- San Francisco at resolution 9",
+        "SELECT H3_LATLNG_TO_CELL(lat, lng, 12) FROM locations"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_LATLNG_TO_CELLADDRESS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_LATLNG_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Latitude, longitude, resolution (0-15)"
+      },
+      "description": "Converts latitude/longitude to H3 cell address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_LATLNG_TO_CELLADDRESS(37.7749, -122.4194, 9) -- Returns hex string",
+        "SELECT H3_LATLNG_TO_CELLADDRESS(lat, lng, 10) FROM stores"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_POINT_TO_CELL",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_POINT_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT point string, resolution"
+      },
+      "description": "Converts WKT point to H3 cell index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POINT_TO_CELL('POINT(-122.4194 37.7749)', 9)",
+        "SELECT H3_POINT_TO_CELL(geometry, 11) FROM poi_table"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_POINT_TO_CELLADDRESS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_POINT_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT point string, resolution"
+      },
+      "description": "Converts WKT point to H3 cell address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POINT_TO_CELLADDRESS('POINT(-122.4194 37.7749)', 9)",
+        "SELECT H3_POINT_TO_CELLADDRESS(location, 8) FROM events"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELL_TO_LATLNG",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELL_TO_LATLNG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of DOUBLE, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "H3 cell index"
+      },
+      "description": "Converts H3 cell to [latitude, longitude] array",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_LATLNG(617733151092549631) -- Returns [lat, lng]",
+        "SELECT H3_CELL_TO_LATLNG(h3_index)[0] AS lat, H3_CELL_TO_LATLNG(h3_index)[1] AS lng FROM grid"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELLADDRESS_TO_LATLNG",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELLADDRESS_TO_LATLNG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of DOUBLE, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "H3 cell address string"
+      },
+      "description": "Converts H3 cell address to [latitude, longitude] array",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_LATLNG('8928308280fffff') -- Returns [lat, lng]",
+        "SELECT H3_CELLADDRESS_TO_LATLNG(h3_address) FROM hexagons"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELL_TO_CELLADDRESS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELL_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "H3 cell index"
+      },
+      "description": "Converts H3 cell index to address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_CELLADDRESS(617733151092549631) -- Returns hex string",
+        "SELECT H3_CELL_TO_CELLADDRESS(cell_id) FROM h3_grid"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELLADDRESS_TO_CELL",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELLADDRESS_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "H3 cell address string"
+      },
+      "description": "Converts H3 cell address to index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_CELL('8928308280fffff') -- Returns numeric index",
+        "SELECT H3_CELLADDRESS_TO_CELL(hex_id) FROM locations"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELL_TO_PARENT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELL_TO_PARENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "H3 cell index, parent resolution"
+      },
+      "description": "Returns parent cell at specified resolution",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_PARENT(617733151092549631, 8) -- Parent at resolution 8",
+        "SELECT H3_CELL_TO_PARENT(cell, resolution - 1) FROM h3_hierarchy"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELLADDRESS_TO_PARENT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_CELLADDRESS_TO_PARENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "H3 cell address, parent resolution"
+      },
+      "description": "Returns parent cell address at specified resolution",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_PARENT('8928308280fffff', 7)",
+        "SELECT H3_CELLADDRESS_TO_PARENT(hex_address, 5) FROM detailed_grid"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_CELL_TO_BOUNDARY_AS_GEOJSON",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "H3_CELL_TO_BOUNDARY_AS_GEOJSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING or NUMERIC",
+        "description": "H3 cell index or address"
+      },
+      "description": "Returns H3 cell boundary as GeoJSON polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_BOUNDARY_AS_GEOJSON(617733151092549631)",
+        "SELECT H3_CELL_TO_BOUNDARY_AS_GEOJSON('8928308280fffff')"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_POLYGON_TO_CELLS",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_POLYGON_TO_CELLS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of BIGINT, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT polygon, resolution"
+      },
+      "description": "Returns H3 cells covering the polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POLYGON_TO_CELLS('POLYGON((-122.4 37.7, -122.4 37.8, -122.3 37.8, -122.3 37.7, -122.4 37.7))', 9)",
+        "SELECT H3_POLYGON_TO_CELLS(boundary, 10) FROM regions"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_POLYGON_TO_CELLADDRESSES",
+    "folder": "numeric",
+    "metadata": {
+      "name": "H3_POLYGON_TO_CELLADDRESSES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of STRING, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT polygon, resolution"
+      },
+      "description": "Returns H3 cell addresses covering the polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POLYGON_TO_CELLADDRESSES(geofence, 11) FROM service_areas",
+        "SELECT H3_POLYGON_TO_CELLADDRESSES('POLYGON(...)', 9)"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "H3_GRID_DISK",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "H3_GRID_DISK",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING/NUMERIC, NUMERIC",
+        "description": "H3 cell (index or address), ring size"
+      },
+      "description": "Returns cells within k rings of the origin cell",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_GRID_DISK(617733151092549631, 1) -- Cell and immediate neighbors",
+        "SELECT H3_GRID_DISK('8928308280fffff', 2) -- Cell and 2 rings around it"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "BING_TILE_QUADKEY",
+    "folder": "numeric",
+    "metadata": {
+      "name": "BING_TILE_QUADKEY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Bing tile string"
+      },
+      "description": "Returns quadkey for a Bing tile",
+      "aliases": [],
+      "examples": [
+        "SELECT BING_TILE_QUADKEY(tile_id) FROM map_tiles",
+        "SELECT BING_TILE_QUADKEY('15_17740_11332')"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "BING_TILE_AT",
+    "folder": "numeric",
+    "metadata": {
+      "name": "BING_TILE_AT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Longitude, latitude, zoom level"
+      },
+      "description": "Returns Bing tile containing the point at zoom level",
+      "aliases": [],
+      "examples": [
+        "SELECT BING_TILE_AT(-122.4194, 37.7749, 12) -- San Francisco at zoom 12",
+        "SELECT BING_TILE_AT(lng, lat, 15) FROM locations"
+      ]
+    },
+    "source_file": "geospatial-functions.json"
+  },
+  {
+    "name": "REGEXP_CONTAINS",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_CONTAINS",
+      "sqlKind": "REGEXP_LIKE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, regex pattern"
+      },
+      "description": "Checks if string contains a match for the regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_CONTAINS('hello123', '[0-9]+') -- Returns TRUE",
+        "SELECT REGEXP_CONTAINS(email, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') FROM users"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_LIKE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_LIKE",
+      "sqlKind": "REGEXP_LIKE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Checks if string matches the regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_LIKE('abc123', '^[a-z]+[0-9]+$') -- Returns TRUE",
+        "SELECT * FROM logs WHERE REGEXP_LIKE(message, 'ERROR.*timeout')"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_EXTRACT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_EXTRACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String, regex pattern, optional group number"
+      },
+      "description": "Extracts substring matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_EXTRACT('hello123world', '[0-9]+') -- Returns '123'",
+        "SELECT REGEXP_EXTRACT('name=John', 'name=([A-Za-z]+)', 1) -- Returns 'John'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_EXTRACT_ALL",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_EXTRACT_ALL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY of strings, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String, regex pattern, optional group number"
+      },
+      "description": "Extracts all substrings matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_EXTRACT_ALL('a1b2c3', '[0-9]+') -- Returns ['1','2','3']",
+        "SELECT REGEXP_EXTRACT_ALL('key1=val1,key2=val2', '([a-z]+)=([a-z0-9]+)', 2) -- Returns ['val1','val2']"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_REPLACE",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_REPLACE",
+      "sqlKind": "REGEXP_REPLACE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [STRING]",
+        "description": "String, regex pattern, optional replacement"
+      },
+      "description": "Replaces substrings matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_REPLACE('hello123world', '[0-9]+', 'XXX') -- Returns 'helloXXXworld'",
+        "SELECT REGEXP_REPLACE(phone, '[^0-9]', '') FROM contacts -- Remove non-digits"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_SPLIT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_SPLIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "String and split pattern"
+      },
+      "description": "Splits string using regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_SPLIT('a,b;c:d', '[,:;]') -- Returns array split by multiple delimiters",
+        "SELECT REGEXP_SPLIT(log_entry, '\\s+') FROM logs -- Split by whitespace"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "REGEXP_COUNT",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "REGEXP_COUNT",
+      "sqlKind": "REGEXP_COUNT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, regex pattern"
+      },
+      "description": "Counts occurrences of regex pattern in string",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_COUNT('hello world hello', 'hello') -- Returns 2",
+        "SELECT REGEXP_COUNT(description, '\\b[A-Z]{2,}\\b') FROM products -- Count uppercase words"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "LIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "LIKE",
+      "sqlKind": "LIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, LIKE pattern"
+      },
+      "description": "SQL pattern matching with % and _ wildcards",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM users WHERE name LIKE 'John%' -- Starts with John",
+        "SELECT * FROM products WHERE code LIKE 'PR_D_%' -- Matches pattern"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "NOT LIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "NOT LIKE",
+      "sqlKind": "NOT_LIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, LIKE pattern"
+      },
+      "description": "Negated SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM emails WHERE address NOT LIKE '%@spam.com'",
+        "SELECT * FROM files WHERE name NOT LIKE '%.tmp'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "ILIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "ILIKE",
+      "sqlKind": "ILIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, ILIKE pattern"
+      },
+      "description": "Case-insensitive SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM users WHERE email ILIKE '%@GMAIL.COM' -- Matches any case",
+        "SELECT * FROM products WHERE name ILIKE '%laptop%'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "NOT ILIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "NOT ILIKE",
+      "sqlKind": "NOT_ILIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, ILIKE pattern"
+      },
+      "description": "Negated case-insensitive SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM logs WHERE message NOT ILIKE '%debug%'",
+        "SELECT * FROM users WHERE username NOT ILIKE 'admin%'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "RLIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "RLIKE",
+      "sqlKind": "RLIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Regex pattern matching (similar to REGEXP_LIKE)",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM urls WHERE path RLIKE '^/api/v[0-9]+/'",
+        "SELECT * FROM logs WHERE message RLIKE 'ERROR.*\\d{3}'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "NOT RLIKE",
+    "folder": "pattern",
+    "metadata": {
+      "name": "NOT RLIKE",
+      "sqlKind": "NOT_RLIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Negated regex pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM emails WHERE subject NOT RLIKE '^Re:'",
+        "SELECT * FROM files WHERE name NOT RLIKE '\\.(jpg|png|gif)$'"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  },
+  {
+    "name": "SET_SEARCH",
+    "folder": "miscellaneous",
+    "metadata": {
+      "name": "SET_SEARCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "COMPARABLE, COMPARABLE",
+        "description": "Value to search, set to search in"
+      },
+      "description": "Searches for a value in a set",
+      "aliases": [],
+      "examples": [
+        "SELECT SET_SEARCH('apple', ['apple', 'banana', 'orange']) -- Returns TRUE",
+        "SELECT * FROM products WHERE SET_SEARCH(category, allowed_categories)"
+      ]
+    },
+    "source_file": "regex-pattern-functions.json"
+  }
+]

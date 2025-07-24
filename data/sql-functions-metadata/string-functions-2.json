@@ -1,0 +1,341 @@
+{
+  "category": "STRING",
+  "functions": [
+    {
+      "name": "INSTR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 to 4",
+        "types": "STRING, STRING, [INTEGER], [INTEGER]",
+        "description": "String to search in, substring to find, optional start position, optional occurrence"
+      },
+      "description": "Returns the position of a substring within a string",
+      "aliases": [],
+      "examples": [
+        "SELECT INSTR('Hello World', 'World') -- Returns 7",
+        "SELECT INSTR('Hello World Hello', 'Hello', 2) -- Returns 13"
+      ]
+    },
+    {
+      "name": "LOCATE",
+      "sqlKind": "LOCATE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "Substring to find, string to search in, optional start position"
+      },
+      "description": "Returns the position of the first occurrence of a substring",
+      "aliases": ["POSITION", "STRPOS", "CHARINDEX"],
+      "examples": [
+        "SELECT LOCATE('World', 'Hello World') -- Returns 7",
+        "SELECT LOCATE('o', 'Hello World', 5) -- Returns 8"
+      ]
+    },
+    {
+      "name": "STRPOS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String to search in, substring to find, optional start position"
+      },
+      "description": "Returns the position of a substring within a string",
+      "aliases": ["POSITION", "LOCATE", "CHARINDEX"],
+      "examples": [
+        "SELECT STRPOS('Hello World', 'World') -- Returns 7"
+      ]
+    },
+    {
+      "name": "CHARINDEX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "Substring to find, string to search in, optional start position"
+      },
+      "description": "Returns the position of a substring within a string",
+      "aliases": ["POSITION", "STRPOS", "LOCATE"],
+      "examples": [
+        "SELECT CHARINDEX('World', 'Hello World') -- Returns 7"
+      ]
+    },
+    {
+      "name": "REPEAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, INTEGER",
+        "description": "String to repeat, number of times to repeat"
+      },
+      "description": "Repeats a string a specified number of times",
+      "aliases": [],
+      "examples": [
+        "SELECT REPEAT('ABC', 3) -- Returns 'ABCABCABC'",
+        "SELECT REPEAT('-', 10) -- Returns '----------'"
+      ]
+    },
+    {
+      "name": "SPLIT_PART",
+      "sqlKind": "SPLIT_PART",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, STRING, INTEGER",
+        "description": "String to split, delimiter, part number (1-based)"
+      },
+      "description": "Splits a string and returns the specified part",
+      "aliases": [],
+      "examples": [
+        "SELECT SPLIT_PART('a,b,c', ',', 2) -- Returns 'b'",
+        "SELECT SPLIT_PART('2023-01-15', '-', 1) -- Returns '2023'"
+      ]
+    },
+    {
+      "name": "INITCAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to capitalize"
+      },
+      "description": "Capitalizes the first letter of each word",
+      "aliases": [],
+      "examples": [
+        "SELECT INITCAP('hello world') -- Returns 'Hello World'",
+        "SELECT INITCAP('JOHN DOE') -- Returns 'John Doe'"
+      ]
+    },
+    {
+      "name": "SOUNDEX",
+      "sqlKind": "SOUNDEX",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to encode"
+      },
+      "description": "Returns the Soundex code of a string",
+      "aliases": [],
+      "examples": [
+        "SELECT SOUNDEX('Smith') -- Returns 'S530'",
+        "SELECT SOUNDEX('Smythe') -- Returns 'S530'"
+      ]
+    },
+    {
+      "name": "NORMALIZE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING, [STRING]",
+        "description": "String to normalize, optional normalization form"
+      },
+      "description": "Normalizes a Unicode string",
+      "aliases": [],
+      "examples": [
+        "SELECT NORMALIZE('café') -- Normalizes the string",
+        "SELECT NORMALIZE('café', 'NFC') -- Normalizes using NFC form"
+      ]
+    },
+    {
+      "name": "CONTAINS_SUBSTR",
+      "sqlKind": "CONTAINS_SUBSTR",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, substring to find"
+      },
+      "description": "Checks if a string contains a substring",
+      "aliases": [],
+      "examples": [
+        "SELECT CONTAINS_SUBSTR('Hello World', 'World') -- Returns TRUE",
+        "SELECT CONTAINS_SUBSTR('Hello', 'xyz') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "STARTSWITH",
+      "sqlKind": "STARTSWITH",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to check, prefix to look for"
+      },
+      "description": "Checks if a string starts with a specified prefix",
+      "aliases": ["STARTS_WITH"],
+      "examples": [
+        "SELECT STARTSWITH('Hello World', 'Hello') -- Returns TRUE",
+        "SELECT STARTSWITH('World', 'Hello') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "STARTS_WITH",
+      "sqlKind": "STARTSWITH",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to check, prefix to look for"
+      },
+      "description": "Checks if a string starts with a specified prefix",
+      "aliases": ["STARTSWITH"],
+      "examples": [
+        "SELECT STARTS_WITH('Hello World', 'Hello') -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "ENDSWITH",
+      "sqlKind": "ENDSWITH",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to check, suffix to look for"
+      },
+      "description": "Checks if a string ends with a specified suffix",
+      "aliases": ["ENDS_WITH"],
+      "examples": [
+        "SELECT ENDSWITH('Hello World', 'World') -- Returns TRUE",
+        "SELECT ENDSWITH('Hello', 'World') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "ENDS_WITH",
+      "sqlKind": "ENDSWITH",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to check, suffix to look for"
+      },
+      "description": "Checks if a string ends with a specified suffix",
+      "aliases": ["ENDSWITH"],
+      "examples": [
+        "SELECT ENDS_WITH('Hello World', 'World') -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "HAMMING_DISTANCE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "First string, second string (must be same length)"
+      },
+      "description": "Calculates the Hamming distance between two strings",
+      "aliases": [],
+      "examples": [
+        "SELECT HAMMING_DISTANCE('karolin', 'kathrin') -- Returns 3",
+        "SELECT HAMMING_DISTANCE('1011101', '1001001') -- Returns 2"
+      ]
+    },
+    {
+      "name": "LEVENSHTEIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "First string, second string"
+      },
+      "description": "Calculates the Levenshtein distance between two strings",
+      "aliases": [],
+      "examples": [
+        "SELECT LEVENSHTEIN('kitten', 'sitting') -- Returns 3",
+        "SELECT LEVENSHTEIN('saturday', 'sunday') -- Returns 3"
+      ]
+    },
+    {
+      "name": "MID",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "STRING, INTEGER, INTEGER",
+        "description": "String to extract from, start position (1-based), length"
+      },
+      "description": "Extracts a substring from a string (similar to SUBSTR)",
+      "aliases": [],
+      "examples": [
+        "SELECT MID('Hello World', 7, 5) -- Returns 'World'",
+        "SELECT MID('ABCDEFG', 3, 2) -- Returns 'CD'"
+      ]
+    },
+    {
+      "name": "STUFF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "4",
+        "types": "STRING, INTEGER, INTEGER, STRING",
+        "description": "String to modify, start position, length to delete, string to insert"
+      },
+      "description": "Deletes a part of a string and inserts another string at that position",
+      "aliases": [],
+      "examples": [
+        "SELECT STUFF('Hello World', 7, 5, 'Universe') -- Returns 'Hello Universe'",
+        "SELECT STUFF('ABCDEFG', 3, 2, 'XYZ') -- Returns 'ABXYZEFG'"
+      ]
+    },
+    {
+      "name": "STRRPOS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String to search in, substring to find, optional start position"
+      },
+      "description": "Returns the position of the last occurrence of a substring",
+      "aliases": [],
+      "examples": [
+        "SELECT STRRPOS('Hello Hello World', 'Hello') -- Returns 7",
+        "SELECT STRRPOS('ABCABC', 'ABC') -- Returns 4"
+      ]
+    },
+    {
+      "name": "ARRAY_TO_STRING",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(4) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY, STRING",
+        "description": "Array to convert, delimiter"
+      },
+      "description": "Concatenates array elements into a string with a delimiter",
+      "aliases": [],
+      "examples": [
+        "SELECT ARRAY_TO_STRING(['a', 'b', 'c'], ',') -- Returns 'a,b,c'",
+        "SELECT ARRAY_TO_STRING([1, 2, 3], '-') -- Returns '1-2-3'"
+      ]
+    }
+  ]
+}

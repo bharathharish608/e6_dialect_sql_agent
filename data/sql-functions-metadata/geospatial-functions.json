@@ -1,0 +1,277 @@
+{
+  "category": "GEOSPATIAL",
+  "functions": [
+    {
+      "name": "H3_LATLNG_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Latitude, longitude, resolution (0-15)"
+      },
+      "description": "Converts latitude/longitude to H3 cell index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_LATLNG_TO_CELL(37.7749, -122.4194, 9) -- San Francisco at resolution 9",
+        "SELECT H3_LATLNG_TO_CELL(lat, lng, 12) FROM locations"
+      ]
+    },
+    {
+      "name": "H3_LATLNG_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Latitude, longitude, resolution (0-15)"
+      },
+      "description": "Converts latitude/longitude to H3 cell address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_LATLNG_TO_CELLADDRESS(37.7749, -122.4194, 9) -- Returns hex string",
+        "SELECT H3_LATLNG_TO_CELLADDRESS(lat, lng, 10) FROM stores"
+      ]
+    },
+    {
+      "name": "H3_POINT_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT point string, resolution"
+      },
+      "description": "Converts WKT point to H3 cell index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POINT_TO_CELL('POINT(-122.4194 37.7749)', 9)",
+        "SELECT H3_POINT_TO_CELL(geometry, 11) FROM poi_table"
+      ]
+    },
+    {
+      "name": "H3_POINT_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT point string, resolution"
+      },
+      "description": "Converts WKT point to H3 cell address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POINT_TO_CELLADDRESS('POINT(-122.4194 37.7749)', 9)",
+        "SELECT H3_POINT_TO_CELLADDRESS(location, 8) FROM events"
+      ]
+    },
+    {
+      "name": "H3_CELL_TO_LATLNG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of DOUBLE, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "H3 cell index"
+      },
+      "description": "Converts H3 cell to [latitude, longitude] array",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_LATLNG(617733151092549631) -- Returns [lat, lng]",
+        "SELECT H3_CELL_TO_LATLNG(h3_index)[0] AS lat, H3_CELL_TO_LATLNG(h3_index)[1] AS lng FROM grid"
+      ]
+    },
+    {
+      "name": "H3_CELLADDRESS_TO_LATLNG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of DOUBLE, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "H3 cell address string"
+      },
+      "description": "Converts H3 cell address to [latitude, longitude] array",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_LATLNG('8928308280fffff') -- Returns [lat, lng]",
+        "SELECT H3_CELLADDRESS_TO_LATLNG(h3_address) FROM hexagons"
+      ]
+    },
+    {
+      "name": "H3_CELL_TO_CELLADDRESS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "H3 cell index"
+      },
+      "description": "Converts H3 cell index to address string",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_CELLADDRESS(617733151092549631) -- Returns hex string",
+        "SELECT H3_CELL_TO_CELLADDRESS(cell_id) FROM h3_grid"
+      ]
+    },
+    {
+      "name": "H3_CELLADDRESS_TO_CELL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "H3 cell address string"
+      },
+      "description": "Converts H3 cell address to index",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_CELL('8928308280fffff') -- Returns numeric index",
+        "SELECT H3_CELLADDRESS_TO_CELL(hex_id) FROM locations"
+      ]
+    },
+    {
+      "name": "H3_CELL_TO_PARENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "H3 cell index, parent resolution"
+      },
+      "description": "Returns parent cell at specified resolution",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_PARENT(617733151092549631, 8) -- Parent at resolution 8",
+        "SELECT H3_CELL_TO_PARENT(cell, resolution - 1) FROM h3_hierarchy"
+      ]
+    },
+    {
+      "name": "H3_CELLADDRESS_TO_PARENT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "H3 cell address, parent resolution"
+      },
+      "description": "Returns parent cell address at specified resolution",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELLADDRESS_TO_PARENT('8928308280fffff', 7)",
+        "SELECT H3_CELLADDRESS_TO_PARENT(hex_address, 5) FROM detailed_grid"
+      ]
+    },
+    {
+      "name": "H3_CELL_TO_BOUNDARY_AS_GEOJSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING or NUMERIC",
+        "description": "H3 cell index or address"
+      },
+      "description": "Returns H3 cell boundary as GeoJSON polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_CELL_TO_BOUNDARY_AS_GEOJSON(617733151092549631)",
+        "SELECT H3_CELL_TO_BOUNDARY_AS_GEOJSON('8928308280fffff')"
+      ]
+    },
+    {
+      "name": "H3_POLYGON_TO_CELLS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of BIGINT, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT polygon, resolution"
+      },
+      "description": "Returns H3 cells covering the polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POLYGON_TO_CELLS('POLYGON((-122.4 37.7, -122.4 37.8, -122.3 37.8, -122.3 37.7, -122.4 37.7))', 9)",
+        "SELECT H3_POLYGON_TO_CELLS(boundary, 10) FROM regions"
+      ]
+    },
+    {
+      "name": "H3_POLYGON_TO_CELLADDRESSES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "ARRAY of STRING, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, NUMERIC",
+        "description": "WKT polygon, resolution"
+      },
+      "description": "Returns H3 cell addresses covering the polygon",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_POLYGON_TO_CELLADDRESSES(geofence, 11) FROM service_areas",
+        "SELECT H3_POLYGON_TO_CELLADDRESSES('POLYGON(...)', 9)"
+      ]
+    },
+    {
+      "name": "H3_GRID_DISK",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "STRING/NUMERIC, NUMERIC",
+        "description": "H3 cell (index or address), ring size"
+      },
+      "description": "Returns cells within k rings of the origin cell",
+      "aliases": [],
+      "examples": [
+        "SELECT H3_GRID_DISK(617733151092549631, 1) -- Cell and immediate neighbors",
+        "SELECT H3_GRID_DISK('8928308280fffff', 2) -- Cell and 2 rings around it"
+      ]
+    },
+    {
+      "name": "BING_TILE_QUADKEY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "Bing tile string"
+      },
+      "description": "Returns quadkey for a Bing tile",
+      "aliases": [],
+      "examples": [
+        "SELECT BING_TILE_QUADKEY(tile_id) FROM map_tiles",
+        "SELECT BING_TILE_QUADKEY('15_17740_11332')"
+      ]
+    },
+    {
+      "name": "BING_TILE_AT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "NUMERIC, NUMERIC, NUMERIC",
+        "description": "Longitude, latitude, zoom level"
+      },
+      "description": "Returns Bing tile containing the point at zoom level",
+      "aliases": [],
+      "examples": [
+        "SELECT BING_TILE_AT(-122.4194, 37.7749, 12) -- San Francisco at zoom 12",
+        "SELECT BING_TILE_AT(lng, lat, 15) FROM locations"
+      ]
+    }
+  ]
+}

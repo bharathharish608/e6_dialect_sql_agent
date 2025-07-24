@@ -1,0 +1,344 @@
+{
+  "category": "MISCELLANEOUS",
+  "functions": [
+    {
+      "name": "UUID",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "0 or 1",
+        "types": "[NUMERIC]",
+        "description": "Optional seed for deterministic UUID"
+      },
+      "description": "Generates a universally unique identifier (UUID)",
+      "aliases": [],
+      "examples": [
+        "SELECT UUID() -- Returns random UUID like 'f47ac10b-58cc-4372-a567-0e02b2c3d479'",
+        "SELECT UUID(42) -- Returns same UUID for same seed"
+      ]
+    },
+    {
+      "name": "VERSION",
+      "sqlKind": "VERSION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns the version of the database system",
+      "aliases": [],
+      "examples": [
+        "SELECT VERSION() -- Returns system version information"
+      ]
+    },
+    {
+      "name": "SLEEP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "INTEGER",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Number of seconds to sleep"
+      },
+      "description": "Pauses execution for specified seconds",
+      "aliases": [],
+      "examples": [
+        "SELECT SLEEP(2) -- Pauses for 2 seconds",
+        "SELECT SLEEP(0.5) -- Pauses for 500 milliseconds"
+      ]
+    },
+    {
+      "name": "JSON_FORMAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to format as JSON"
+      },
+      "description": "Formats a value as JSON string",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_FORMAT(map_col) FROM table_with_maps",
+        "SELECT JSON_FORMAT(array_col) FROM table_with_arrays"
+      ]
+    },
+    {
+      "name": "JSON_EXTRACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "JSON or extracted value",
+      "parameters": {
+        "count": "2",
+        "types": "JSON/STRING, STRING",
+        "description": "JSON document and JSONPath expression"
+      },
+      "description": "Extracts values from JSON using JSONPath",
+      "aliases": ["JSON_VALUE"],
+      "examples": [
+        "SELECT JSON_EXTRACT('{\"a\": 1, \"b\": 2}', '$.a') -- Returns 1",
+        "SELECT JSON_EXTRACT(json_col, '$.user.name') FROM events"
+      ]
+    },
+    {
+      "name": "JSON_VALUE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "STRING",
+      "parameters": {
+        "count": "2",
+        "types": "JSON/STRING, STRING",
+        "description": "JSON document and JSONPath expression"
+      },
+      "description": "Extracts a scalar value from JSON as string",
+      "aliases": ["JSON_EXTRACT"],
+      "examples": [
+        "SELECT JSON_VALUE('{\"name\": \"John\"}', '$.name') -- Returns 'John'",
+        "SELECT JSON_VALUE(metadata, '$.version') FROM configs"
+      ]
+    },
+    {
+      "name": "JSON_EXTRACT_SCALAR",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "JSON/STRING/STRUCT/MAP/ARRAY, STRING",
+        "description": "JSON-like value and path"
+      },
+      "description": "Extracts a scalar value from JSON-like structures",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_EXTRACT_SCALAR(json_col, '$.id') FROM users",
+        "SELECT JSON_EXTRACT_SCALAR(nested_data, '$.items[0].price') FROM orders"
+      ]
+    },
+    {
+      "name": "JSON_ARRAY_LENGTH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "STRING",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "JSON array as string"
+      },
+      "description": "Returns the length of a JSON array",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_ARRAY_LENGTH('[1,2,3]') -- Returns 3",
+        "SELECT JSON_ARRAY_LENGTH(items_json) FROM shopping_cart"
+      ]
+    },
+    {
+      "name": "IS_VALID_JSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "1",
+        "types": "STRING",
+        "description": "String to validate as JSON"
+      },
+      "description": "Checks if a string is valid JSON",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_VALID_JSON('{\"valid\": true}') -- Returns TRUE",
+        "SELECT IS_VALID_JSON('{invalid}') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "JSONEXTRACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "STRING",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "JSON string and path (ClickHouse compatible)"
+      },
+      "description": "Extracts value from JSON (ClickHouse compatible)",
+      "aliases": [],
+      "examples": [
+        "SELECT JSONEXTRACT('{\"a\": 1}', 'a') -- Returns '1'",
+        "SELECT JSONEXTRACT(json_data, 'user.id') FROM logs"
+      ]
+    },
+    {
+      "name": "JSON_HAS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "JSON string and path to check"
+      },
+      "description": "Checks if a path exists in JSON",
+      "aliases": [],
+      "examples": [
+        "SELECT JSON_HAS('{\"a\": 1}', 'a') -- Returns TRUE",
+        "SELECT JSON_HAS(config, 'settings.debug') FROM app_config"
+      ]
+    },
+    {
+      "name": "TO_JSON",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "JSON STRING",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to convert to JSON"
+      },
+      "description": "Converts a value to JSON representation",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_JSON(struct_col) FROM table_with_structs",
+        "SELECT TO_JSON(MAP('key1', 'value1', 'key2', 'value2'))"
+      ]
+    },
+    {
+      "name": "NAMED_STRUCT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "SYSTEM",
+      "returnType": "STRUCT",
+      "parameters": {
+        "count": "Variable (even number)",
+        "types": "STRING, ANY, STRING, ANY, ...",
+        "description": "Alternating field names and values"
+      },
+      "description": "Creates a struct with named fields",
+      "aliases": [],
+      "examples": [
+        "SELECT NAMED_STRUCT('name', 'John', 'age', 30) -- Returns struct",
+        "SELECT NAMED_STRUCT('id', user_id, 'email', user_email) FROM users"
+      ]
+    },
+    {
+      "name": "MAP_KEYS",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "ARRAY of keys",
+      "parameters": {
+        "count": "1",
+        "types": "MAP",
+        "description": "Map to extract keys from"
+      },
+      "description": "Returns an array of all keys in a map",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_KEYS(MAP('a', 1, 'b', 2)) -- Returns ['a', 'b']",
+        "SELECT MAP_KEYS(attributes) FROM products"
+      ]
+    },
+    {
+      "name": "MAP_VALUES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "ARRAY of values",
+      "parameters": {
+        "count": "1",
+        "types": "MAP",
+        "description": "Map to extract values from"
+      },
+      "description": "Returns an array of all values in a map",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_VALUES(MAP('a', 1, 'b', 2)) -- Returns [1, 2]",
+        "SELECT MAP_VALUES(properties) FROM items"
+      ]
+    },
+    {
+      "name": "MAP_CONCAT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "MAP (same as input)",
+      "parameters": {
+        "count": "2",
+        "types": "MAP, MAP",
+        "description": "Two maps to concatenate"
+      },
+      "description": "Merges two maps into one",
+      "aliases": [],
+      "examples": [
+        "SELECT MAP_CONCAT(MAP('a', 1), MAP('b', 2)) -- Returns MAP('a', 1, 'b', 2)",
+        "SELECT MAP_CONCAT(defaults, overrides) FROM configurations"
+      ]
+    },
+    {
+      "name": "ELEMENT_AT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY/MAP, INTEGER/KEY",
+        "description": "Array/map and index/key"
+      },
+      "description": "Returns element at specified position or key",
+      "aliases": ["TRY_ELEMENT_AT"],
+      "examples": [
+        "SELECT ELEMENT_AT([1,2,3], 2) -- Returns 2",
+        "SELECT ELEMENT_AT(MAP('a', 1, 'b', 2), 'b') -- Returns 2"
+      ]
+    },
+    {
+      "name": "TRY_ELEMENT_AT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Element type, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ARRAY/MAP, INTEGER/KEY",
+        "description": "Array/map and index/key"
+      },
+      "description": "Returns element at position/key, NULL if not found",
+      "aliases": ["ELEMENT_AT"],
+      "examples": [
+        "SELECT TRY_ELEMENT_AT([1,2,3], 5) -- Returns NULL",
+        "SELECT TRY_ELEMENT_AT(map_col, 'missing_key') FROM table"
+      ]
+    },
+    {
+      "name": "SLICE_MAP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "MAP",
+      "returnType": "MAP",
+      "parameters": {
+        "count": "2",
+        "types": "MAP, ARRAY",
+        "description": "Map and array of keys to extract"
+      },
+      "description": "Extracts a subset of a map based on keys",
+      "aliases": [],
+      "examples": [
+        "SELECT SLICE_MAP(MAP('a',1,'b',2,'c',3), ['a','c']) -- Returns MAP('a',1,'c',3)",
+        "SELECT SLICE_MAP(full_config, required_keys) FROM settings"
+      ]
+    },
+    {
+      "name": "EXPLODE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TABLE",
+      "returnType": "TABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ARRAY/MAP",
+        "description": "Array or map to explode"
+      },
+      "description": "Transforms array/map into multiple rows",
+      "aliases": [],
+      "examples": [
+        "SELECT EXPLODE([1,2,3]) -- Returns 3 rows",
+        "SELECT id, EXPLODE(tags) AS tag FROM products"
+      ]
+    }
+  ]
+}

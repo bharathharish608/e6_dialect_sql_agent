@@ -6,7 +6,7 @@ import chromadb
 DATA_DIR = 'data'
 CHUNKS_FILE = os.path.join(DATA_DIR, 'chunks.json')
 CHROMA_PATH = os.path.join(DATA_DIR, 'chroma_db')
-CALCITE_FILE = os.path.join('input', 'apache_calcite_sql_idioms.txt')
+CALCITE_FILE = os.path.join('input', 'e6data_sql_rules.txt')
 
 # Load chunks
 with open(CHUNKS_FILE) as f:
@@ -30,8 +30,8 @@ if os.path.exists(CALCITE_FILE):
             if bullet_lines:
                 chunks.append({
                     'chunk': '\n'.join(bullet_lines),
-                    'url': 'file://apache_calcite_sql_idioms.txt',
-                    'source': 'apache_calcite',
+                    'url': 'file://e6data_sql_rules.txt',
+                    'source': 'e6data_sql_rules',
                     'section': section or '',
                     'chunk_type': 'idiom',
                     'function_name': None,
@@ -45,8 +45,8 @@ if os.path.exists(CALCITE_FILE):
     if bullet_lines:
         chunks.append({
             'chunk': '\n'.join(bullet_lines),
-            'url': 'file://apache_calcite_sql_idioms.txt',
-            'source': 'apache_calcite',
+            'url': 'file://e6data_sql_rules.txt',
+            'source': 'e6data_sql_rules',
             'section': section or '',
             'chunk_type': 'idiom',
             'function_name': None,

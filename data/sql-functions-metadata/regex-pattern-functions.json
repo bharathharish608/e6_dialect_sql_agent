@@ -1,0 +1,243 @@
+{
+  "category": "REGEX_AND_PATTERN",
+  "functions": [
+    {
+      "name": "REGEXP_CONTAINS",
+      "sqlKind": "REGEXP_LIKE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, regex pattern"
+      },
+      "description": "Checks if string contains a match for the regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_CONTAINS('hello123', '[0-9]+') -- Returns TRUE",
+        "SELECT REGEXP_CONTAINS(email, '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$') FROM users"
+      ]
+    },
+    {
+      "name": "REGEXP_LIKE",
+      "sqlKind": "REGEXP_LIKE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Checks if string matches the regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_LIKE('abc123', '^[a-z]+[0-9]+$') -- Returns TRUE",
+        "SELECT * FROM logs WHERE REGEXP_LIKE(message, 'ERROR.*timeout')"
+      ]
+    },
+    {
+      "name": "REGEXP_EXTRACT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String, regex pattern, optional group number"
+      },
+      "description": "Extracts substring matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_EXTRACT('hello123world', '[0-9]+') -- Returns '123'",
+        "SELECT REGEXP_EXTRACT('name=John', 'name=([A-Za-z]+)', 1) -- Returns 'John'"
+      ]
+    },
+    {
+      "name": "REGEXP_EXTRACT_ALL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "ARRAY of strings, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [INTEGER]",
+        "description": "String, regex pattern, optional group number"
+      },
+      "description": "Extracts all substrings matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_EXTRACT_ALL('a1b2c3', '[0-9]+') -- Returns ['1','2','3']",
+        "SELECT REGEXP_EXTRACT_ALL('key1=val1,key2=val2', '([a-z]+)=([a-z0-9]+)', 2) -- Returns ['val1','val2']"
+      ]
+    },
+    {
+      "name": "REGEXP_REPLACE",
+      "sqlKind": "REGEXP_REPLACE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "STRING, STRING, [STRING]",
+        "description": "String, regex pattern, optional replacement"
+      },
+      "description": "Replaces substrings matching regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_REPLACE('hello123world', '[0-9]+', 'XXX') -- Returns 'helloXXXworld'",
+        "SELECT REGEXP_REPLACE(phone, '[^0-9]', '') FROM contacts -- Remove non-digits"
+      ]
+    },
+    {
+      "name": "REGEXP_SPLIT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR varying, nullable",
+      "parameters": {
+        "count": "Variable",
+        "types": "STRING, STRING, ...",
+        "description": "String and split pattern"
+      },
+      "description": "Splits string using regex pattern",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_SPLIT('a,b;c:d', '[,:;]') -- Returns array split by multiple delimiters",
+        "SELECT REGEXP_SPLIT(log_entry, '\\s+') FROM logs -- Split by whitespace"
+      ]
+    },
+    {
+      "name": "REGEXP_COUNT",
+      "sqlKind": "REGEXP_COUNT",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to search in, regex pattern"
+      },
+      "description": "Counts occurrences of regex pattern in string",
+      "aliases": [],
+      "examples": [
+        "SELECT REGEXP_COUNT('hello world hello', 'hello') -- Returns 2",
+        "SELECT REGEXP_COUNT(description, '\\b[A-Z]{2,}\\b') FROM products -- Count uppercase words"
+      ]
+    },
+    {
+      "name": "LIKE",
+      "sqlKind": "LIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, LIKE pattern"
+      },
+      "description": "SQL pattern matching with % and _ wildcards",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM users WHERE name LIKE 'John%' -- Starts with John",
+        "SELECT * FROM products WHERE code LIKE 'PR_D_%' -- Matches pattern"
+      ]
+    },
+    {
+      "name": "NOT LIKE",
+      "sqlKind": "NOT_LIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, LIKE pattern"
+      },
+      "description": "Negated SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM emails WHERE address NOT LIKE '%@spam.com'",
+        "SELECT * FROM files WHERE name NOT LIKE '%.tmp'"
+      ]
+    },
+    {
+      "name": "ILIKE",
+      "sqlKind": "ILIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, ILIKE pattern"
+      },
+      "description": "Case-insensitive SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM users WHERE email ILIKE '%@GMAIL.COM' -- Matches any case",
+        "SELECT * FROM products WHERE name ILIKE '%laptop%'"
+      ]
+    },
+    {
+      "name": "NOT ILIKE",
+      "sqlKind": "NOT_ILIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, ILIKE pattern"
+      },
+      "description": "Negated case-insensitive SQL pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM logs WHERE message NOT ILIKE '%debug%'",
+        "SELECT * FROM users WHERE username NOT ILIKE 'admin%'"
+      ]
+    },
+    {
+      "name": "RLIKE",
+      "sqlKind": "RLIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Regex pattern matching (similar to REGEXP_LIKE)",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM urls WHERE path RLIKE '^/api/v[0-9]+/'",
+        "SELECT * FROM logs WHERE message RLIKE 'ERROR.*\\d{3}'"
+      ]
+    },
+    {
+      "name": "NOT RLIKE",
+      "sqlKind": "NOT_RLIKE",
+      "category": "PATTERN",
+      "returnType": "BOOLEAN",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to match, regex pattern"
+      },
+      "description": "Negated regex pattern matching",
+      "aliases": [],
+      "examples": [
+        "SELECT * FROM emails WHERE subject NOT RLIKE '^Re:'",
+        "SELECT * FROM files WHERE name NOT RLIKE '\\.(jpg|png|gif)$'"
+      ]
+    },
+    {
+      "name": "SET_SEARCH",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "COMPARABLE, COMPARABLE",
+        "description": "Value to search, set to search in"
+      },
+      "description": "Searches for a value in a set",
+      "aliases": [],
+      "examples": [
+        "SELECT SET_SEARCH('apple', ['apple', 'banana', 'orange']) -- Returns TRUE",
+        "SELECT * FROM products WHERE SET_SEARCH(category, allowed_categories)"
+      ]
+    }
+  ]
+}

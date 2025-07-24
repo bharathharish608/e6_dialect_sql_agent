@@ -1,0 +1,344 @@
+{
+  "category": "AGGREGATE",
+  "functions": [
+    {
+      "name": "COUNT",
+      "sqlKind": "COUNT",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1",
+        "types": "ANY or *",
+        "description": "Column to count or * for all rows"
+      },
+      "description": "Counts the number of rows or non-null values",
+      "aliases": [],
+      "examples": [
+        "SELECT COUNT(*) FROM users -- Count all rows",
+        "SELECT COUNT(email) FROM users -- Count non-null emails",
+        "SELECT COUNT(DISTINCT city) FROM users -- Count unique cities"
+      ]
+    },
+    {
+      "name": "COUNTIF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1",
+        "types": "BOOLEAN",
+        "description": "Boolean condition to count"
+      },
+      "description": "Counts rows where condition is true",
+      "aliases": ["COUNT_IF"],
+      "examples": [
+        "SELECT COUNTIF(age > 18) FROM users -- Count adults",
+        "SELECT COUNTIF(status = 'active') FROM accounts"
+      ]
+    },
+    {
+      "name": "COUNT_IF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1",
+        "types": "BOOLEAN",
+        "description": "Boolean condition to count"
+      },
+      "description": "Counts rows where condition is true",
+      "aliases": ["COUNTIF"],
+      "examples": [
+        "SELECT COUNT_IF(price > 100) FROM products"
+      ]
+    },
+    {
+      "name": "SUM",
+      "sqlKind": "SUM",
+      "category": "AGGREGATE",
+      "returnType": "Sum type of input",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric column to sum"
+      },
+      "description": "Calculates the sum of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT SUM(amount) FROM sales",
+        "SELECT SUM(quantity * price) FROM order_items"
+      ]
+    },
+    {
+      "name": "AVG",
+      "sqlKind": "AVG",
+      "category": "AGGREGATE",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric column to average"
+      },
+      "description": "Calculates the average of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT AVG(salary) FROM employees",
+        "SELECT AVG(rating) FROM reviews"
+      ]
+    },
+    {
+      "name": "MIN",
+      "sqlKind": "MIN",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY COMPARABLE",
+        "description": "Column to find minimum"
+      },
+      "description": "Returns the minimum value",
+      "aliases": [],
+      "examples": [
+        "SELECT MIN(price) FROM products",
+        "SELECT MIN(created_date) FROM orders"
+      ]
+    },
+    {
+      "name": "MAX",
+      "sqlKind": "MAX",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY COMPARABLE",
+        "description": "Column to find maximum"
+      },
+      "description": "Returns the maximum value",
+      "aliases": [],
+      "examples": [
+        "SELECT MAX(score) FROM exams",
+        "SELECT MAX(last_login) FROM users"
+      ]
+    },
+    {
+      "name": "STRING_AGG",
+      "sqlKind": "STRING_AGG",
+      "category": "AGGREGATE",
+      "returnType": "STRING NULLABLE",
+      "parameters": {
+        "count": "1 to 3",
+        "types": "STRING, [STRING], [INTEGER]",
+        "description": "Column, optional separator, optional limit"
+      },
+      "description": "Concatenates strings from a group into a single string",
+      "aliases": [],
+      "examples": [
+        "SELECT STRING_AGG(name, ', ') FROM users GROUP BY department",
+        "SELECT STRING_AGG(tag, '|' ORDER BY tag) FROM product_tags"
+      ]
+    },
+    {
+      "name": "ARRAY_AGG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to aggregate into array"
+      },
+      "description": "Aggregates values into an array",
+      "aliases": ["COLLECT_LIST"],
+      "examples": [
+        "SELECT ARRAY_AGG(product_id) FROM orders GROUP BY customer_id",
+        "SELECT ARRAY_AGG(DISTINCT category) FROM products"
+      ]
+    },
+    {
+      "name": "COLLECT_LIST",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to collect into list"
+      },
+      "description": "Collects values into a list/array",
+      "aliases": ["ARRAY_AGG"],
+      "examples": [
+        "SELECT COLLECT_LIST(item_name) FROM cart GROUP BY user_id"
+      ]
+    },
+    {
+      "name": "ARG_MAX",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, COMPARABLE",
+        "description": "Value column, comparison column"
+      },
+      "description": "Returns the value of the first column at the row with max value of second column",
+      "aliases": [],
+      "examples": [
+        "SELECT ARG_MAX(product_name, price) FROM products -- Product with highest price",
+        "SELECT ARG_MAX(employee_name, salary) FROM employees GROUP BY department"
+      ]
+    },
+    {
+      "name": "ARG_MIN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, COMPARABLE",
+        "description": "Value column, comparison column"
+      },
+      "description": "Returns the value of the first column at the row with min value of second column",
+      "aliases": [],
+      "examples": [
+        "SELECT ARG_MIN(product_name, price) FROM products -- Cheapest product",
+        "SELECT ARG_MIN(student_name, score) FROM exam_results GROUP BY class"
+      ]
+    },
+    {
+      "name": "MAX_BY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, COMPARABLE, INTEGER",
+        "description": "Value column, comparison column, number of values"
+      },
+      "description": "Returns top N values based on comparison column",
+      "aliases": [],
+      "examples": [
+        "SELECT MAX_BY(product_name, revenue, 5) FROM sales -- Top 5 products by revenue",
+        "SELECT MAX_BY(employee_id, performance_score, 3) FROM reviews"
+      ]
+    },
+    {
+      "name": "MIN_BY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as first argument, nullable if empty",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, COMPARABLE, INTEGER",
+        "description": "Value column, comparison column, number of values"
+      },
+      "description": "Returns bottom N values based on comparison column",
+      "aliases": [],
+      "examples": [
+        "SELECT MIN_BY(product_name, price, 5) FROM products -- 5 cheapest products",
+        "SELECT MIN_BY(error_message, error_count, 10) FROM logs"
+      ]
+    },
+    {
+      "name": "APPROX_COUNT_DISTINCT",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "BIGINT",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "ANY, [DOUBLE]",
+        "description": "Column to count, optional error rate"
+      },
+      "description": "Approximates the number of distinct values using HyperLogLog",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_COUNT_DISTINCT(user_id) FROM events",
+        "SELECT APPROX_COUNT_DISTINCT(ip_address, 0.01) FROM access_logs"
+      ]
+    },
+    {
+      "name": "APPROX_PERCENTILE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "2 or 3",
+        "types": "NUMERIC, DOUBLE, [INTEGER]",
+        "description": "Column, percentile (0-1), optional accuracy"
+      },
+      "description": "Approximates the percentile of numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_PERCENTILE(response_time, 0.95) FROM api_logs -- 95th percentile",
+        "SELECT APPROX_PERCENTILE(salary, 0.5) FROM employees -- Median"
+      ]
+    },
+    {
+      "name": "APPROX_QUANTILES",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "ARRAY",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, INTEGER",
+        "description": "Column, number of quantiles"
+      },
+      "description": "Approximates quantile boundaries for numeric values",
+      "aliases": [],
+      "examples": [
+        "SELECT APPROX_QUANTILES(income, 4) FROM census -- Quartiles",
+        "SELECT APPROX_QUANTILES(score, 10) FROM exams -- Deciles"
+      ]
+    },
+    {
+      "name": "CORR",
+      "sqlKind": "CORR",
+      "category": "AGGREGATE",
+      "returnType": "DOUBLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric columns to correlate"
+      },
+      "description": "Calculates the correlation coefficient between two numeric columns",
+      "aliases": [],
+      "examples": [
+        "SELECT CORR(temperature, ice_cream_sales) FROM daily_stats",
+        "SELECT CORR(study_hours, test_score) FROM students"
+      ]
+    },
+    {
+      "name": "ARBITRARY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to select arbitrary value from"
+      },
+      "description": "Returns an arbitrary non-null value from the group",
+      "aliases": [],
+      "examples": [
+        "SELECT ARBITRARY(color) FROM products GROUP BY category",
+        "SELECT ARBITRARY(manager_id) FROM employees GROUP BY department"
+      ]
+    },
+    {
+      "name": "ANY_VALUE",
+      "sqlKind": "ANY_VALUE",
+      "category": "AGGREGATE",
+      "returnType": "Same as input",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Column to select any value from"
+      },
+      "description": "Returns any value from the group (including nulls)",
+      "aliases": [],
+      "examples": [
+        "SELECT ANY_VALUE(email) FROM users GROUP BY domain",
+        "SELECT ANY_VALUE(timestamp) FROM logs GROUP BY session_id"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,346 @@
+{
+  "category": "CONVERSION_AND_SYSTEM",
+  "functions": [
+    {
+      "name": "CAST",
+      "sqlKind": "CAST",
+      "category": "SYSTEM",
+      "returnType": "Target type specified in cast",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, TYPE",
+        "description": "Value to cast and target type"
+      },
+      "description": "Converts a value from one data type to another",
+      "aliases": [],
+      "examples": [
+        "SELECT CAST('123' AS INTEGER) -- Returns 123",
+        "SELECT CAST(price AS VARCHAR) FROM products"
+      ]
+    },
+    {
+      "name": "TRY_CAST",
+      "sqlKind": "TRY_CAST",
+      "category": "SYSTEM",
+      "returnType": "Target type specified in cast, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, TYPE",
+        "description": "Value to cast and target type"
+      },
+      "description": "Attempts to convert a value, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_CAST('abc' AS INTEGER) -- Returns NULL",
+        "SELECT TRY_CAST('123' AS INTEGER) -- Returns 123"
+      ]
+    },
+    {
+      "name": "TO_CHAR",
+      "sqlKind": "TO_CHAR",
+      "category": "STRING",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "ANY, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a value to a character string",
+      "aliases": ["TO_VARCHAR"],
+      "examples": [
+        "SELECT TO_CHAR(123) -- Returns '123'",
+        "SELECT TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD') -- Formatted date"
+      ]
+    },
+    {
+      "name": "TO_VARCHAR",
+      "sqlKind": "TO_CHAR",
+      "category": "STRING",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "ANY, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a value to a varchar string",
+      "aliases": ["TO_CHAR"],
+      "examples": [
+        "SELECT TO_VARCHAR(123.45) -- Returns '123.45'",
+        "SELECT TO_VARCHAR(NOW(), 'HH:MI:SS') -- Formatted time"
+      ]
+    },
+    {
+      "name": "TO_NUMBER",
+      "sqlKind": "TO_NUMBER",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to convert, format pattern"
+      },
+      "description": "Converts a string to a number using a format",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_NUMBER('123.45', '999.99') -- Returns 123.45",
+        "SELECT TO_NUMBER('$1,234.56', '$9,999.99') -- Returns 1234.56"
+      ]
+    },
+    {
+      "name": "TRY_TO_NUMBER",
+      "sqlKind": "TRY_TO_NUMBER",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, STRING",
+        "description": "String to convert, format pattern"
+      },
+      "description": "Attempts to convert string to number, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_TO_NUMBER('abc', '999') -- Returns NULL",
+        "SELECT TRY_TO_NUMBER('123', '999') -- Returns 123"
+      ]
+    },
+    {
+      "name": "TO_BOOLEAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "STRING or NUMERIC",
+        "description": "Value to convert to boolean"
+      },
+      "description": "Converts a value to boolean",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_BOOLEAN('true') -- Returns TRUE",
+        "SELECT TO_BOOLEAN(1) -- Returns TRUE",
+        "SELECT TO_BOOLEAN('false') -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "TO_DATE",
+      "sqlKind": "TO_DATE",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/TIMESTAMP, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a string or timestamp to a date",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_DATE('2023-01-15') -- Returns date",
+        "SELECT TO_DATE('15/01/2023', 'DD/MM/YYYY') -- With format"
+      ]
+    },
+    {
+      "name": "TO_TIMESTAMP",
+      "sqlKind": "TO_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/NUMERIC, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Converts a value to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TO_TIMESTAMP('2023-01-15 10:30:00') -- Returns timestamp",
+        "SELECT TO_TIMESTAMP(1672531200) -- From Unix timestamp"
+      ]
+    },
+    {
+      "name": "TRY_TO_TIMESTAMP",
+      "sqlKind": "TRY_TO_TIMESTAMP",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "STRING/NUMERIC, [STRING]",
+        "description": "Value to convert, optional format string"
+      },
+      "description": "Attempts to convert to timestamp, returns NULL on failure",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_TO_TIMESTAMP('invalid') -- Returns NULL",
+        "SELECT TRY_TO_TIMESTAMP('2023-01-15') -- Returns timestamp"
+      ]
+    },
+    {
+      "name": "TYPEOF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "ANY",
+        "description": "Value to get type of"
+      },
+      "description": "Returns the data type of an expression as a string",
+      "aliases": [],
+      "examples": [
+        "SELECT TYPEOF(123) -- Returns 'INTEGER'",
+        "SELECT TYPEOF('hello') -- Returns 'VARCHAR'",
+        "SELECT TYPEOF([1,2,3]) -- Returns 'ARRAY'"
+      ]
+    },
+    {
+      "name": "COALESCE",
+      "sqlKind": "COALESCE",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of arguments",
+      "parameters": {
+        "count": "Variable (2 or more)",
+        "types": "ANY, ANY, ...",
+        "description": "Values to check for non-null"
+      },
+      "description": "Returns the first non-null value in a list",
+      "aliases": [],
+      "examples": [
+        "SELECT COALESCE(NULL, 'default') -- Returns 'default'",
+        "SELECT COALESCE(phone, mobile, 'N/A') FROM contacts"
+      ]
+    },
+    {
+      "name": "NVL",
+      "sqlKind": "NVL",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "SAME, SAME",
+        "description": "Value to check and replacement if null"
+      },
+      "description": "Returns the second value if the first is null",
+      "aliases": ["IFNULL"],
+      "examples": [
+        "SELECT NVL(commission, 0) FROM sales",
+        "SELECT NVL(middle_name, '') FROM users"
+      ]
+    },
+    {
+      "name": "IFNULL",
+      "sqlKind": "NVL",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "SAME, SAME",
+        "description": "Value to check and replacement if null"
+      },
+      "description": "Returns the second value if the first is null",
+      "aliases": ["NVL"],
+      "examples": [
+        "SELECT IFNULL(discount, 0) FROM orders"
+      ]
+    },
+    {
+      "name": "NVL2",
+      "sqlKind": "NVL2",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of 2nd and 3rd args",
+      "parameters": {
+        "count": "3",
+        "types": "ANY, SAME, SAME",
+        "description": "Value to check, value if not null, value if null"
+      },
+      "description": "Returns second arg if first is not null, else third arg",
+      "aliases": [],
+      "examples": [
+        "SELECT NVL2(commission, commission * 1.1, 0) FROM sales",
+        "SELECT NVL2(end_date, 'Completed', 'Active') FROM projects"
+      ]
+    },
+    {
+      "name": "NULLIF",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as first argument, force nullable",
+      "parameters": {
+        "count": "2",
+        "types": "COMPARABLE, COMPARABLE",
+        "description": "Two values to compare"
+      },
+      "description": "Returns NULL if two values are equal, else returns first value",
+      "aliases": [],
+      "examples": [
+        "SELECT NULLIF(0, 0) -- Returns NULL",
+        "SELECT NULLIF(5, 0) -- Returns 5"
+      ]
+    },
+    {
+      "name": "NULLIFZERO",
+      "sqlKind": "NULLIFZERO",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "Same as input, force nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Returns NULL if the value is zero",
+      "aliases": [],
+      "examples": [
+        "SELECT NULLIFZERO(0) -- Returns NULL",
+        "SELECT NULLIFZERO(5) -- Returns 5"
+      ]
+    },
+    {
+      "name": "CASE",
+      "sqlKind": "CASE",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of result expressions",
+      "parameters": {
+        "count": "Variable",
+        "types": "Condition/value pairs with optional ELSE",
+        "description": "CASE expression with WHEN/THEN pairs"
+      },
+      "description": "Conditional expression that returns different values based on conditions",
+      "aliases": [],
+      "examples": [
+        "SELECT CASE WHEN score >= 90 THEN 'A' WHEN score >= 80 THEN 'B' ELSE 'C' END",
+        "SELECT CASE status WHEN 'active' THEN 1 WHEN 'inactive' THEN 0 END"
+      ]
+    },
+    {
+      "name": "IF",
+      "sqlKind": "IF",
+      "category": "SYSTEM",
+      "returnType": "Least restrictive type of result expressions",
+      "parameters": {
+        "count": "3",
+        "types": "BOOLEAN, ANY, ANY",
+        "description": "Condition, value if true, value if false"
+      },
+      "description": "Returns one of two values based on a condition",
+      "aliases": [],
+      "examples": [
+        "SELECT IF(age >= 18, 'Adult', 'Minor') FROM users",
+        "SELECT IF(quantity > 0, 'In Stock', 'Out of Stock') FROM products"
+      ]
+    },
+    {
+      "name": "IFF",
+      "sqlKind": "OTHER",
+      "category": "SYSTEM",
+      "returnType": "Type of second argument, nullable",
+      "parameters": {
+        "count": "3",
+        "types": "BOOLEAN, SAME, SAME",
+        "description": "Condition, value if true, value if false"
+      },
+      "description": "Inline IF function (Snowflake compatible)",
+      "aliases": [],
+      "examples": [
+        "SELECT IFF(status = 'active', 1, 0) FROM accounts",
+        "SELECT IFF(temperature > 100, 'Hot', 'Normal') FROM sensors"
+      ]
+    }
+  ]
+}

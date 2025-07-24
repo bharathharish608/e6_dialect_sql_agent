@@ -1,0 +1,345 @@
+{
+  "category": "NUMERIC",
+  "functions": [
+    {
+      "name": "PLUS",
+      "sqlKind": "PLUS",
+      "category": "NUMERIC",
+      "returnType": "Sum type of operands, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values to add"
+      },
+      "description": "Arithmetic addition operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 5 + 3 -- Returns 8",
+        "SELECT price + tax FROM orders"
+      ]
+    },
+    {
+      "name": "MINUS",
+      "sqlKind": "MINUS",
+      "category": "NUMERIC",
+      "returnType": "Sum type of operands, nullable",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Two numeric values to subtract"
+      },
+      "description": "Arithmetic subtraction operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 10 - 3 -- Returns 7",
+        "SELECT revenue - cost AS profit FROM sales"
+      ]
+    },
+    {
+      "name": "DIVIDE",
+      "sqlKind": "DIVIDE",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Dividend and divisor"
+      },
+      "description": "Arithmetic division operator",
+      "aliases": [],
+      "examples": [
+        "SELECT 20 / 4 -- Returns 5.0",
+        "SELECT total_sales / num_customers AS avg_sale FROM metrics"
+      ]
+    },
+    {
+      "name": "TRY_DIVIDE",
+      "sqlKind": "TRY_DIVIDE",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "ANY, ANY",
+        "description": "Dividend and divisor"
+      },
+      "description": "Safe division that returns NULL instead of error on division by zero",
+      "aliases": [],
+      "examples": [
+        "SELECT TRY_DIVIDE(10, 0) -- Returns NULL",
+        "SELECT TRY_DIVIDE(20, 4) -- Returns 5.0"
+      ]
+    },
+    {
+      "name": "POW",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Base and exponent"
+      },
+      "description": "Raises a number to the power of another number",
+      "aliases": [],
+      "examples": [
+        "SELECT POW(2, 3) -- Returns 8.0",
+        "SELECT POW(10, 2) -- Returns 100.0"
+      ]
+    },
+    {
+      "name": "MOD",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Dividend and divisor"
+      },
+      "description": "Returns the remainder of division",
+      "aliases": [],
+      "examples": [
+        "SELECT MOD(10, 3) -- Returns 1",
+        "SELECT MOD(25, 7) -- Returns 4"
+      ]
+    },
+    {
+      "name": "LOG",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "NUMERIC, NUMERIC",
+        "description": "Base and value"
+      },
+      "description": "Returns the logarithm of a number with specified base",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG(2, 8) -- Returns 3.0",
+        "SELECT LOG(10, 100) -- Returns 2.0"
+      ]
+    },
+    {
+      "name": "LOG10",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the base-10 logarithm of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG10(100) -- Returns 2.0",
+        "SELECT LOG10(1000) -- Returns 3.0"
+      ]
+    },
+    {
+      "name": "LOG2",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "Same as input, nullable",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the base-2 logarithm of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT LOG2(8) -- Returns 3.0",
+        "SELECT LOG2(16) -- Returns 4.0"
+      ]
+    },
+    {
+      "name": "SIGN",
+      "sqlKind": "SIGN",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the sign of a number (-1, 0, or 1)",
+      "aliases": ["SIGNUM"],
+      "examples": [
+        "SELECT SIGN(-5) -- Returns -1",
+        "SELECT SIGN(0) -- Returns 0",
+        "SELECT SIGN(10) -- Returns 1"
+      ]
+    },
+    {
+      "name": "SIGNUM",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the sign of a number (-1.0, 0.0, or 1.0)",
+      "aliases": ["SIGN"],
+      "examples": [
+        "SELECT SIGNUM(-5.5) -- Returns -1.0",
+        "SELECT SIGNUM(0) -- Returns 0.0"
+      ]
+    },
+    {
+      "name": "SQUARE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to square"
+      },
+      "description": "Returns the square of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT SQUARE(5) -- Returns 25.0",
+        "SELECT SQUARE(-3) -- Returns 9.0"
+      ]
+    },
+    {
+      "name": "FACTORIAL",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Non-negative integer"
+      },
+      "description": "Returns the factorial of a number",
+      "aliases": [],
+      "examples": [
+        "SELECT FACTORIAL(5) -- Returns 120",
+        "SELECT FACTORIAL(0) -- Returns 1"
+      ]
+    },
+    {
+      "name": "E",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns Euler's number (e ≈ 2.71828)",
+      "aliases": [],
+      "examples": [
+        "SELECT E() -- Returns 2.718281828459045"
+      ]
+    },
+    {
+      "name": "INFINITY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns positive infinity",
+      "aliases": [],
+      "examples": [
+        "SELECT INFINITY() -- Returns Infinity",
+        "SELECT 1 / 0 < INFINITY() -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "NAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "0",
+        "types": "None",
+        "description": "No parameters"
+      },
+      "description": "Returns Not-a-Number (NaN)",
+      "aliases": [],
+      "examples": [
+        "SELECT NAN() -- Returns NaN",
+        "SELECT IS_NAN(NAN()) -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "IS_FINITE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is finite",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_FINITE(100) -- Returns TRUE",
+        "SELECT IS_FINITE(INFINITY()) -- Returns FALSE"
+      ]
+    },
+    {
+      "name": "IS_INFINITE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is infinite",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_INFINITE(100) -- Returns FALSE",
+        "SELECT IS_INFINITE(INFINITY()) -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "IS_NAN",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "NUMERIC",
+      "returnType": "BOOLEAN NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value to check"
+      },
+      "description": "Checks if a number is NaN (Not-a-Number)",
+      "aliases": [],
+      "examples": [
+        "SELECT IS_NAN(100) -- Returns FALSE",
+        "SELECT IS_NAN(0.0 / 0.0) -- Returns TRUE"
+      ]
+    },
+    {
+      "name": "POSITIVE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "DOUBLE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "NUMERIC",
+        "description": "Numeric value"
+      },
+      "description": "Returns the positive value (unary plus)",
+      "aliases": [],
+      "examples": [
+        "SELECT POSITIVE(-5) -- Returns -5",
+        "SELECT POSITIVE(5) -- Returns 5"
+      ]
+    }
+  ]
+}

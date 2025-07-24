@@ -1,0 +1,342 @@
+{
+  "category": "TIMEDATE",
+  "functions": [
+    {
+      "name": "DATE",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "DATE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP/STRING",
+        "description": "Timestamp or date string to convert"
+      },
+      "description": "Extracts the date part from a timestamp or converts string to date",
+      "aliases": [],
+      "examples": [
+        "SELECT DATE('2023-01-15 10:30:00') -- Returns '2023-01-15'",
+        "SELECT DATE(CURRENT_TIMESTAMP) -- Returns today's date"
+      ]
+    },
+    {
+      "name": "TIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIME",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP/STRING",
+        "description": "Timestamp or time string to convert"
+      },
+      "description": "Extracts the time part from a timestamp or converts string to time",
+      "aliases": [],
+      "examples": [
+        "SELECT TIME('2023-01-15 10:30:00') -- Returns '10:30:00'",
+        "SELECT TIME(CURRENT_TIMESTAMP) -- Returns current time"
+      ]
+    },
+    {
+      "name": "TIMESTAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "TIMESTAMP",
+      "parameters": {
+        "count": "1",
+        "types": "STRING/DATE",
+        "description": "String or date to convert to timestamp"
+      },
+      "description": "Converts a string or date to a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIMESTAMP('2023-01-15 10:30:00') -- Returns timestamp",
+        "SELECT TIMESTAMP('2023-01-15') -- Returns '2023-01-15 00:00:00'"
+      ]
+    },
+    {
+      "name": "DATETIME",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP WITH TIMEZONE NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "TIMESTAMP, [STRING]",
+        "description": "Timestamp, optional timezone"
+      },
+      "description": "Creates a datetime with optional timezone",
+      "aliases": [],
+      "examples": [
+        "SELECT DATETIME('2023-01-15 10:30:00') -- Returns datetime",
+        "SELECT DATETIME('2023-01-15 10:30:00', 'America/New_York') -- With timezone"
+      ]
+    },
+    {
+      "name": "TIME_STAMP",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "1 or 2",
+        "types": "TIMESTAMP, [STRING]",
+        "description": "Timestamp, optional format"
+      },
+      "description": "Creates a timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT TIME_STAMP('2023-01-15 10:30:00') -- Returns timestamp"
+      ]
+    },
+    {
+      "name": "GENERATE_TIMESTAMP_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "ARRAY of TIMESTAMP NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "TIMESTAMP, TIMESTAMP, INTERVAL",
+        "description": "Start timestamp, end timestamp, interval"
+      },
+      "description": "Generates an array of timestamps",
+      "aliases": [],
+      "examples": [
+        "SELECT GENERATE_TIMESTAMP_ARRAY('2023-01-01', '2023-01-05', INTERVAL 1 DAY)",
+        "-- Returns array of 5 timestamps"
+      ]
+    },
+    {
+      "name": "GENERATE_DATE_ARRAY",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "ARRAY of DATE NULLABLE",
+      "parameters": {
+        "count": "3",
+        "types": "DATE, DATE, INTERVAL",
+        "description": "Start date, end date, interval"
+      },
+      "description": "Generates an array of dates",
+      "aliases": [],
+      "examples": [
+        "SELECT GENERATE_DATE_ARRAY('2023-01-01', '2023-01-31', INTERVAL 7 DAY)",
+        "-- Returns array of weekly dates"
+      ]
+    },
+    {
+      "name": "DATE_PART",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, DATE/TIMESTAMP",
+        "description": "Date part name, date/timestamp"
+      },
+      "description": "Extracts a specific part from a date/timestamp",
+      "aliases": ["DATEPART"],
+      "examples": [
+        "SELECT DATE_PART('year', '2023-01-15') -- Returns 2023",
+        "SELECT DATE_PART('month', CURRENT_DATE) -- Returns current month"
+      ]
+    },
+    {
+      "name": "DATEPART",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "2",
+        "types": "STRING, DATE/TIMESTAMP",
+        "description": "Date part name, date/timestamp"
+      },
+      "description": "Extracts a specific part from a date/timestamp",
+      "aliases": ["DATE_PART"],
+      "examples": [
+        "SELECT DATEPART('quarter', '2023-04-15') -- Returns 2",
+        "SELECT DATEPART('week', CURRENT_DATE) -- Returns week number"
+      ]
+    },
+    {
+      "name": "LAST_DAY",
+      "sqlKind": "LAST_DAY",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the last day of the month for a given date",
+      "aliases": ["LAST_DAY_OF_MONTH"],
+      "examples": [
+        "SELECT LAST_DAY('2023-02-15') -- Returns '2023-02-28'",
+        "SELECT LAST_DAY('2024-02-15') -- Returns '2024-02-29' (leap year)"
+      ]
+    },
+    {
+      "name": "LAST_DAY_OF_MONTH",
+      "sqlKind": "LAST_DAY",
+      "category": "TIMEDATE",
+      "returnType": "DATE NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the last day of the month for a given date",
+      "aliases": ["LAST_DAY"],
+      "examples": [
+        "SELECT LAST_DAY_OF_MONTH('2023-01-15') -- Returns '2023-01-31'"
+      ]
+    },
+    {
+      "name": "SECOND",
+      "sqlKind": "OTHER_FUNCTION",
+      "category": "USER_DEFINED_FUNCTION",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIME/TIMESTAMP/STRING",
+        "description": "Time, timestamp, or time string"
+      },
+      "description": "Extracts the second from a time or timestamp",
+      "aliases": [],
+      "examples": [
+        "SELECT SECOND('10:30:45') -- Returns 45",
+        "SELECT SECOND(CURRENT_TIMESTAMP) -- Returns current second"
+      ]
+    },
+    {
+      "name": "DAY",
+      "sqlKind": "DAYS",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Extracts the day of month from a date",
+      "aliases": ["DAYS"],
+      "examples": [
+        "SELECT DAY('2023-01-15') -- Returns 15",
+        "SELECT DAY(CURRENT_DATE) -- Returns current day of month"
+      ]
+    },
+    {
+      "name": "DAYS",
+      "sqlKind": "DAYS",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Extracts the day of month from a date",
+      "aliases": ["DAY"],
+      "examples": [
+        "SELECT DAYS('2023-01-15') -- Returns 15"
+      ]
+    },
+    {
+      "name": "WEEKDAY",
+      "sqlKind": "WEEKDAY",
+      "category": "TIMEDATE",
+      "returnType": "INTEGER NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the weekday number (0=Monday, 6=Sunday)",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKDAY('2023-01-15') -- Returns 6 (Sunday)",
+        "SELECT WEEKDAY(CURRENT_DATE) -- Returns current weekday"
+      ]
+    },
+    {
+      "name": "DAYNAME",
+      "sqlKind": "DAYNAME",
+      "category": "TIMEDATE",
+      "returnType": "VARCHAR(2000) NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the name of the weekday",
+      "aliases": [],
+      "examples": [
+        "SELECT DAYNAME('2023-01-15') -- Returns 'Sunday'",
+        "SELECT DAYNAME(CURRENT_DATE) -- Returns current day name"
+      ]
+    },
+    {
+      "name": "DAYOFWEEKISO",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns ISO day of week (1=Monday, 7=Sunday)",
+      "aliases": [],
+      "examples": [
+        "SELECT DAYOFWEEKISO('2023-01-15') -- Returns 7 (Sunday)",
+        "SELECT DAYOFWEEKISO(CURRENT_DATE) -- Returns current ISO day"
+      ]
+    },
+    {
+      "name": "WEEKOFYEAR",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the week number of the year",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKOFYEAR('2023-01-15') -- Returns 3",
+        "SELECT WEEKOFYEAR(CURRENT_DATE) -- Returns current week number"
+      ]
+    },
+    {
+      "name": "WEEKISO",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the ISO week number",
+      "aliases": [],
+      "examples": [
+        "SELECT WEEKISO('2023-01-15') -- Returns ISO week number",
+        "SELECT WEEKISO(CURRENT_DATE) -- Returns current ISO week"
+      ]
+    },
+    {
+      "name": "YEAROFWEEK",
+      "sqlKind": "OTHER",
+      "category": "TIMEDATE",
+      "returnType": "BIGINT NULLABLE",
+      "parameters": {
+        "count": "1",
+        "types": "DATE/TIMESTAMP",
+        "description": "Date or timestamp"
+      },
+      "description": "Returns the year of the week-based year",
+      "aliases": [],
+      "examples": [
+        "SELECT YEAROFWEEK('2023-01-01') -- May return 2022 if Jan 1 is in last week of previous year",
+        "SELECT YEAROFWEEK(CURRENT_DATE) -- Returns current week-based year"
+      ]
+    }
+  ]
+}
